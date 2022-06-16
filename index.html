@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    :root {
+      --background-primary: #efefef;
+      --color-primary: #1b1b1b;
+      --font: 'Fantasque';
+    }
+    @font-face {
+      font-family: 'Fantasque';
+      src: url(assets/fonts/FantasqueSansMono-Regular.ttf) format('truetype');
+      font-display: swap;
+    }
+    body {
+      background-color: var(--background-primary);
+      overflow: hidden;
+    }
+    #tree {
+      width: 99vw;
+      height: 98vh;
+      border: none;
+    }
+    #compileButt {
+      background: transparent;
+      border: none;
+      color: var(--color-primary);
+      cursor: pointer;
+      position: absolute;
+      font-size: 15px;
+      font-weight: 900;
+      top: 10px;
+      outline: none;
+      right: 240px;
+      margin: auto;
+    }
+    #resetButt {
+      background: transparent;
+      border: none;
+      color: var(--color-primary);
+      cursor: pointer;
+      position: absolute;
+      font-size: 15px;
+      font-weight: 900;
+      top: 10px;
+      outline: none;
+      right: 180px;
+      margin: auto;
+    }
+    #loadFileButt {
+      background: transparent;
+      border: none;
+      color: var(--color-primary);
+      cursor: pointer;
+      position: absolute;
+      font-size: 15px;
+      font-weight: 900;
+      top: 10px;
+      outline: none;
+      right: 140px;
+      margin: auto;
+    }
+    #saveFileButt {
+      background: transparent;
+      border: none;
+      color: var(--color-primary);
+      cursor: pointer;
+      position: absolute;
+      font-size: 15px;
+      font-weight: 900;
+      top: 10px;
+      outline: none;
+      right: 80px;
+      margin: auto;
+    }
+    #showNumbersButt {
+      background: transparent;
+      border: none;
+      color: var(--color-primary);
+      cursor: pointer;
+      position: absolute;
+      font-size: 15px;
+      font-weight: 900;
+      top: 10px;
+      outline: none;
+      right: 10px;
+      margin: auto;
+    }
+    #fileNameInput {
+      position: absolute;
+      display: none;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 900;
+      top: 25px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      outline: none;
+      background: transparent;
+      color: var(--color-primary);
+      border: none;
+    }
+
+    #selectedIndex {
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 600;
+      position: fixed;
+      top: 10px;
+      left: 20px;
+      z-index: 1000;
+      color: var(--color-primary);
+    }
+    #infoGuide {
+      font-family: var(--font);
+      display: none;
+      position: absolute;
+      top: -10px;
+      left: 45vw;
+      border: none;
+      padding: 1px;
+      background-color: transparent;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    #tooltip {
+      font-family: var(--font);
+      color: var(--color-secondary);
+      background-color: transparent;
+      pointer-events: none;
+    }
+  </style>
+  <body>
+    <div id="tree"></div>
+    <a id="selectedIndex">none : not selected</a>
+    <div id="infoGuide"><pre id="tooltip"></pre></div>
+    <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.19.0/dist/cytoscape.min.js"></script>
+
+    <script src="graph.js" type="module" defer></script>
+  </body>
+</html>
