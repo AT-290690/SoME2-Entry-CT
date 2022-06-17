@@ -213,20 +213,37 @@ const clickEdges = e => {
   );
   memo.selectedPairs.length = 0;
 };
-
+const connectSelf = () => {
+  const couple = memo.selectedPairs;
+  if (couple.length === 1 || couple[0] === couple[1]) {
+    addEdge(memo.edgeIndex, couple[0], couple[0], 'f   .');
+    resetColorOfSelectedNodes(couple);
+    inspectSelectionIndex(
+      memo.lastSelection,
+      couple[0]
+        ? '[ ' + couple.join(' -> ') + ' ]'
+        : '[ ' + memo.lastSelection.id + ' -> ? ]'
+    );
+    //  memo.selectedPairs.push(memo.lastSelection.id);
+    clearSelection();
+  }
+};
 const connectNodes = () => {
   const couple = memo.selectedPairs;
-  if (memo.selectedPairs.length > 1) {
+  if (
+    couple.length > 1 &&
+    couple[0] !== couple[1] // don't connect self to avoid bad user experience
+  ) {
     addEdge(memo.edgeIndex, couple[0], couple[1], 'f   .');
-    resetColorOfSelectedNodes([couple[0]]);
-    memo.selectedPairs.length = 0;
+    resetColorOfSelectedNodes(couple);
     inspectSelectionIndex(
       memo.lastSelection,
       couple[1]
-        ? '[ ' + memo.selectedPairs.join(' -> ') + ' ]'
+        ? '[ ' + couple.join(' -> ') + ' ]'
         : '[ ' + memo.lastSelection.id + ' -> ? ]'
     );
-    memo.selectedPairs.push(memo.lastSelection.id);
+    //  memo.selectedPairs.push(memo.lastSelection.id);
+    clearSelection();
   }
 };
 
@@ -319,7 +336,9 @@ cy.ready(() => {
     if (e.key.toLowerCase() === 'c') {
       connectNodes();
     }
-
+    if (e.key.toLowerCase() === 'i') {
+      connectSelf();
+    }
     if (e.key.toLowerCase() === 'n') {
       memo.lastSelection = { id: null };
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
