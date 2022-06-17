@@ -47,7 +47,7 @@ const style = [
     selector: 'edge',
     style: {
       width: 1,
-      'curve-style': 'straight',
+      'curve-style': 'bezier',
       'line-color': COLORS.edges,
       color: COLORS.text
     }
@@ -182,6 +182,7 @@ const addEdge = (index, prevId, nextId, label) => {
       arrow: 'vee'
     }
   });
+  // edge.style('curve-style', curve);
   memo.edgeIndex += 1;
   return edge;
 };
@@ -216,31 +217,16 @@ const clickEdges = e => {
 const connectNodes = () => {
   const couple = memo.selectedPairs;
   if (memo.selectedPairs.length > 1) {
-    if (
-      couple[0] !== couple[1] &&
-      //&& memo.lastSelection.type !== "root"
-      !cy
-        .edges()
-        .find(
-          x =>
-            (x.data().source === couple[1] && x.data().target === couple[0]) ||
-            (x.data().source === couple[0] && x.data().target === couple[1])
-        )
-    ) {
-      addEdge(memo.edgeIndex, couple[0], couple[1], 'f   .');
-      resetColorOfSelectedNodes([couple[0]]);
-      memo.selectedPairs.length = 0;
-      inspectSelectionIndex(
-        memo.lastSelection,
-        couple[1]
-          ? '[ ' + memo.selectedPairs.join(' -> ') + ' ]'
-          : '[ ' + memo.lastSelection.id + ' -> ? ]'
-      );
-      memo.selectedPairs.push(memo.lastSelection.id);
-    } else {
-      showToolTip("can't connect!");
-      clearSelection();
-    }
+    addEdge(memo.edgeIndex, couple[0], couple[1], 'f   .');
+    resetColorOfSelectedNodes([couple[0]]);
+    memo.selectedPairs.length = 0;
+    inspectSelectionIndex(
+      memo.lastSelection,
+      couple[1]
+        ? '[ ' + memo.selectedPairs.join(' -> ') + ' ]'
+        : '[ ' + memo.lastSelection.id + ' -> ? ]'
+    );
+    memo.selectedPairs.push(memo.lastSelection.id);
   }
 };
 
