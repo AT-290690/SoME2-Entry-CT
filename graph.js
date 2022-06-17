@@ -5,8 +5,8 @@ export const COLORS = {
   nodesBG: '#efefef',
   edges: '#1b1b1b',
   selection: '#83e665',
-  selectionOutgoing: '#39A0ED',
-  selectionIncoming: '#ff4a4a',
+  selectionOutgoing: '#ff4a4a',
+  selectionIncoming: '#39A0ED',
   selectionBox: '#83e665'
 };
 export const memo = {
@@ -109,11 +109,11 @@ export const cy = cytoscape({
   fit: true,
   padding: 30, // fit padding
   // initial viewport state:
-  zoom: 1,
+  zoom: 1.2,
   pan: { x: 0, y: 0 },
 
   // interaction options:
-  minZoom: 0.35,
+  minZoom: 0.4,
   maxZoom: 6,
   zoomingEnabled: true,
   userZoomingEnabled: true,
