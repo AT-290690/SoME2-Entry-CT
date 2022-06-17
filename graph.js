@@ -36,6 +36,7 @@ export const elements = {
 const style = [
   {
     selector: 'core',
+
     style: {
       'selection-box-opacity': 0.5,
       'selection-box-color': COLORS.selectionBox,
@@ -198,7 +199,9 @@ const addEdge = (index, prevId, nextId, label) => {
       arrow: 'vee'
     }
   });
-  // edge.style('curve-style', curve);
+  // 'line-dash-pattern': [6, 3],
+  // 'line-dash-offset': 5,
+  // edge.style('line-dash-pattern', [6, 3]).style('line-dash-offset', 24);
   memo.edgeIndex += 1;
   return edge;
 };
@@ -233,12 +236,12 @@ const connectNodes = () => {
     couple.length > 1 &&
     couple[0] !== couple[1] // don't connect self to avoid bad user experience
   ) {
-    addEdge(memo.edgeIndex, couple[0], couple[1], '?');
+    addEdge(memo.edgeIndex, couple[0], couple[1], '');
     resetColorOfSelectedNodes(couple);
 
     //  memo.selectedPairs.push(memo.lastSelection.id);
   } else if (couple[0] === couple[1]) {
-    addEdge(memo.edgeIndex, couple[0], couple[0], '?');
+    addEdge(memo.edgeIndex, couple[0], couple[0], '');
     resetColorOfSelectedNodes(couple);
 
     //  memo.selectedPairs.push(memo.lastSelection.id);
