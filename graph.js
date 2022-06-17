@@ -54,7 +54,11 @@ const style = [
   },
   {
     selector: 'edge[label]',
-    style: { label: 'data(label)' },
+    style: {
+      label: 'data(label)',
+      'text-outline-color': COLORS.nodes,
+      'text-outline-width': 5
+    },
     label: 'data(label)'
   },
   {
@@ -127,8 +131,8 @@ localStorage.setItem(
 );
 
 const getScroll = () => {
-  if (window.pageYOffset !== undefined) {
-    return { x: pageXOffset, y: pageYOffset };
+  if (window.scrollY !== undefined) {
+    return { x: scrollX, y: scrollY };
   } else {
     var sx,
       sy,
@@ -216,7 +220,7 @@ const clickEdges = e => {
 const connectSelf = () => {
   const couple = memo.selectedPairs;
   if (couple.length === 1 || couple[0] === couple[1]) {
-    addEdge(memo.edgeIndex, couple[0], couple[0], 'f   .');
+    addEdge(memo.edgeIndex, couple[0], couple[0], 'f');
     resetColorOfSelectedNodes(couple);
     inspectSelectionIndex(
       memo.lastSelection,
@@ -234,7 +238,7 @@ const connectNodes = () => {
     couple.length > 1 &&
     couple[0] !== couple[1] // don't connect self to avoid bad user experience
   ) {
-    addEdge(memo.edgeIndex, couple[0], couple[1], 'f   .');
+    addEdge(memo.edgeIndex, couple[0], couple[1], 'f');
     resetColorOfSelectedNodes(couple);
     inspectSelectionIndex(
       memo.lastSelection,
