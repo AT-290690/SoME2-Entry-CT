@@ -117,7 +117,7 @@ export const cy = cytoscape({
   maxZoom: 6,
   zoomingEnabled: true,
   userZoomingEnabled: true,
-  panningEnabled: true,
+  panningEnabled: false, // drag
   userPanningEnabled: true,
   boxSelectionEnabled: true,
   selectionType: 'single',
