@@ -4,8 +4,10 @@ export const COLORS = {
   stroke: '#efefef',
   nodesBG: '#efefef',
   edges: '#1b1b1b',
-  selection: '#39A0ED',
-  selectionBox: '#39A0ED'
+  selection: '#83e665',
+  selectionOutgoing: '#39A0ED',
+  selectionIncoming: '#ff4a4a',
+  selectionBox: '#83e665'
 };
 export const memo = {
   lastSelection: { id: null },
@@ -83,6 +85,13 @@ const style = [
       'font-family': 'Fantasque',
       'text-valign': 'center',
       content: 'data(label)'
+    }
+  },
+  {
+    selector: 'node:selected',
+    style: {
+      'text-outline-color': COLORS.selection,
+      'text-outline-width': 3
     }
   },
   {
@@ -255,9 +264,12 @@ const clickNodes = e => {
     memo.selectedPairs.length = 1;
     memo.selectedPairs.push(memo.lastSelection.id);
   }
-  cy.nodes(`#${memo.selectedPairs[0]}`).style('text-outline-width', 3);
-
-  cy.nodes(`#${memo.selectedPairs[1]}`).style('text-outline-width', 3);
+  cy.nodes(`#${memo.selectedPairs[0]}`)
+    .style('text-outline-width', 3)
+    .style('text-outline-color', COLORS.selectionIncoming);
+  cy.nodes(`#${memo.selectedPairs[1]}`)
+    .style('text-outline-width', 3)
+    .style('text-outline-color', COLORS.selectionOutgoing);
   inspectSelectionIndex(
     memo.lastSelection,
     couple[1]
@@ -281,7 +293,12 @@ const removeEdge = id => {
 };
 
 const resetColorOfSelectedNodes = (nodes = memo.selectedPairs) => {
-  nodes.map(id => cy.nodes(`#${id}`).style('text-outline-width', 0));
+  nodes.map(id =>
+    cy
+      .nodes(`#${id}`)
+      .style('text-outline-width', 0)
+      .style('text-outline-color', COLORS.selection)
+  );
 };
 
 const clearSelection = () => {
@@ -377,8 +394,8 @@ cy.ready(() => {
   });
 
   cy.on('select', 'node', e => {
+    e.target.style('text-outline-width', 3);
     memo.selectedPairs.push(e.target.id());
-    e.target.style('border-color', COLORS.selection);
   });
 
   cy.on('click', 'node', e => {
