@@ -21,6 +21,11 @@ export const write = async (filename, data) => {
     })
   );
 };
+const saveData = () => {
+  memo.selectedPairs.length = 0;
+  memo.zoom = cy.zoom();
+  memo.filename = elements.fileNameInput.value.trim();
+};
 
 const seedGraph = (nodes = memo.elements.nodes, edges = memo.elements.edges) =>
   cy.add([...nodes, ...edges]);

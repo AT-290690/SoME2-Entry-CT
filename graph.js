@@ -301,10 +301,12 @@ const clearSelection = () => {
   resetColorOfSelectedNodes();
   cy.$(':selected')
     .nodes()
-    .map(n => {
-      n.style('text-outline-width', 0);
-      n.unselect();
-    });
+    .map(n =>
+      n
+        .style('text-outline-width', 0)
+        .style('text-outline-color', COLORS.selection)
+        .unselect()
+    );
   memo.selectedPairs.length = 0;
   memo.lastSelection = { id: null };
 };
@@ -335,12 +337,6 @@ cy.ready(() => {
     memo.mousePosition.x = (e.clientX - pan.x + scrollOffset.x) / zoom;
     memo.mousePosition.y = (e.clientY - pan.y + scrollOffset.y) / zoom;
   });
-
-  const saveData = () => {
-    memo.selectedPairs.length = 0;
-    memo.zoom = cy.zoom();
-    memo.filename = elements.fileNameInput.value.trim();
-  };
 
   document.addEventListener('keydown', e => {
     if (memo.focus !== elements.treeContainer) return;
@@ -392,12 +388,7 @@ cy.ready(() => {
     // memo.selectedPairs.push(e.target.id());
   });
 
-  cy.on('click', 'node', e => {
-    if (memo.selectedPairs.length > 2) {
-      clearSelection();
-    }
-    clickNodes(e);
-  });
+  cy.on('click', 'node', clickNodes);
 
   cy.on('mouseout', 'node', e => {
     if (e) {
