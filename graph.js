@@ -57,7 +57,7 @@ const style = [
     style: {
       label: 'data(label)',
       'text-outline-color': COLORS.nodes,
-      'text-outline-width': 5
+      'text-outline-width': 1
     },
     label: 'data(label)'
   },
@@ -73,10 +73,12 @@ const style = [
     selector: 'node',
     style: {
       shape: 'rectangle',
-      'border-style': 'solid',
+      // 'border-style': 'solid',
       color: COLORS.text,
-      'border-color': COLORS.stroke,
-      'border-width': '2',
+      'text-outline-color': COLORS.selection,
+      'text-outline-width': 0,
+      // 'border-color': COLORS.stroke,
+      // 'border-width': '2',
       'background-opacity': 0,
       'font-family': 'Fantasque',
       'text-valign': 'center',
@@ -86,7 +88,7 @@ const style = [
   {
     selector: 'node:active',
     style: {
-      'background-color': COLORS.nodes
+      'text-outline-width': 3
     }
   }
 ];
@@ -204,17 +206,9 @@ const inspectSelectionIndex = (selection, opt = '') =>
   } ${opt}`);
 
 const clickEdges = e => {
+  clearSelection();
   memo.lastSelection.type = 'edge';
   memo.lastSelection.id = e.target.id();
-  cy.nodes(`#${memo.selectedPairs[0]}`).style(
-    'background-color',
-    COLORS.nodesBG
-  );
-
-  cy.nodes(`#${memo.selectedPairs[1]}`).style(
-    'background-color',
-    COLORS.nodesBG
-  );
   memo.selectedPairs.length = 0;
 };
 const connectSelf = () => {
@@ -261,9 +255,9 @@ const clickNodes = e => {
     memo.selectedPairs.length = 1;
     memo.selectedPairs.push(memo.lastSelection.id);
   }
-  cy.nodes(`#${memo.selectedPairs[0]}`).style('border-color', COLORS.selected);
+  cy.nodes(`#${memo.selectedPairs[0]}`).style('text-outline-width', 3);
 
-  cy.nodes(`#${memo.selectedPairs[1]}`).style('border-color', COLORS.selected);
+  cy.nodes(`#${memo.selectedPairs[1]}`).style('text-outline-width', 3);
   inspectSelectionIndex(
     memo.lastSelection,
     couple[1]
@@ -287,7 +281,7 @@ const removeEdge = id => {
 };
 
 const resetColorOfSelectedNodes = (nodes = memo.selectedPairs) => {
-  nodes.map(id => cy.nodes(`#${id}`).style('border-color', COLORS.nodesBG));
+  nodes.map(id => cy.nodes(`#${id}`).style('text-outline-width', 0));
 };
 
 const clearSelection = () => {
@@ -295,7 +289,7 @@ const clearSelection = () => {
   cy.$(':selected')
     .nodes()
     .map(n => {
-      n.style('border-color', COLORS.nodesBG);
+      n.style('text-outline-width', 0);
       n.unselect();
     });
   memo.selectedPairs.length = 0;
