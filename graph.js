@@ -239,7 +239,7 @@ const connectNodes = () => {
     inspectSelectionIndex(
       memo.lastSelection,
       couple[1]
-        ? '[ ' + couple.join(' -> ') + ' ]'
+        ? '[ ' + couple[0] + ' -> ' + couple[1] + ' ]'
         : '[ ' + memo.lastSelection.id + ' -> ? ]'
     );
     //  memo.selectedPairs.push(memo.lastSelection.id);
