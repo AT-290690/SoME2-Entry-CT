@@ -19,6 +19,7 @@
     body {
       background-color: var(--background-primary);
       overflow: hidden;
+      margin: 0;
     }
     #tree {
       width: 99vw;
@@ -90,6 +91,22 @@
       right: 10px;
       margin: auto;
     }
+    #variableInput {
+      font-family: var(--font);
+      font-size: 18px;
+      font-weight: 600;
+      position: fixed;
+      bottom: 100px;
+      background-color: transparent;
+      border: none;
+      border-bottom: solid 1px black;
+      outline: none;
+      width: 100vw;
+      margin: auto;
+      text-align: center;
+      z-index: 1000;
+      color: var(--color-primary);
+    }
     #fileNameInput {
       position: absolute;
       display: none;
@@ -108,7 +125,7 @@
 
     #selectedIndex {
       font-family: var(--font);
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 600;
       position: fixed;
       bottom: 50px;
@@ -125,7 +142,6 @@
       top: -10px;
       left: 45vw;
       border: none;
-      padding: 1px;
       background-color: transparent;
       z-index: 1000;
       pointer-events: none;
@@ -139,7 +155,8 @@
   </style>
   <body>
     <div id="tree"></div>
-    <a id="selectedIndex">none : not selected</a>
+    <input id="variableInput" placeholder="..." spellcheck="false" />
+    <a id="selectedIndex">none: not selected</a>
     <div id="infoGuide"><pre id="tooltip"></pre></div>
     <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.19.0/dist/cytoscape.min.js"></script>
 

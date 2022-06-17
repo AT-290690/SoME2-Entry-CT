@@ -5,8 +5,8 @@ export const COLORS = {
   nodesBG: '#efefef',
   edges: '#1b1b1b',
   selection: '#83e665',
-  selectionOutgoing: '#ff4a4a',
-  selectionIncoming: '#39A0ED',
+  selectionOutgoing: '#fc6262',
+  selectionIncoming: '#57b3f7',
   selectionBox: '#83e665'
 };
 export const memo = {
@@ -29,6 +29,7 @@ export const elements = {
   selectedIndex: document.getElementById('selectedIndex'),
   treeContainer: document.getElementById('tree'),
   infoGuide: document.getElementById('infoGuide'),
+  variableInput: document.getElementById('variableInput'),
   tooltip: document.getElementById('tooltip')
 };
 
@@ -210,14 +211,17 @@ const setNodeAsRoot = id => {
 };
 
 const inspectSelectionIndex = (selection, opt = '') =>
-  (elements.selectedIndex.innerHTML = `${selection.id || 'none'} : ${
+  (elements.selectedIndex.innerHTML = `${selection.label || 'none'} : ${
     selection.type || 'not selected'
   } ${opt}`);
 
 const clickEdges = e => {
   clearSelection();
-  memo.lastSelection.type = 'edge';
-  memo.lastSelection.id = e.target.id();
+  memo.lastSelection = {
+    type: 'edge',
+    id: e.target.id(),
+    label: e.target.data().label
+  };
   memo.selectedPairs.length = 0;
 };
 
@@ -231,44 +235,39 @@ const connectNodes = () => {
   ) {
     addEdge(memo.edgeIndex, couple[0], couple[1], 'f');
     resetColorOfSelectedNodes(couple);
-    inspectSelectionIndex(
-      memo.lastSelection,
-      couple[1]
-        ? '[ ' + couple[0] + ' -> ' + couple[1] + ' ]'
-        : '[ ' + memo.lastSelection.id + ' -> ? ]'
-    );
+
     //  memo.selectedPairs.push(memo.lastSelection.id);
   } else if (couple[0] === couple[1]) {
     addEdge(memo.edgeIndex, couple[0], couple[0], 'f');
     resetColorOfSelectedNodes(couple);
-    inspectSelectionIndex(
-      memo.lastSelection,
-      couple[0]
-        ? '[ ' + couple.join(' -> ') + ' ]'
-        : '[ ' + memo.lastSelection.id + ' -> ? ]'
-    );
+
     //  memo.selectedPairs.push(memo.lastSelection.id);
   }
   clearSelection();
 };
 
 const clickNodes = e => {
-  memo.lastSelection.type = e.target.data().type === 'root' ? 'root' : 'node';
-  memo.lastSelection.id = e.target.id();
+  const current = e.target.data();
+  memo.lastSelection = {
+    type: current.type === 'root' ? 'root' : 'node',
+    id: e.target.id(),
+    label: current.label
+  };
   memo.selectedPairs.push(memo.lastSelection.id);
   const couple = memo.selectedPairs;
-
-  cy.nodes(`#${memo.selectedPairs[0]}`)
+  const outgoing = cy.nodes(`#${couple[1]}`);
+  e.target
     .style('text-outline-width', 3)
     .style('text-outline-color', COLORS.selectionIncoming);
-  cy.nodes(`#${memo.selectedPairs[1]}`)
+  outgoing
     .style('text-outline-width', 3)
     .style('text-outline-color', COLORS.selectionOutgoing);
+
   inspectSelectionIndex(
     memo.lastSelection,
     couple[1]
-      ? '[ ' + memo.selectedPairs.join(' -> ') + ' ]'
-      : '[ ' + memo.lastSelection.id + ' -> ? ]'
+      ? '[ ' + e.target.data().label + ' -> ' + outgoing.data().label + ' ]'
+      : '[ ' + e.target.data().label + ' -> ? ]'
   );
   if (memo.selectedPairs.length > 2) {
     clearSelection();
@@ -313,25 +312,14 @@ const clearSelection = () => {
   memo.lastSelection = { id: null };
 };
 
-const objToString = obj =>
-  Object.entries(typeof obj === 'object' ? obj : { data: null }).map(
-    (item, index) =>
-      `${item[0]}: ${
-        index > 1 && JSON.stringify(item[1]).length > 25
-          ? JSON.stringify(item[1]).toString().substr(0, 25) + '...'
-          : JSON.stringify(item[1])
-      }`
-  );
-
-const displayStats = (obj, footer) =>
-  `\n----------------\n${objToString(obj).join('\n')}\n----------------\n`;
-
-const showToolTip = msg => {
-  elements.tooltip.innerHTML = msg;
-  elements.infoGuide.style.display = 'block';
-};
 cy.ready(() => {
   // loadSelectedFile('untitled');
+  variableInput.addEventListener('click', () => {
+    const temp = memo.lastSelection;
+    clearSelection();
+    memo.lastSelection = temp;
+    cy.nodes(`#${memo.lastSelection.id}`).select();
+  });
   document.addEventListener('mousemove', e => {
     const zoom = cy.zoom();
     const pan = cy.pan();
@@ -342,11 +330,17 @@ cy.ready(() => {
 
   document.addEventListener('keydown', e => {
     if (memo.focus !== elements.treeContainer) return;
-    if (e.key.toLowerCase() === 'c') {
+    if (
+      document.activeElement !== variableInput &&
+      e.key.toLowerCase() === 'c'
+    ) {
       connectNodes();
     }
 
-    if (e.key.toLowerCase() === 'n') {
+    if (
+      document.activeElement !== variableInput &&
+      e.key.toLowerCase() === 'n'
+    ) {
       memo.lastSelection = { id: null };
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
       clearSelection();
@@ -357,11 +351,33 @@ cy.ready(() => {
         '?'
       );
     }
+    if (e.key === 'Enter') {
+      if (document.activeElement === variableInput && memo.lastSelection.id) {
+        if (
+          memo.lastSelection.type === 'node' ||
+          memo.lastSelection.type === 'root'
+        ) {
+          cy.nodes(`#${memo.lastSelection.id}`).data({
+            label: variableInput.value
+          });
+        } else if (memo.lastSelection.type === 'edge') {
+          cy.edges(`#${memo.lastSelection.id}`).data({
+            label: variableInput.value
+          });
+        }
+        clearSelection();
+        variableInput.value = '';
+      }
+    }
     if (e.key === 'Escape') {
       clearSelection();
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
     }
-    if (e.key.toLowerCase() === 'r' && memo.lastSelection.type !== 'edge') {
+    if (
+      document.activeElement !== variableInput &&
+      e.key.toLowerCase() === 'r' &&
+      memo.lastSelection.type !== 'edge'
+    ) {
       setNodeAsRoot(memo.lastSelection.id);
       //  cy.nodes().edgesTo(`#${memo.lastSelection.id}`).remove();
       inspectSelectionIndex({ type: 'root', id: memo.lastSelection.id });
@@ -392,18 +408,21 @@ cy.ready(() => {
 
   cy.on('click', 'node', clickNodes);
 
-  cy.on('mouseout', 'node', e => {
-    if (e) {
-      elements.infoGuide.style.display = 'none';
-    }
-  });
+  // cy.on('mouseout', 'node', e => {
+  //   if (e) {
+  //     elements.infoGuide.style.display = 'none';
+  //   }
+  // });
 
   cy.on('click', 'edge', e => {
     clickEdges(e);
     const data = e.target.data();
+    const incomming = cy.nodes(`#${data.source}`);
+    const outgoing = cy.nodes(`#${data.target}`);
+
     inspectSelectionIndex(
       memo.lastSelection,
-      '[ ' + data.source + ' -> ' + data.target + ' ]'
+      '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
     );
   });
   memo.focus = elements.treeContainer;
