@@ -236,7 +236,6 @@ const connectNodes = () => {
         : '[ ' + memo.lastSelection.id + ' -> ? ]'
     );
     //  memo.selectedPairs.push(memo.lastSelection.id);
-    clearSelection();
   } else if (couple[0] === couple[1]) {
     addEdge(memo.edgeIndex, couple[0], couple[0], 'f');
     resetColorOfSelectedNodes(couple);
@@ -247,8 +246,8 @@ const connectNodes = () => {
         : '[ ' + memo.lastSelection.id + ' -> ? ]'
     );
     //  memo.selectedPairs.push(memo.lastSelection.id);
-    clearSelection();
   }
+  clearSelection();
 };
 
 const clickNodes = e => {
@@ -390,7 +389,7 @@ cy.ready(() => {
 
   cy.on('select', 'node', e => {
     e.target.style('text-outline-width', 3);
-    memo.selectedPairs.push(e.target.id());
+    // memo.selectedPairs.push(e.target.id());
   });
 
   cy.on('click', 'node', e => {
