@@ -42,10 +42,10 @@ const style = [
       'selection-box-border-color': 'transparent'
     }
   },
-  // {
-  //   selector: '.autorotate',
-  //   style: { 'edge-text-rotation': 'autorotate' }
-  // },
+  {
+    selector: '.autorotate',
+    style: { 'edge-text-rotation': 'autorotate' }
+  },
   {
     selector: 'edge',
     style: {
@@ -189,7 +189,7 @@ const addNode = (index, x = 0, y = 0, label) => {
 const addEdge = (index, prevId, nextId, label) => {
   const edge = cy.add({
     group: 'edges',
-    // classes: 'autorotate',
+    classes: 'autorotate',
     data: {
       id: `e${index}`,
       label,
@@ -233,12 +233,12 @@ const connectNodes = () => {
     couple.length > 1 &&
     couple[0] !== couple[1] // don't connect self to avoid bad user experience
   ) {
-    addEdge(memo.edgeIndex, couple[0], couple[1], 'f');
+    addEdge(memo.edgeIndex, couple[0], couple[1], '?');
     resetColorOfSelectedNodes(couple);
 
     //  memo.selectedPairs.push(memo.lastSelection.id);
   } else if (couple[0] === couple[1]) {
-    addEdge(memo.edgeIndex, couple[0], couple[0], 'f');
+    addEdge(memo.edgeIndex, couple[0], couple[0], '?');
     resetColorOfSelectedNodes(couple);
 
     //  memo.selectedPairs.push(memo.lastSelection.id);
