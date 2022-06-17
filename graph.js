@@ -4,7 +4,7 @@ export const COLORS = {
   stroke: '#efefef',
   nodesBG: '#efefef',
   edges: '#1b1b1b',
-  selection: '#1b1b1b',
+  selection: '#39A0ED',
   selectionBox: '#39A0ED'
 };
 export const memo = {
@@ -73,7 +73,7 @@ const style = [
       color: COLORS.text,
       'border-color': COLORS.stroke,
       'border-width': '2',
-      'background-color': COLORS.nodesBG,
+      'background-opacity': 0,
       'font-family': 'Fantasque',
       'text-valign': 'center',
       content: 'data(label)'
@@ -125,180 +125,6 @@ localStorage.setItem(
   'untitled',
   '{"zoom": 1, "filename":"untitled","elements":{"nodes":[],"edges":[]}}'
 );
-export const read = async filename =>
-  JSON.parse(localStorage.getItem(filename));
-export const write = async (filename, data) => {
-  localStorage.setItem(
-    filename,
-    JSON.stringify({
-      filename: filename,
-      data: JSON.stringify(data)
-    })
-  );
-};
-
-const clearFileOptions = () => {
-  const opt = elements.fileSelector.querySelector('optgroup');
-  elements.fileSelector.innerHTML = '';
-  elements.fileSelector.appendChild(opt);
-};
-const offsetElementsIndexes = elements => {
-  const N = memo.nodeIndex;
-  const E = memo.edgeIndex;
-  const { nodes, edges } = elements;
-
-  let maxNodeIndex = 0;
-  let maxEdgeIndex = 0;
-
-  const offsetNodes = nodes?.map(n => {
-    n.data.index += N;
-    n.data.id = 'n' + n.data.index;
-    maxNodeIndex = Math.max(maxNodeIndex, n.data.index);
-    return n;
-  });
-
-  const offsetEdges = edges?.map(e => {
-    const index = Number(e.data.id.substr(1)) + E;
-    e.data.id = 'e' + index;
-    e.data.source = `n${Number(e.data.source.substr(1)) + N}`;
-    e.data.target = `n${Number(e.data.target.substr(1)) + N}`;
-    maxEdgeIndex = Math.max(maxEdgeIndex, index, E);
-    return e;
-  });
-
-  incIndex(maxNodeIndex);
-  memo.edgeIndex = Math.max(maxEdgeIndex, memo.edgeIndex) + 1;
-  return { nodes: offsetNodes || [], edges: offsetEdges || [] };
-};
-export const loadSelectedFile = filename => {
-  const file = JSON.parse(localStorage.getItem(filename));
-  clearTree();
-  memo.elements = offsetElementsIndexes(file.elements);
-  memo.filename = file.filename;
-  memo.zoom = file.zoom || 1;
-  seedGraph(memo.elements.nodes);
-  cy.zoom({ level: memo.zoom, position: cy.nodes('#n0').position() });
-};
-const deleteTree = filename => {
-  localStorage.removeItem(filename);
-  clearTree();
-};
-
-const clearTree = (nodes = true, edges = true) => {
-  if (nodes) {
-    memo.nodeIndex = 0;
-    cy.nodes().remove();
-  }
-  if (edges) {
-    cy.edges().remove();
-    memo.edgeIndex = 0;
-  }
-};
-
-const pruneTree = () => {
-  memo.nodeIndex = 0;
-  let max = 0,
-    min = 0;
-  cy.nodes().map(n => {
-    const data = n.data();
-    if (!data.prev) removeNode(data.id);
-    min = Math.min(data.index, min);
-    max = Math.max(data.index, max);
-  });
-  memo.elements.nodes = cy.nodes().map(x => x.data());
-  memo.elements.edges = cy.edges().map(x => x.data());
-  memo.edgeIndex = Math.max(memo.edgeIndex, cy.edges().length);
-  incIndex(max + 1);
-};
-
-const mergeDescisionTree = () => {
-  const output = {
-    filename: memo.filename,
-    type: 'graph',
-    nodes: {}
-  };
-
-  const existingConnections = cy.edges().reduce((map, fn) => {
-    const item = fn.data();
-    if (item) {
-      const current = map.get(item.source);
-      if (current) {
-        current.add(item.target);
-      } else {
-        map.set(item.source, new Set([item.target]));
-      }
-    }
-    return map;
-  }, new Map());
-
-  existingConnections.forEach((value, key) => {
-    const node = cy.nodes(`#${key}`);
-    const data = node.data();
-    output.nodes[data.index] = {
-      index: data.index,
-      id: data.id,
-      role: data.type !== 'node' ? data.type : 'branch',
-      next: [...value].reduce((o, i) => {
-        o.push(+i.substr(1));
-        return o;
-      }, [])
-    };
-  });
-  cy.nodes()
-    .roots()
-    .map(current => {
-      const data = current.data();
-      if (data) {
-        if (output.nodes[data.index]) {
-          output.nodes[data.index].role =
-            data.type !== 'node' ? data.type : 'leaf';
-        }
-      }
-    });
-  cy.nodes()
-    .leaves()
-    .map(current => {
-      const data = current.data();
-      if (data) {
-        output.nodes[data.index] = {
-          index: data.index,
-          id: data.id,
-          role: data.type !== 'node' ? data.type : 'leaf',
-          next: null
-        };
-      }
-    });
-  for (const nod in output.nodes) {
-    output.nodes[nod].next?.forEach(n => (output.nodes[n].prev = +nod));
-  }
-  return output;
-};
-
-const saveEmptyJSONData = () => {
-  clearSelection();
-  elements.fileNameInput.value = 'untitled';
-  write('untitled', {
-    version: 1,
-    filename: 'untitled',
-    zoom: cy.zoom(),
-    elements: { nodes: [], edges: [] }
-  }).then(() => loadSelectedFile(elements.fileNameInput.value));
-};
-const sendJSONData = (filename = '', clear = true) => {
-  inspectSelectionIndex(memo.lastSelection);
-  if (clear) clearSelection();
-  const slugName = filename.trim().replaceAll(' ', '_');
-  memo.elements = cy.json().elements;
-  const descTree = mergeDescisionTree();
-  write(slugName, {
-    data: memo.data,
-    elements: memo.elements
-  });
-  write(slugName, {
-    data: memo.data,
-    nodes: descTree.nodes
-  }).then(() => loadSelectedFile(elements.fileNameInput.value));
-};
 
 const getScroll = () => {
   if (window.pageYOffset !== undefined) {
@@ -486,11 +312,8 @@ const showToolTip = msg => {
   elements.tooltip.innerHTML = msg;
   elements.infoGuide.style.display = 'block';
 };
-
-const seedGraph = (nodes = memo.elements.nodes, edges = memo.elements.edges) =>
-  cy.add([...nodes, ...edges]);
 cy.ready(() => {
-  loadSelectedFile('untitled');
+  // loadSelectedFile('untitled');
   document.addEventListener('mousemove', e => {
     const zoom = cy.zoom();
     const pan = cy.pan();
