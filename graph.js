@@ -98,8 +98,8 @@ export const cy = cytoscape({
   pan: { x: 0, y: 0 },
 
   // interaction options:
-  minZoom: 1e-50,
-  maxZoom: 1e50,
+  minZoom: 0.35,
+  maxZoom: 6,
   zoomingEnabled: true,
   userZoomingEnabled: true,
   panningEnabled: true,
