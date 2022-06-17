@@ -223,7 +223,9 @@ const clickEdges = e => {
 
 const connectNodes = () => {
   const couple = memo.selectedPairs;
-  if (
+  if (!couple[0] && !couple[1]) {
+    resetColorOfSelectedNodes(couple);
+  } else if (
     couple.length > 1 &&
     couple[0] !== couple[1] // don't connect self to avoid bad user experience
   ) {
@@ -255,11 +257,7 @@ const clickNodes = e => {
   memo.lastSelection.id = e.target.id();
   memo.selectedPairs.push(memo.lastSelection.id);
   const couple = memo.selectedPairs;
-  if (memo.selectedPairs.length > 2) {
-    memo.selectedPairs[0] = memo.selectedPairs[1];
-    memo.selectedPairs.length = 1;
-    memo.selectedPairs.push(memo.lastSelection.id);
-  }
+
   cy.nodes(`#${memo.selectedPairs[0]}`)
     .style('text-outline-width', 3)
     .style('text-outline-color', COLORS.selectionIncoming);
@@ -272,6 +270,10 @@ const clickNodes = e => {
       ? '[ ' + memo.selectedPairs.join(' -> ') + ' ]'
       : '[ ' + memo.lastSelection.id + ' -> ? ]'
   );
+  if (memo.selectedPairs.length > 2) {
+    clearSelection();
+    clickNodes(e);
+  }
 };
 
 const hasEdges = id => cy.nodes(`#${id}`).connectedEdges().size();
