@@ -220,21 +220,7 @@ const clickEdges = e => {
   memo.lastSelection.id = e.target.id();
   memo.selectedPairs.length = 0;
 };
-const connectSelf = () => {
-  const couple = memo.selectedPairs;
-  if (couple.length === 1 || couple[0] === couple[1]) {
-    addEdge(memo.edgeIndex, couple[0], couple[0], 'f');
-    resetColorOfSelectedNodes(couple);
-    inspectSelectionIndex(
-      memo.lastSelection,
-      couple[0]
-        ? '[ ' + couple.join(' -> ') + ' ]'
-        : '[ ' + memo.lastSelection.id + ' -> ? ]'
-    );
-    //  memo.selectedPairs.push(memo.lastSelection.id);
-    clearSelection();
-  }
-};
+
 const connectNodes = () => {
   const couple = memo.selectedPairs;
   if (
@@ -247,6 +233,17 @@ const connectNodes = () => {
       memo.lastSelection,
       couple[1]
         ? '[ ' + couple[0] + ' -> ' + couple[1] + ' ]'
+        : '[ ' + memo.lastSelection.id + ' -> ? ]'
+    );
+    //  memo.selectedPairs.push(memo.lastSelection.id);
+    clearSelection();
+  } else if (couple[0] === couple[1]) {
+    addEdge(memo.edgeIndex, couple[0], couple[0], 'f');
+    resetColorOfSelectedNodes(couple);
+    inspectSelectionIndex(
+      memo.lastSelection,
+      couple[0]
+        ? '[ ' + couple.join(' -> ') + ' ]'
         : '[ ' + memo.lastSelection.id + ' -> ? ]'
     );
     //  memo.selectedPairs.push(memo.lastSelection.id);
@@ -351,9 +348,7 @@ cy.ready(() => {
     if (e.key.toLowerCase() === 'c') {
       connectNodes();
     }
-    if (e.key.toLowerCase() === 'i') {
-      connectSelf();
-    }
+
     if (e.key.toLowerCase() === 'n') {
       memo.lastSelection = { id: null };
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
@@ -362,7 +357,7 @@ cy.ready(() => {
         memo.nodeIndex,
         memo.mousePosition.x,
         memo.mousePosition.y,
-        'X'
+        '?'
       );
     }
     if (e.key === 'Escape') {
