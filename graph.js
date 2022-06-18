@@ -332,7 +332,6 @@ cy.ready(() => {
   });
 
   document.addEventListener('keydown', e => {
-    if (memo.focus !== elements.treeContainer) return;
     if (
       document.activeElement !== variableInput &&
       e.key.toLowerCase() === 'c'
@@ -351,7 +350,7 @@ cy.ready(() => {
         memo.nodeIndex,
         memo.mousePosition.x,
         memo.mousePosition.y,
-        '?'
+        elements.variableInput.value || '?'
       );
     }
     if (e.key === 'Enter') {
@@ -369,12 +368,13 @@ cy.ready(() => {
           });
         }
         clearSelection();
-        variableInput.value = '';
+        // variableInput.value = '';
       }
     }
     if (e.key === 'Escape') {
       clearSelection();
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
+      elements.variableInput.focus();
     }
     if (
       document.activeElement !== variableInput &&
@@ -428,6 +428,5 @@ cy.ready(() => {
       '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
     );
   });
-  memo.focus = elements.treeContainer;
-  window.focus();
+  elements.treeContainer.focus();
 });
