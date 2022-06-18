@@ -349,6 +349,7 @@ cy.ready(() => {
 
   document.addEventListener('keydown', e => {
     if (
+      memo.selectedPairs.length === 1 &&
       e.key !== 'Enter' &&
       e.key !== 'Delete' &&
       e.key !== 'Shift' &&
