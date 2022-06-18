@@ -328,7 +328,7 @@ const renameVariable = (value = DEFAULT_TOKEN) => {
     memo.lastSelection.type === 'root'
   ) {
     cy.nodes(`#${memo.lastSelection.id}`).data({
-      label
+      label: label === '' ? DEFAULT_TOKEN : label
     });
   } else if (memo.lastSelection.type === 'edge') {
     cy.edges(`#${memo.lastSelection.id}`).data({
