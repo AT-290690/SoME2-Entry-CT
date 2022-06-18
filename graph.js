@@ -9,6 +9,9 @@ export const COLORS = {
   selectionIncoming: '#57b3f7',
   selectionBox: '#83e665'
 };
+
+const DEFAULT_TOKEN = '·';
+
 export const memo = {
   lastSelection: { id: null },
   selectedPairs: [],
@@ -257,7 +260,8 @@ const clickNodes = e => {
     id: e.target.id(),
     label: current.label
   };
-  elements.variableInput.value = current.label === '?' ? '' : current.label;
+  elements.variableInput.value =
+    current.label === DEFAULT_TOKEN ? '' : current.label;
   memo.selectedPairs.push(memo.lastSelection.id);
   const couple = memo.selectedPairs;
   const outgoing = cy.nodes(`#${couple[1]}`);
@@ -317,7 +321,8 @@ const clearSelection = () => {
   memo.lastSelection = { id: null };
 };
 
-const renameVariable = (label = '?') => {
+const renameVariable = (value = DEFAULT_TOKEN) => {
+  const label = value.trim();
   if (
     memo.lastSelection.type === 'node' ||
     memo.lastSelection.type === 'root'
@@ -379,7 +384,7 @@ cy.ready(() => {
         memo.nodeIndex,
         memo.mousePosition.x,
         memo.mousePosition.y,
-        '?'
+        DEFAULT_TOKEN
       );
     }
     // if (e.key.toLowerCase() === 'r' && memo.lastSelection.type !== 'edge') {
