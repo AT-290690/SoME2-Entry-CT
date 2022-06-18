@@ -225,6 +225,7 @@ const clickEdges = e => {
     id: e.target.id(),
     label: e.target.data().label
   };
+  variableInput.value = memo.lastSelection.label;
   memo.selectedPairs.length = 0;
 };
 
@@ -256,6 +257,7 @@ const clickNodes = e => {
     id: e.target.id(),
     label: current.label
   };
+  variableInput.value = current.label === '?' ? '' : current.label;
   memo.selectedPairs.push(memo.lastSelection.id);
   const couple = memo.selectedPairs;
   const outgoing = cy.nodes(`#${couple[1]}`);
@@ -317,6 +319,21 @@ const clearSelection = () => {
 
 cy.ready(() => {
   // loadSelectedFile('untitled');
+  variableInput.addEventListener('input', () => {
+    const label = variableInput.value ?? '?';
+    if (
+      memo.lastSelection.type === 'node' ||
+      memo.lastSelection.type === 'root'
+    ) {
+      cy.nodes(`#${memo.lastSelection.id}`).data({
+        label
+      });
+    } else if (memo.lastSelection.type === 'edge') {
+      cy.edges(`#${memo.lastSelection.id}`).data({
+        label
+      });
+    }
+  });
   variableInput.addEventListener('click', () => {
     const temp = memo.lastSelection;
     clearSelection();
@@ -353,24 +370,24 @@ cy.ready(() => {
         elements.variableInput.value || '?'
       );
     }
-    if (e.key === 'Enter') {
-      if (document.activeElement === variableInput && memo.lastSelection.id) {
-        if (
-          memo.lastSelection.type === 'node' ||
-          memo.lastSelection.type === 'root'
-        ) {
-          cy.nodes(`#${memo.lastSelection.id}`).data({
-            label: variableInput.value
-          });
-        } else if (memo.lastSelection.type === 'edge') {
-          cy.edges(`#${memo.lastSelection.id}`).data({
-            label: variableInput.value
-          });
-        }
-        clearSelection();
-        // variableInput.value = '';
-      }
-    }
+    // if (e.key === 'Enter') {
+    //   if (document.activeElement === variableInput && memo.lastSelection.id) {
+    //     if (
+    //       memo.lastSelection.type === 'node' ||
+    //       memo.lastSelection.type === 'root'
+    //     ) {
+    //       cy.nodes(`#${memo.lastSelection.id}`).data({
+    //         label: variableInput.value
+    //       });
+    //     } else if (memo.lastSelection.type === 'edge') {
+    //       cy.edges(`#${memo.lastSelection.id}`).data({
+    //         label: variableInput.value
+    //       });
+    //     }
+    //     clearSelection();
+    //     // variableInput.value = '';
+    //   }
+    // }
     if (e.key === 'Escape') {
       if (document.activeElement !== elements.variableInput) {
         clearSelection();
