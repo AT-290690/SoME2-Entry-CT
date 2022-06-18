@@ -23,6 +23,7 @@ const Shortcuts = {
 const memo = {
     lastSelection: { id: undefined, type: 'node', label: '' },
     selectedPairs: [],
+    edgeSelections: new Set(),
     mousePosition: { x: 0, y: 0 },
     nodeIndex: 0,
     edgeIndex: 0
@@ -70,6 +71,13 @@ const cy = cytoscape({
                 'text-outline-color': COLORS.nodes,
                 'text-outline-width': 2,
                 'font-family': 'Fantasque'
+            }
+        },
+        {
+            selector: 'edge[label]:selected',
+            style: {
+                'text-outline-color': COLORS.selection,
+                'text-outline-width': 3
             }
         },
         {
@@ -178,7 +186,7 @@ const addEdge = (sourceId, targetId, label) => {
 const inspectSelectionIndex = (selection, opt = '') => (elements.selectedIndex.innerHTML = `${selection.label || 'none'} : ${selection.type || 'not selected'} ${opt}`);
 const clickEdges = (e) => {
     var _a;
-    clearSelection();
+    resetColorOfSelectedNodes();
     memo.lastSelection = {
         type: 'edge',
         id: e.target.id(),
@@ -264,7 +272,8 @@ const clearSelection = () => {
     })
         .unselect());
     memo.selectedPairs.length = 0;
-    memo.lastSelection.id = null;
+    memo.edgeSelections.clear();
+    memo.lastSelection.id = undefined;
 };
 const renameVariable = (value = DEFAULT_TOKEN) => {
     const label = value.trim();
@@ -315,36 +324,37 @@ cy.ready(() => {
             clearSelection();
             return addNode(memo.mousePosition.x, memo.mousePosition.y, DEFAULT_TOKEN);
         }
-        if (memo.selectedPairs.length === 2) {
-            if (e.key === Shortcuts.Morphism) {
-                connectNodes();
-            }
-            else if (e.key === Shortcuts.Composition) {
-                const path = cy.elements().aStar({
-                    root: `#${memo.selectedPairs[0]}`,
-                    goal: `#${memo.selectedPairs[1]}`,
-                    directed: true
-                }).path;
-                const edges = path.edges().map(x => x.data().label);
-                if (edges) {
-                    const label = edges.every(x => x)
-                        ? edges.reverse().join(COMPOSITION_TOKEN)
-                        : '';
-                    const size = path.size();
-                    path.forEach((element, index) => {
-                        if (index > 0 && index < size - 1)
-                            element.remove();
-                    });
-                    connectNodes(undefined, label);
+        if (memo.selectedPairs.length === 2 && e.key === Shortcuts.Morphism) {
+            connectNodes();
+        }
+        if (e.key === Shortcuts.Composition && memo.edgeSelections.size) {
+            const edges = [...memo.edgeSelections].map(x => cy.edges(`#${x}`).first());
+            const first = edges[0];
+            const last = edges[edges.length - 1];
+            const label = edges
+                .map(x => x.data().label)
+                .filter(Boolean)
+                .reverse()
+                .join(COMPOSITION_TOKEN);
+            const size = edges.length;
+            edges.forEach((element, index) => {
+                if (index > 0 && index < size - 1) {
+                    element.connectedNodes().remove();
+                    element.remove();
                 }
-            }
-            else if (e.key.toLowerCase() === Shortcuts.Universal) {
-                connectNodes({
-                    'line-style': 'dashed',
-                    'line-dash-pattern': [6, 3],
-                    'line-dash-offset': 1
-                });
-            }
+            });
+            memo.selectedPairs = [
+                first.connectedNodes().first().id(),
+                last.connectedNodes().last().id()
+            ];
+            connectNodes(undefined, label);
+        }
+        else if (e.key.toLowerCase() === Shortcuts.Universal) {
+            connectNodes({
+                'line-style': 'dashed',
+                'line-dash-pattern': [6, 3],
+                'line-dash-offset': 1
+            });
         }
         if (e.key === 'Escape') {
             clearSelection();
@@ -367,10 +377,12 @@ cy.ready(() => {
         clearSelection();
         inspectSelectionIndex({ type: 'not selected', id: 'none' });
     });
-    cy.on('select', 'node', e => {
-        e.target.style('text-outline-width', 3);
-        // memo.selectedPairs.push(e.target.id());
+    cy.on('select', 'edge', e => {
+        memo.edgeSelections.add(e.target.id());
     });
+    // cy.on('select', 'node', e => {
+    //   e.target.style('text-outline-width', 3);
+    // });
     cy.on('click', 'node', clickNodes);
     cy.on('click', 'edge', e => {
         clickEdges(e);
