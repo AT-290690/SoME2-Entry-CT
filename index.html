@@ -77,13 +77,15 @@
       pointer-events: none;
     }
   </style>
+
   <body>
     <div id="tree"></div>
     <input id="variableInput" placeholder="..." spellcheck="false" disabled />
     <a id="selectedIndex">none: not selected</a>
-    <div id="infoGuide"><pre id="tooltip"></pre></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.21.1/cytoscape.min.js"></script>
-
-    <script src="graph.js" type="module" defer></script>
+    <script>
+      window.exports = {};
+    </script>
+    <script src="dist/graph.js" type="module"></script>
   </body>
 </html>
