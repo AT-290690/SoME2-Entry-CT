@@ -225,7 +225,7 @@ const clickEdges = e => {
     id: e.target.id(),
     label: e.target.data().label
   };
-  variableInput.value = memo.lastSelection.label;
+  elements.variableInput.value = memo.lastSelection.label;
   memo.selectedPairs.length = 0;
 };
 
@@ -257,7 +257,7 @@ const clickNodes = e => {
     id: e.target.id(),
     label: current.label
   };
-  variableInput.value = current.label === '?' ? '' : current.label;
+  elements.variableInput.value = current.label === '?' ? '' : current.label;
   memo.selectedPairs.push(memo.lastSelection.id);
   const couple = memo.selectedPairs;
   const outgoing = cy.nodes(`#${couple[1]}`);
@@ -317,23 +317,22 @@ const clearSelection = () => {
   memo.lastSelection = { id: null };
 };
 
+const renameVariable = (label = '?') => {
+  if (
+    memo.lastSelection.type === 'node' ||
+    memo.lastSelection.type === 'root'
+  ) {
+    cy.nodes(`#${memo.lastSelection.id}`).data({
+      label
+    });
+  } else if (memo.lastSelection.type === 'edge') {
+    cy.edges(`#${memo.lastSelection.id}`).data({
+      label
+    });
+  }
+};
+
 cy.ready(() => {
-  // loadSelectedFile('untitled');
-  variableInput.addEventListener('input', () => {
-    const label = variableInput.value ?? '?';
-    if (
-      memo.lastSelection.type === 'node' ||
-      memo.lastSelection.type === 'root'
-    ) {
-      cy.nodes(`#${memo.lastSelection.id}`).data({
-        label
-      });
-    } else if (memo.lastSelection.type === 'edge') {
-      cy.edges(`#${memo.lastSelection.id}`).data({
-        label
-      });
-    }
-  });
   variableInput.addEventListener('click', () => {
     const temp = memo.lastSelection;
     clearSelection();
@@ -349,17 +348,19 @@ cy.ready(() => {
   });
 
   document.addEventListener('keydown', e => {
-    if (
-      document.activeElement !== variableInput &&
-      e.key.toLowerCase() === 'c'
-    ) {
+    if (e.key !== 'Backspace' && e.key !== 'Enter' && e.key !== 'Delete') {
+      elements.variableInput.value += e.key;
+    }
+    if (e.key === 'Enter') {
+      renameVariable(elements.variableInput.value);
+      elements.variableInput.value = '';
+      clearSelection();
+    }
+    if (e.key.toLowerCase() === 'c') {
       connectNodes();
     }
 
-    if (
-      document.activeElement !== variableInput &&
-      e.key.toLowerCase() === 'n'
-    ) {
+    if (e.key.toLowerCase() === 'n') {
       memo.lastSelection = { id: null };
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
       clearSelection();
@@ -367,38 +368,15 @@ cy.ready(() => {
         memo.nodeIndex,
         memo.mousePosition.x,
         memo.mousePosition.y,
-        elements.variableInput.value || '?'
+        '?'
       );
     }
-    // if (e.key === 'Enter') {
-    //   if (document.activeElement === variableInput && memo.lastSelection.id) {
-    //     if (
-    //       memo.lastSelection.type === 'node' ||
-    //       memo.lastSelection.type === 'root'
-    //     ) {
-    //       cy.nodes(`#${memo.lastSelection.id}`).data({
-    //         label: variableInput.value
-    //       });
-    //     } else if (memo.lastSelection.type === 'edge') {
-    //       cy.edges(`#${memo.lastSelection.id}`).data({
-    //         label: variableInput.value
-    //       });
-    //     }
-    //     clearSelection();
-    //     // variableInput.value = '';
-    //   }
-    // }
+
     if (e.key === 'Escape') {
-      if (document.activeElement !== elements.variableInput) {
-        clearSelection();
-        inspectSelectionIndex({ type: 'not selected', id: 'none' });
-      }
+      clearSelection();
+      inspectSelectionIndex({ type: 'not selected', id: 'none' });
     }
-    if (
-      document.activeElement !== variableInput &&
-      e.key.toLowerCase() === 'r' &&
-      memo.lastSelection.type !== 'edge'
-    ) {
+    if (e.key.toLowerCase() === 'r' && memo.lastSelection.type !== 'edge') {
       setNodeAsRoot(memo.lastSelection.id);
       //  cy.nodes().edgesTo(`#${memo.lastSelection.id}`).remove();
       inspectSelectionIndex({ type: 'root', id: memo.lastSelection.id });
