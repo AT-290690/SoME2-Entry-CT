@@ -233,7 +233,7 @@ const clickEdges = e => {
   memo.selectedPairs.length = 0;
 };
 
-const connectNodes = style => {
+const connectNodes = (style, label = '') => {
   const couple = memo.selectedPairs;
   if (!couple[0] && !couple[1]) {
     resetColorOfSelectedNodes(couple);
@@ -241,7 +241,7 @@ const connectNodes = style => {
     couple.length > 1 &&
     couple[0] !== couple[1] // don't connect self to avoid bad user experience
   ) {
-    const edge = addEdge(memo.edgeIndex, couple[0], couple[1], '');
+    const edge = addEdge(memo.edgeIndex, couple[0], couple[1], label);
     if (style) {
       edge.style(style);
     }
@@ -249,7 +249,7 @@ const connectNodes = style => {
 
     //  memo.selectedPairs.push(memo.lastSelection.id);
   } else if (couple[0] === couple[1]) {
-    addEdge(memo.edgeIndex, couple[0], couple[0], '');
+    addEdge(memo.edgeIndex, couple[0], couple[0], label);
     resetColorOfSelectedNodes(couple);
 
     //  memo.selectedPairs.push(memo.lastSelection.id);
@@ -403,8 +403,16 @@ cy.ready(() => {
     //   inspectSelectionIndex({ type: 'root', id: memo.lastSelection.id });
     // }
     if (memo.selectedPairs.length === 2) {
-      if (e.key.toLowerCase() === 'c') {
+      if (e.key === 'c') {
         connectNodes();
+      } else if (e.key === 'C') {
+        const incomming = cy.nodes(`#${memo.selectedPairs[0]}`).data();
+        const outgoing = cy.nodes(`#${memo.selectedPairs[1]}`).data();
+        const label =
+          incomming?.label && outgoing?.label
+            ? `${incomming.label} o ${outgoing.label}`
+            : '';
+        connectNodes({ 'curve-style': 'unbundled-bezier' }, label);
       } else if (e.key.toLowerCase() === 'u') {
         connectNodes({
           'line-style': 'dashed',
