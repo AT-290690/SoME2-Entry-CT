@@ -119,7 +119,7 @@ export const cy = cytoscape({
   maxZoom: 6,
   zoomingEnabled: true,
   userZoomingEnabled: true,
-  panningEnabled: false, // drag
+  panningEnabled: true, // drag
   userPanningEnabled: true,
   boxSelectionEnabled: true,
   selectionType: 'single',
@@ -348,7 +348,13 @@ cy.ready(() => {
   });
 
   document.addEventListener('keydown', e => {
-    if (e.key !== 'Enter' && e.key !== 'Delete') {
+    if (
+      e.key !== 'Enter' &&
+      e.key !== 'Delete' &&
+      e.key !== 'Shift' &&
+      e.key !== 'Meta' &&
+      e.key !== 'Control'
+    ) {
       if (e.key === 'Backspace') {
         elements.variableInput.value = elements.variableInput.value.substring(
           0,
@@ -380,7 +386,7 @@ cy.ready(() => {
     //   //  cy.nodes().edgesTo(`#${memo.lastSelection.id}`).remove();
     //   inspectSelectionIndex({ type: 'root', id: memo.lastSelection.id });
     // }
-    if (e.key.toLowerCase() === 'c') {
+    if (memo.selectedPairs.length === 2 && e.key.toLowerCase() === 'c') {
       connectNodes();
     }
     if (e.key === 'Escape') {
