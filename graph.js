@@ -11,7 +11,9 @@ export const COLORS = {
 };
 
 const DEFAULT_TOKEN = '·';
-
+const OPERATORS = '+-<>=*!()[]%&|/{}:,'
+  .split('')
+  .reduce((acc, item) => ({ ...acc, [item]: true }), {});
 export const memo = {
   lastSelection: { id: null },
   selectedPairs: [],
@@ -46,10 +48,10 @@ const style = [
       'selection-box-border-color': 'transparent'
     }
   },
-  {
-    selector: '.autorotate',
-    style: { 'edge-text-rotation': 'autorotate' }
-  },
+  // {
+  //   selector: '.autorotate',
+  //   style: { 'edge-text-rotation': 'autorotate' }
+  // },
   {
     selector: 'edge',
     style: {
@@ -193,7 +195,7 @@ const addNode = (index, x = 0, y = 0, label) => {
 const addEdge = (index, prevId, nextId, label) => {
   const edge = cy.add({
     group: 'edges',
-    classes: 'autorotate',
+    // classes: 'autorotate',
     data: {
       id: `e${index}`,
       label,
@@ -336,7 +338,6 @@ const renameVariable = (value = DEFAULT_TOKEN) => {
     });
   }
 };
-
 cy.ready(() => {
   variableInput.addEventListener('click', () => {
     const temp = memo.lastSelection;
@@ -357,6 +358,8 @@ cy.ready(() => {
       ((memo.selectedPairs.length === 1 ||
         memo.lastSelection.type === 'edge') &&
         /^[a-z0-9]$/i.test(e.key)) ||
+      OPERATORS[e.key] ||
+      e.key === ' ' ||
       e.key === 'Backspace'
     ) {
       if (e.key === 'Backspace') {
