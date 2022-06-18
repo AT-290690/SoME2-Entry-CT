@@ -66,7 +66,8 @@ const style = [
     style: {
       label: 'data(label)',
       'text-outline-color': COLORS.nodes,
-      'text-outline-width': 1
+      'text-outline-width': 2,
+      'font-family': 'Fantasque'
     },
     label: 'data(label)'
   },
