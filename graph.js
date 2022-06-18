@@ -354,7 +354,7 @@ cy.ready(() => {
 
   document.addEventListener('keydown', e => {
     if (
-      memo.selectedPairs.length === 1 &&
+      (memo.selectedPairs.length === 1 || memo.lastSelection.type === 'edge') &&
       e.key !== 'Enter' &&
       e.key !== 'Delete' &&
       e.key !== 'Shift' &&
@@ -375,8 +375,11 @@ cy.ready(() => {
       elements.variableInput.value = '';
       clearSelection();
     }
-
-    if (!memo.selectedPairs.length && e.key.toLowerCase() === 'n') {
+    if (
+      !memo.selectedPairs.length &&
+      !memo.lastSelection.id &&
+      e.key.toLowerCase() === 'n'
+    ) {
       memo.lastSelection = { id: null };
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
       clearSelection();
