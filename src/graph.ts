@@ -39,10 +39,15 @@ const COLORS: Record<string, string> = {
 };
 
 const DEFAULT_TOKEN = '·';
+const COMPOSITION_TOKEN = ' o ';
 const OPERATORS = '+-<>=*!()[]%&|/{}:.,'
   .split('')
   .reduce((acc, item) => ({ ...acc, [item]: true }), {});
-
+const Shortcuts = {
+  Composition: 'C',
+  Morphism: 'c',
+  Universal: 'u'
+};
 const memo: State = {
   lastSelection: { id: undefined, type: 'node', label: '' },
   selectedPairs: [],
@@ -221,7 +226,7 @@ const clickEdges = (e: cytoscape.EventObject) => {
   memo.lastSelection = {
     type: 'edge',
     id: e.target.id(),
-    label: e.target.data().label
+    label: e.target.data().label ?? ''
   };
   elements.variableInput.value = memo.lastSelection.label;
   memo.selectedPairs.length = 0;
@@ -380,21 +385,26 @@ cy.ready(() => {
     }
 
     if (memo.selectedPairs.length === 2) {
-      if (e.key === 'c') {
+      if (e.key === Shortcuts.Morphism) {
         connectNodes();
-      } else if (e.key === 'C') {
-        const path = cy
-          .elements()
-          .aStar({
-            root: `#${memo.selectedPairs[0]}`,
-            goal: `#${memo.selectedPairs[1]}`
-          })
-          .path.edges()
-          .map(x => x.data().label);
-
-        const label = path.every(x => x) ? path.reverse().join(' o ') : '';
-        connectNodes({ 'curve-style': 'unbundled-bezier' }, label);
-      } else if (e.key.toLowerCase() === 'u') {
+      } else if (e.key === Shortcuts.Composition) {
+        const path = cy.elements().aStar({
+          root: `#${memo.selectedPairs[0]}`,
+          goal: `#${memo.selectedPairs[1]}`,
+          directed: true
+        }).path;
+        const edges = path.edges().map(x => x.data().label);
+        if (edges) {
+          const label = edges.every(x => x)
+            ? edges.reverse().join(COMPOSITION_TOKEN)
+            : '';
+          const size = path.size();
+          path.forEach((element, index) => {
+            if (index > 0 && index < size - 1) element.remove();
+          });
+          connectNodes(undefined, label);
+        }
+      } else if (e.key.toLowerCase() === Shortcuts.Universal) {
         connectNodes({
           'line-style': 'dashed',
           'line-dash-pattern': [6, 3],
