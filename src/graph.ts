@@ -12,7 +12,12 @@ interface Coordinates2D {
   x: number;
   y: number;
 }
-
+interface Payload {
+  index: number;
+  label: string;
+  id: string;
+  type: Roles;
+}
 interface State {
   lastSelection: Seleciton;
   selectedPairs: string[];
@@ -161,7 +166,7 @@ const cy = cytoscape({
   pixelRatio: 'auto'
 });
 
-const setIndex = v => {
+const setIndex = (v: number) => {
   memo.nodeIndex = +v;
   memo.edgeIndex += memo.nodeIndex;
 };
@@ -170,31 +175,35 @@ const incIndex = (v = 1) => {
   memo.nodeIndex += v;
 };
 
-const addNode = (index, x = 0, y = 0, label) => {
+const addNode = (x: number, y: number, label: string) => {
+  const data: Payload = {
+    index: memo.nodeIndex,
+    label,
+    id: 'n' + memo.nodeIndex,
+    type: 'node'
+  };
   const node = cy
     .add({
       group: 'nodes',
-      data: {
-        index,
-        label,
-        id: 'n' + index,
-        type: 'node'
-      }
+      data
     })
     .position({ x, y });
   incIndex();
   return node;
 };
-
-const addEdge = (index, prevId, nextId, label) => {
+const addEdge = (
+  sourceId: string,
+  targetId: string,
+  label: string
+): cytoscape.CollectionReturnValue => {
   const edge = cy.add({
     group: 'edges',
     // classes: 'autorotate',
     data: {
-      id: `e${index}`,
+      id: `e${memo.edgeIndex}`,
       label,
-      source: `${prevId}`,
-      target: `${nextId}`,
+      source: `${sourceId}`,
+      target: `${targetId}`,
       arrow: 'vee'
     }
   });
@@ -207,7 +216,7 @@ const inspectSelectionIndex = (selection, opt = '') =>
     selection.type || 'not selected'
   } ${opt}`);
 
-const clickEdges = e => {
+const clickEdges = (e: cytoscape.EventObject) => {
   clearSelection();
   memo.lastSelection = {
     type: 'edge',
@@ -226,7 +235,7 @@ const connectNodes = (style?: Record<string, unknown>, label?: string) => {
     couple.length > 1 &&
     couple[0] !== couple[1] // don't connect self to avoid bad user experience
   ) {
-    const edge = addEdge(memo.edgeIndex, couple[0], couple[1], label);
+    const edge = addEdge(couple[0], couple[1], label);
     if (style) {
       edge.style(style);
     }
@@ -234,7 +243,7 @@ const connectNodes = (style?: Record<string, unknown>, label?: string) => {
 
     //  memo.selectedPairs.push(memo.lastSelection.id);
   } else if (couple[0] === couple[1]) {
-    addEdge(memo.edgeIndex, couple[0], couple[0], label);
+    addEdge(couple[0], couple[0], label);
     resetColorOfSelectedNodes(couple);
 
     //  memo.selectedPairs.push(memo.lastSelection.id);
@@ -275,22 +284,22 @@ const clickNodes = e => {
   }
 };
 
-const hasEdges = id => cy.nodes(`#${id}`).connectedEdges().size();
+const hasEdges = (id: string) => cy.nodes(`#${id}`).connectedEdges().size();
 
-const removeNode = id => {
+const removeNode = (id: string) => {
   cy.nodes(`#${id}`).remove();
 };
 
-const removeNodeEdges = id => {
+const removeNodeEdges = (id: string) => {
   cy.nodes(`#${id}`).connectedEdges().remove();
 };
 
-const removeEdge = id => {
+const removeEdge = (id: string) => {
   cy.edges(`#${id}`).remove();
 };
 
 const resetColorOfSelectedNodes = (nodes = memo.selectedPairs) => {
-  nodes.map(id =>
+  nodes.map((id: string) =>
     cy.nodes(`#${id}`).style({
       'text-outline-width': 0,
       'text-outline-color': COLORS.selection
@@ -367,12 +376,7 @@ cy.ready(() => {
       memo.lastSelection.id = null;
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
       clearSelection();
-      return addNode(
-        memo.nodeIndex,
-        memo.mousePosition.x,
-        memo.mousePosition.y,
-        DEFAULT_TOKEN
-      );
+      return addNode(memo.mousePosition.x, memo.mousePosition.y, DEFAULT_TOKEN);
     }
 
     if (memo.selectedPairs.length === 2) {
