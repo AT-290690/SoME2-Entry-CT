@@ -15,4 +15,4 @@ Escape - unselect pairs
 Enter - Click on an element or an arrow and type something then press Enter (it will label it)
 
 Select self 2 times anc press C to connect ot self
-All elements default to ?
+All elements default to ·
