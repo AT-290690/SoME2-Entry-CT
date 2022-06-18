@@ -372,9 +372,10 @@ cy.ready(() => {
       }
     }
     if (e.key === 'Escape') {
-      clearSelection();
-      inspectSelectionIndex({ type: 'not selected', id: 'none' });
-      elements.variableInput.focus();
+      if (document.activeElement !== elements.variableInput) {
+        clearSelection();
+        inspectSelectionIndex({ type: 'not selected', id: 'none' });
+      }
     }
     if (
       document.activeElement !== variableInput &&
