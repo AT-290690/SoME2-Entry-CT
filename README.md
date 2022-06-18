@@ -4,13 +4,14 @@ Summer of Math Exposition 2 - Category Theory
 
 Current interactions:
 
-Shortcuts: N, C, U, Escape, Enter
+Shortcuts: N, c, shift + c, U, Escape, Enter
 
 N - Focus on cantvas and press N to create an element
 
-C - Select pairs of elments and press C to connect them with solid arrow (blue -> red)
-
+c - Select pairs of elments and press c to connect them with solid arrow (blue -> red)
 U - Select pairs of elements and press U to connect them with dashed arrow (blue -> red)
+
+shift + c -  Select pairs of elments and press shift + c (capital C) to connect them with solid arrow (blue -> red) bended with label (blue o red)
 
 Escape - unselect pairs
 
