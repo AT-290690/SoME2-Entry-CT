@@ -26,71 +26,7 @@
       height: 98vh;
       border: none;
     }
-    #compileButt {
-      background: transparent;
-      border: none;
-      color: var(--color-primary);
-      cursor: pointer;
-      position: absolute;
-      font-size: 15px;
-      font-weight: 900;
-      top: 10px;
-      outline: none;
-      right: 240px;
-      margin: auto;
-    }
-    #resetButt {
-      background: transparent;
-      border: none;
-      color: var(--color-primary);
-      cursor: pointer;
-      position: absolute;
-      font-size: 15px;
-      font-weight: 900;
-      top: 10px;
-      outline: none;
-      right: 180px;
-      margin: auto;
-    }
-    #loadFileButt {
-      background: transparent;
-      border: none;
-      color: var(--color-primary);
-      cursor: pointer;
-      position: absolute;
-      font-size: 15px;
-      font-weight: 900;
-      top: 10px;
-      outline: none;
-      right: 140px;
-      margin: auto;
-    }
-    #saveFileButt {
-      background: transparent;
-      border: none;
-      color: var(--color-primary);
-      cursor: pointer;
-      position: absolute;
-      font-size: 15px;
-      font-weight: 900;
-      top: 10px;
-      outline: none;
-      right: 80px;
-      margin: auto;
-    }
-    #showNumbersButt {
-      background: transparent;
-      border: none;
-      color: var(--color-primary);
-      cursor: pointer;
-      position: absolute;
-      font-size: 15px;
-      font-weight: 900;
-      top: 10px;
-      outline: none;
-      right: 10px;
-      margin: auto;
-    }
+
     #variableInput {
       font-family: var(--font);
       font-size: 18px;
@@ -106,21 +42,7 @@
       text-align: center;
       z-index: 1000;
       color: var(--color-primary);
-    }
-    #fileNameInput {
-      position: absolute;
-      display: none;
-      text-align: center;
-      font-size: 15px;
-      font-weight: 900;
-      top: 25px;
-      left: 0;
-      right: 0;
-      margin: auto;
-      outline: none;
-      background: transparent;
-      color: var(--color-primary);
-      border: none;
+      user-select: none;
     }
 
     #selectedIndex {
@@ -134,8 +56,10 @@
       text-align: center;
       z-index: 1000;
       color: var(--color-primary);
+      user-select: none;
     }
     #infoGuide {
+      user-select: none;
       font-family: var(--font);
       display: none;
       position: absolute;

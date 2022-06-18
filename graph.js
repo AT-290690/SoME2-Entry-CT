@@ -354,12 +354,10 @@ cy.ready(() => {
 
   document.addEventListener('keydown', e => {
     if (
-      (memo.selectedPairs.length === 1 || memo.lastSelection.type === 'edge') &&
-      e.key !== 'Enter' &&
-      e.key !== 'Delete' &&
-      e.key !== 'Shift' &&
-      e.key !== 'Meta' &&
-      e.key !== 'Control'
+      ((memo.selectedPairs.length === 1 ||
+        memo.lastSelection.type === 'edge') &&
+        /^[a-z0-9]$/i.test(e.key)) ||
+      e.key === 'Backspace'
     ) {
       if (e.key === 'Backspace') {
         elements.variableInput.value = elements.variableInput.value.substring(
