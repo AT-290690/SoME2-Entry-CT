@@ -11,7 +11,7 @@ export const COLORS = {
 };
 
 const DEFAULT_TOKEN = '·';
-const OPERATORS = '+-<>=*!()[]%&|/{}:,'
+const OPERATORS = '+-<>=*!()[]%&|/{}:.,'
   .split('')
   .reduce((acc, item) => ({ ...acc, [item]: true }), {});
 export const memo = {
