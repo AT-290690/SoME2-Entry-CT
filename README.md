@@ -7,7 +7,9 @@ Current interactions:
 Shortcuts: N, C, Escape
 
 N - Focus on cantvas and press N to create an element
+
 C - Select pairs of elments and press C to connect them (blue -> red)
+
 Escape - unselect pairs
 
 Click on an element or an arrow and type something on the ... input field (it will label it)
