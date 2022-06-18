@@ -406,12 +406,16 @@ cy.ready(() => {
       if (e.key === 'c') {
         connectNodes();
       } else if (e.key === 'C') {
-        const incomming = cy.nodes(`#${memo.selectedPairs[0]}`).data();
-        const outgoing = cy.nodes(`#${memo.selectedPairs[1]}`).data();
-        const label =
-          incomming?.label && outgoing?.label
-            ? `${incomming.label} o ${outgoing.label}`
-            : '';
+        const path = cy
+          .elements()
+          .aStar({
+            root: `#${memo.selectedPairs[0]}`,
+            goal: `#${memo.selectedPairs[1]}`
+          })
+          .path.edges()
+          .map(x => x.data().label);
+
+        const label = path.every(x => x) ? path.reverse().join(' o ') : '';
         connectNodes({ 'curve-style': 'unbundled-bezier' }, label);
       } else if (e.key.toLowerCase() === 'u') {
         connectNodes({
