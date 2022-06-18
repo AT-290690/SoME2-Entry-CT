@@ -52,6 +52,7 @@ const style = [
   //   selector: '.autorotate',
   //   style: { 'edge-text-rotation': 'autorotate' }
   // },
+
   {
     selector: 'edge',
     style: {
@@ -205,9 +206,6 @@ const addEdge = (index, prevId, nextId, label) => {
       arrow: 'vee'
     }
   });
-  // 'line-dash-pattern': [6, 3],
-  // 'line-dash-offset': 5,
-  // edge.style('line-dash-pattern', [6, 3]).style('line-dash-offset', 24);
   memo.edgeIndex += 1;
   return edge;
 };
@@ -235,7 +233,7 @@ const clickEdges = e => {
   memo.selectedPairs.length = 0;
 };
 
-const connectNodes = () => {
+const connectNodes = style => {
   const couple = memo.selectedPairs;
   if (!couple[0] && !couple[1]) {
     resetColorOfSelectedNodes(couple);
@@ -243,7 +241,10 @@ const connectNodes = () => {
     couple.length > 1 &&
     couple[0] !== couple[1] // don't connect self to avoid bad user experience
   ) {
-    addEdge(memo.edgeIndex, couple[0], couple[1], '');
+    const edge = addEdge(memo.edgeIndex, couple[0], couple[1], '');
+    if (style) {
+      edge.style(style);
+    }
     resetColorOfSelectedNodes(couple);
 
     //  memo.selectedPairs.push(memo.lastSelection.id);
@@ -268,12 +269,14 @@ const clickNodes = e => {
   memo.selectedPairs.push(memo.lastSelection.id);
   const couple = memo.selectedPairs;
   const outgoing = cy.nodes(`#${couple[1]}`);
-  e.target
-    .style('text-outline-width', 3)
-    .style('text-outline-color', COLORS.selectionIncoming);
-  outgoing
-    .style('text-outline-width', 3)
-    .style('text-outline-color', COLORS.selectionOutgoing);
+  e.target.style({
+    'text-outline-width': 3,
+    'text-outline-color': COLORS.selectionIncoming
+  });
+  outgoing.style({
+    'text-outline-width': 3,
+    'text-outline-color': COLORS.selectionOutgoing
+  });
 
   inspectSelectionIndex(
     memo.lastSelection,
@@ -303,10 +306,10 @@ const removeEdge = id => {
 
 const resetColorOfSelectedNodes = (nodes = memo.selectedPairs) => {
   nodes.map(id =>
-    cy
-      .nodes(`#${id}`)
-      .style('text-outline-width', 0)
-      .style('text-outline-color', COLORS.selection)
+    cy.nodes(`#${id}`).style({
+      'text-outline-width': 0,
+      'text-outline-color': COLORS.selection
+    })
   );
 };
 
@@ -316,8 +319,10 @@ const clearSelection = () => {
     .nodes()
     .map(n =>
       n
-        .style('text-outline-width', 0)
-        .style('text-outline-color', COLORS.selection)
+        .style({
+          'text-outline-width': 0,
+          'text-outline-color': COLORS.selection
+        })
         .unselect()
     );
   memo.selectedPairs.length = 0;
@@ -397,8 +402,16 @@ cy.ready(() => {
     //   //  cy.nodes().edgesTo(`#${memo.lastSelection.id}`).remove();
     //   inspectSelectionIndex({ type: 'root', id: memo.lastSelection.id });
     // }
-    if (memo.selectedPairs.length === 2 && e.key.toLowerCase() === 'c') {
-      connectNodes();
+    if (memo.selectedPairs.length === 2) {
+      if (e.key.toLowerCase() === 'c') {
+        connectNodes();
+      } else if (e.key.toLowerCase() === 'u') {
+        connectNodes({
+          'line-style': 'dashed',
+          'line-dash-pattern': [6, 3],
+          'line-dash-offset': 1
+        });
+      }
     }
     if (e.key === 'Escape') {
       clearSelection();
