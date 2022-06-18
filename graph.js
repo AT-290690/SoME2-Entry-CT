@@ -356,11 +356,8 @@ cy.ready(() => {
       elements.variableInput.value = '';
       clearSelection();
     }
-    if (e.key.toLowerCase() === 'c') {
-      connectNodes();
-    }
 
-    if (e.key.toLowerCase() === 'n') {
+    if (!memo.selectedPairs.length && e.key.toLowerCase() === 'n') {
       memo.lastSelection = { id: null };
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
       clearSelection();
@@ -371,15 +368,17 @@ cy.ready(() => {
         '?'
       );
     }
-
+    // if (e.key.toLowerCase() === 'r' && memo.lastSelection.type !== 'edge') {
+    //   setNodeAsRoot(memo.lastSelection.id);
+    //   //  cy.nodes().edgesTo(`#${memo.lastSelection.id}`).remove();
+    //   inspectSelectionIndex({ type: 'root', id: memo.lastSelection.id });
+    // }
+    if (e.key.toLowerCase() === 'c') {
+      connectNodes();
+    }
     if (e.key === 'Escape') {
       clearSelection();
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
-    }
-    if (e.key.toLowerCase() === 'r' && memo.lastSelection.type !== 'edge') {
-      setNodeAsRoot(memo.lastSelection.id);
-      //  cy.nodes().edgesTo(`#${memo.lastSelection.id}`).remove();
-      inspectSelectionIndex({ type: 'root', id: memo.lastSelection.id });
     }
 
     if (e.key === 'Delete' || (e.ctrlKey && e.key === 'Backspace')) {
