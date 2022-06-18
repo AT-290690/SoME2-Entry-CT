@@ -348,8 +348,15 @@ cy.ready(() => {
   });
 
   document.addEventListener('keydown', e => {
-    if (e.key !== 'Backspace' && e.key !== 'Enter' && e.key !== 'Delete') {
-      elements.variableInput.value += e.key;
+    if (e.key !== 'Enter' && e.key !== 'Delete') {
+      if (e.key === 'Backspace') {
+        elements.variableInput.value = elements.variableInput.value.substring(
+          0,
+          elements.variableInput.value.length - 1
+        );
+      } else {
+        elements.variableInput.value += e.key;
+      }
     }
     if (e.key === 'Enter') {
       renameVariable(elements.variableInput.value);
