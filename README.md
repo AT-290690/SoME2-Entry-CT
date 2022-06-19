@@ -11,7 +11,7 @@ N - Focus on cantvas and press N to create an element
 c - Select pairs of elments and press c to connect them with solid arrow (blue -> red)
 U - Select pairs of elements and press U to connect them with dashed arrow (blue -> red)
 
-shift + c -  Select pairs of elments and press shift + c (capital C) to connect them with solid arrow (blue -> red) bended with label (blue o red)
+shift + c -  Select multiple edges and press shift + c to merge them into one with label (f o g)
 
 Escape - unselect pairs
 
