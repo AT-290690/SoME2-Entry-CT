@@ -12,13 +12,14 @@ const COLORS = {
 };
 const DEFAULT_TOKEN = '·';
 const COMPOSITION_TOKEN = ' o ';
-const OPERATORS = '+-<>=*!()[]%&|/{}:.,'
+const OPERATORS = `+-<>=*!()[]%&|/{}:.,^;~"'$\``
     .split('')
     .reduce((acc, item) => (Object.assign(Object.assign({}, acc), { [item]: true })), {});
 const Shortcuts = {
     Composition: 'C',
-    Morphism: 'c',
-    Universal: 'u'
+    Edge: 'c',
+    Universal: 'u',
+    Node: 'n'
 };
 const memo = {
     lastSelection: { id: undefined, type: 'node', label: '' },
@@ -318,14 +319,23 @@ cy.ready(() => {
         }
         if (!memo.selectedPairs.length &&
             !memo.lastSelection.id &&
-            e.key.toLowerCase() === 'n') {
+            e.key.toLowerCase() === Shortcuts.Node) {
             memo.lastSelection.id = null;
             inspectSelectionIndex({ type: 'not selected', id: 'none' });
             clearSelection();
             return addNode(memo.mousePosition.x, memo.mousePosition.y, DEFAULT_TOKEN);
         }
-        if (memo.selectedPairs.length === 2 && e.key === Shortcuts.Morphism) {
-            connectNodes();
+        if (memo.selectedPairs.length === 2) {
+            if (e.key === Shortcuts.Edge) {
+                connectNodes();
+            }
+            else if (e.key.toLowerCase() === Shortcuts.Universal) {
+                connectNodes({
+                    'line-style': 'dashed',
+                    'line-dash-pattern': [6, 3],
+                    'line-dash-offset': 1
+                });
+            }
         }
         if (e.key === Shortcuts.Composition && memo.edgeSelections.size) {
             const edges = [...memo.edgeSelections].map(x => cy.edges(`#${x}`).first());
@@ -361,13 +371,6 @@ cy.ready(() => {
                 first.remove();
                 last.remove();
             }
-        }
-        else if (e.key.toLowerCase() === Shortcuts.Universal) {
-            connectNodes({
-                'line-style': 'dashed',
-                'line-dash-pattern': [6, 3],
-                'line-dash-offset': 1
-            });
         }
         if (e.key === 'Escape') {
             clearSelection();

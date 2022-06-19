@@ -12,12 +12,14 @@ interface Coordinates2D {
   x: number;
   y: number;
 }
+
 interface Payload {
   index: number;
   label: string;
   id: string;
   type: Roles;
 }
+
 interface State {
   lastSelection: Seleciton;
   selectedPairs: string[];
@@ -41,14 +43,17 @@ const COLORS: Record<string, string> = {
 
 const DEFAULT_TOKEN = '·';
 const COMPOSITION_TOKEN = ' o ';
-const OPERATORS = '+-<>=*!()[]%&|/{}:.,'
+const OPERATORS = `+-<>=*!()[]%&|/{}:.,^;~"'$\``
   .split('')
   .reduce((acc, item) => ({ ...acc, [item]: true }), {});
+
 const Shortcuts = {
   Composition: 'C',
-  Morphism: 'c',
-  Universal: 'u'
+  Edge: 'c',
+  Universal: 'u',
+  Node: 'n'
 };
+
 const memo: State = {
   lastSelection: { id: undefined, type: 'node', label: '' },
   selectedPairs: [],
@@ -205,6 +210,7 @@ const addNode = (x: number, y: number, label: string) => {
   incIndex();
   return node;
 };
+
 const addEdge = (
   sourceId: string,
   targetId: string,
@@ -353,6 +359,7 @@ const renameVariable = (value = DEFAULT_TOKEN) => {
     });
   }
 };
+
 cy.ready(() => {
   document.addEventListener('mousemove', e => {
     const zoom = cy.zoom();
@@ -387,17 +394,25 @@ cy.ready(() => {
     if (
       !memo.selectedPairs.length &&
       !memo.lastSelection.id &&
-      e.key.toLowerCase() === 'n'
+      e.key.toLowerCase() === Shortcuts.Node
     ) {
       memo.lastSelection.id = null;
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
       clearSelection();
       return addNode(memo.mousePosition.x, memo.mousePosition.y, DEFAULT_TOKEN);
     }
-
-    if (memo.selectedPairs.length === 2 && e.key === Shortcuts.Morphism) {
-      connectNodes();
+    if (memo.selectedPairs.length === 2) {
+      if (e.key === Shortcuts.Edge) {
+        connectNodes();
+      } else if (e.key.toLowerCase() === Shortcuts.Universal) {
+        connectNodes({
+          'line-style': 'dashed',
+          'line-dash-pattern': [6, 3],
+          'line-dash-offset': 1
+        });
+      }
     }
+
     if (e.key === Shortcuts.Composition && memo.edgeSelections.size) {
       const edges = [...memo.edgeSelections].map(x =>
         cy.edges(`#${x}`).first()
@@ -431,12 +446,6 @@ cy.ready(() => {
         first.remove();
         last.remove();
       }
-    } else if (e.key.toLowerCase() === Shortcuts.Universal) {
-      connectNodes({
-        'line-style': 'dashed',
-        'line-dash-pattern': [6, 3],
-        'line-dash-offset': 1
-      });
     }
 
     if (e.key === 'Escape') {
@@ -456,18 +465,13 @@ cy.ready(() => {
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
     }
   });
-
   cy.on('dragfree', 'node', e => {
     clearSelection();
     inspectSelectionIndex({ type: 'not selected', id: 'none' });
   });
-
   cy.on('select', 'edge', e => memo.edgeSelections.add(e.target.id()));
-
   cy.on('select', 'node', e => e.target.style('text-outline-width', 3));
-
   cy.on('click', 'node', clickNodes);
-
   cy.on('click', 'edge', e => {
     clickEdges(e);
     const data = e.target.data();

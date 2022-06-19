@@ -80,7 +80,22 @@
 
   <body>
     <div id="tree"></div>
+    <!-- <div style="position: absolute; top: 10px; left: 10px">
+      <latex-js baseURL="https://cdn.jsdelivr.net/npm/latex.js/dist/">
+        \section{Mathematical Formulae} Math is typeset using KaTeX. Inline
+        math: $ f(x) = \int_{-\infty}^\infty \hat f(\xi)\,e^{2 \pi i \xi x} \,
+        d\xi $ as well as display math is supported: $$ f(n) = \begin{cases}
+        \frac{n}{2}, & \text{if } n\text{ is even} \\ 3n+1, & \text{if } n\text{
+        is odd} \end{cases} $$
+      </latex-js>
+    </div>
+    <script type="module">
+      import { LaTeXJSComponent } from 'https://cdn.jsdelivr.net/npm/latex.js/dist/latex.mjs';
+      customElements.define('latex-js', LaTeXJSComponent);
+    </script> -->
+
     <input id="variableInput" placeholder="..." spellcheck="false" disabled />
+
     <a id="selectedIndex">none: not selected</a>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.21.1/cytoscape.min.js"></script>
     <script>
