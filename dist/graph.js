@@ -337,12 +337,19 @@ cy.ready(() => {
                 .reverse()
                 .join(COMPOSITION_TOKEN);
             const size = edges.length;
-            edges.forEach((element, index) => {
-                if (index > 0 && index < size - 1) {
-                    element.connectedNodes().remove();
-                    element.remove();
-                }
-            });
+            if (edges.length > 2) {
+                edges.forEach((element, index) => {
+                    if (index > 0 && index < size - 1) {
+                        element.connectedNodes().remove();
+                        element.remove();
+                    }
+                });
+            }
+            else {
+                first.connectedNodes().last().remove();
+                first.remove();
+                last.remove();
+            }
             memo.selectedPairs = [
                 first.connectedNodes().first().id(),
                 last.connectedNodes().last().id()
