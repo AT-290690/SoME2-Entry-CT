@@ -404,11 +404,20 @@ cy.ready(() => {
       );
       const first = edges[0];
       const last = edges[edges.length - 1];
-      const label = edges
-        .map(x => x.data().label)
-        .filter(Boolean)
-        .reverse()
-        .join(COMPOSITION_TOKEN);
+      const fId = first.connectedNodes().first().id();
+      const lId = last.connectedNodes().last().id();
+      if (!fId || !lId || fId === lId) return;
+      try {
+        memo.selectedPairs = [fId, lId];
+        const label = edges
+          .map(x => x.data().label)
+          .filter(Boolean)
+          .reverse()
+          .join(COMPOSITION_TOKEN);
+        connectNodes(undefined, label);
+      } catch (err) {
+        return console.error(err);
+      }
       const size = edges.length;
       if (edges.length > 2) {
         edges.forEach((element, index) => {
@@ -422,11 +431,6 @@ cy.ready(() => {
         first.remove();
         last.remove();
       }
-      memo.selectedPairs = [
-        first.connectedNodes().first().id(),
-        last.connectedNodes().last().id()
-      ];
-      connectNodes(undefined, label);
     } else if (e.key.toLowerCase() === Shortcuts.Universal) {
       connectNodes({
         'line-style': 'dashed',
