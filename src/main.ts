@@ -406,7 +406,7 @@ cy.ready(() => {
       const last = edges[edges.length - 1];
       const fId = first.connectedNodes().first().id();
       const lId = last.connectedNodes().last().id();
-      if (!fId || !lId || fId === lId) return;
+      if (!fId || !lId) return;
       try {
         memo.selectedPairs = [fId, lId];
         const label = edges
