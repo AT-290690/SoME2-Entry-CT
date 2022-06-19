@@ -390,12 +390,8 @@ cy.ready(() => {
         clearSelection();
         inspectSelectionIndex({ type: 'not selected', id: 'none' });
     });
-    cy.on('select', 'edge', e => {
-        memo.edgeSelections.add(e.target.id());
-    });
-    // cy.on('select', 'node', e => {
-    //   e.target.style('text-outline-width', 3);
-    // });
+    cy.on('select', 'edge', e => memo.edgeSelections.add(e.target.id()));
+    cy.on('select', 'node', e => e.target.style('text-outline-width', 3));
     cy.on('click', 'node', clickNodes);
     cy.on('click', 'edge', e => {
         clickEdges(e);
