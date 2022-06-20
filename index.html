@@ -9,7 +9,13 @@
     :root {
       --background-primary: #efefef;
       --color-primary: #1b1b1b;
-      --font: 'Fantasque';
+      --font-primary: 'NatoSansMath';
+      --font-secondary: 'Fantasque';
+    }
+    @font-face {
+      font-family: 'NatoSansMath';
+      src: url(assets/fonts/NotoSansMath-Regular.ttf) format('truetype');
+      font-display: swap;
     }
     @font-face {
       font-family: 'Fantasque';
@@ -21,14 +27,53 @@
       overflow: hidden;
       margin: 0;
     }
+
     #tree {
       width: 99vw;
       height: 98vh;
       border: none;
     }
-
+    .autocomplete-option:hover {
+      opacity: 1;
+      background-color: gold;
+    }
+    .autocomplete-option {
+      border: none;
+      cursor: pointer;
+      background-color: transparent;
+      font-size: 30px;
+      opacity: 0.25;
+    }
+    #autocomplete {
+      font-family: var(--font-primary);
+      font-weight: 600;
+      position: fixed;
+      bottom: 150px;
+      background-color: transparent;
+      outline: none;
+      width: 100vw;
+      margin: auto;
+      text-align: center;
+      z-index: 1000;
+      color: var(--color-primary);
+    }
+    #composition-button:hover {
+      opacity: 1;
+    }
+    #composition-button {
+      opacity: 0.5;
+      font-family: var(--font-primary);
+      font-size: 20px;
+      cursor: pointer;
+      top: 10px;
+      width: 100vw;
+      margin: auto;
+      text-align: center;
+      position: absolute;
+      border: none;
+    }
     #variableInput {
-      font-family: var(--font);
+      font-family: var(--font-primary);
       font-size: 18px;
       font-weight: 600;
       position: fixed;
@@ -46,7 +91,7 @@
     }
 
     #selectedIndex {
-      font-family: var(--font);
+      font-family: var(--font-secondary);
       font-size: 15px;
       font-weight: 600;
       position: fixed;
@@ -60,7 +105,7 @@
     }
     #infoGuide {
       user-select: none;
-      font-family: var(--font);
+      font-family: var(--font-secondary);
       display: none;
       position: absolute;
       top: -10px;
@@ -71,7 +116,7 @@
       pointer-events: none;
     }
     #tooltip {
-      font-family: var(--font);
+      font-family: var(--font-secondary);
       color: var(--color-secondary);
       background-color: transparent;
       pointer-events: none;
@@ -93,10 +138,13 @@
       import { LaTeXJSComponent } from 'https://cdn.jsdelivr.net/npm/latex.js/dist/latex.mjs';
       customElements.define('latex-js', LaTeXJSComponent);
     </script> -->
+    <div id="autocomplete"></div>
+    <button id="composition-button" style="display: none">𝒇 ∘ 𝒉</button>
 
     <input id="variableInput" placeholder="..." spellcheck="false" disabled />
 
     <a id="selectedIndex">none: not selected</a>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.21.1/cytoscape.min.js"></script>
     <script>
       window.exports = {};
