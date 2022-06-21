@@ -521,22 +521,25 @@ cy.ready(() => {
   });
   cy.on('select', 'node', e => e.target.style('text-outline-width', 3));
   cy.on('click', 'node', clickNodes);
-  cy.on('dblclick', 'edge', e =>
+  cy.on(
+    'dblclick',
+    'edge',
+    e =>
     e.target.data().variant === 'Universal'
-      ? e.target
-          .style({
-            'line-style': 'solid',
-            'line-dash-pattern': [0, 0],
-            'line-dash-offset': 0
-          })
-          .data({ variant: 'Morphism' })
-      : e.target
-          .style({
-            'line-style': 'dashed',
-            'line-dash-pattern': [6, 3],
-            'line-dash-offset': 1
-          })
-          .data({ variant: 'Universal' })
+          ? e.target
+              .style({
+                'line-style': 'solid',
+                'line-dash-pattern': [0, 0],
+                'line-dash-offset': 0
+              })
+              .data({ variant: 'Morphism' })
+          : e.target
+              .style({
+                'line-style': 'dashed',
+                'line-dash-pattern': [6, 3],
+                'line-dash-offset': 1
+              })
+              .data({ variant: 'Universal' }))
   );
   cy.on('click', 'edge', e => {
     clickEdges(e);

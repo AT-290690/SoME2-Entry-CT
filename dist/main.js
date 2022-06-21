@@ -450,12 +450,13 @@ cy.ready(() => {
             'line-dash-offset': 1
         })
             .data({ variant: 'Universal' }));
-    cy.on('click', 'edge', e => {
-        clickEdges(e);
-        const data = e.target.data();
-        const incomming = cy.nodes(`#${data.source}`).first();
-        const outgoing = cy.nodes(`#${data.target}`).first();
-        inspectSelectionIndex(memo.lastSelection, '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]');
-    });
-    elements.treeContainer.focus();
 });
+cy.on('click', 'edge', e => {
+    clickEdges(e);
+    const data = e.target.data();
+    const incomming = cy.nodes(`#${data.source}`).first();
+    const outgoing = cy.nodes(`#${data.target}`).first();
+    inspectSelectionIndex(memo.lastSelection, '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]');
+});
+elements.treeContainer.focus();
+;
