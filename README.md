@@ -6,7 +6,8 @@ Current interactions:
 
 Shortcuts: N, c, shift + c, U, Escape, Enter
 
-N - Focus on cantvas and press N to create an element
+N - Focus on cantvas and press N to create a node at the mouse location
+double click - click twice to create a node on that place
 
 c - Select pairs of elments and press c to connect them with solid arrow (blue -> red)
 U - Select pairs of elements and press U to connect them with dashed arrow (blue -> red)
