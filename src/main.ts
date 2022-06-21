@@ -60,7 +60,8 @@ const elements: Record<string, any> = {
   treeContainer: document.getElementById('tree'),
   variableInput: document.getElementById('variableInput'),
   autocompleteContainer: document.getElementById('autocomplete'),
-  compositionButton: document.getElementById('composition-button')
+  compositionButton: document.getElementById('composition-button'),
+  connectionButton: document.getElementById('connection-button')
 };
 
 const cy = cytoscape({
@@ -297,6 +298,9 @@ const clickNodes = e => {
   if (memo.selectedPairs.length > 2) {
     clearSelection();
     clickNodes(e);
+  } else if (memo.selectedPairs.length === 2) {
+    elements.connectionButton.style.display = 'block';
+    positionAbsoluteElement(elements.connectionButton, memo.mousePosition);
   }
 };
 
@@ -322,6 +326,15 @@ const resetColorOfSelectedNodes = (nodes = memo.selectedPairs) => {
     })
   );
 };
+
+const positionAbsoluteElement = (
+  element: HTMLElement,
+  coordinates: Coordinates2D
+) => {
+  element.style.left = coordinates.x - 50 + 'px';
+  element.style.top = coordinates.y + 50 + 'px';
+};
+
 const autocomplete = (words: string[]) => {
   elements.autocompleteContainer.innerHTML = '';
   words.forEach(word => {
@@ -343,6 +356,7 @@ const clearSelection = () => {
   resetColorOfSelectedNodes();
   elements.autocompleteContainer.innerHTML = '';
   elements.compositionButton.style.display = 'none';
+  elements.connectionButton.style.display = 'none';
   cy.$(':selected')
     .nodes()
     .map(n =>
@@ -378,6 +392,19 @@ const eraseCharacter = () =>
     elements.variableInput.value.length - 1
   );
 cy.ready(() => {
+  elements.connectionButton.addEventListener('click', () => {
+    if (memo.selectedPairs.length === 2) {
+      connectNodes();
+    }
+
+    // else if () {
+    //   connectNodes({
+    //     'line-style': 'dashed',
+    //     'line-dash-pattern': [6, 3],
+    //     'line-dash-offset': 1
+    //   });
+    // }
+  });
   elements.compositionButton.addEventListener('click', () => {
     if (memo.edgeSelections.size) {
       const edges = [...memo.edgeSelections].map(x =>
@@ -415,12 +442,23 @@ cy.ready(() => {
     }
   });
   document.addEventListener('mousemove', e => {
+    memo.mousePosition = {
+      x: e.clientX,
+      y: e.clientY
+    };
+  });
+  document.addEventListener('dblclick', e => {
+    memo.lastSelection.id = null;
+    inspectSelectionIndex({ type: 'not selected', id: 'none' });
+    clearSelection();
     const zoom = cy.zoom();
     const pan = cy.pan();
-    memo.mousePosition.x = (e.clientX - pan.x) / zoom;
-    memo.mousePosition.y = (e.clientY - pan.y) / zoom;
+    return addNode(
+      (memo.mousePosition.x - pan.x) / zoom,
+      (memo.mousePosition.y - pan.y) / zoom,
+      DEFAULT_TOKEN
+    );
   });
-
   document.addEventListener('keydown', e => {
     if (
       !memo.selectedPairs.length &&
@@ -430,7 +468,13 @@ cy.ready(() => {
       memo.lastSelection.id = null;
       inspectSelectionIndex({ type: 'not selected', id: 'none' });
       clearSelection();
-      return addNode(memo.mousePosition.x, memo.mousePosition.y, DEFAULT_TOKEN);
+      const zoom = cy.zoom();
+      const pan = cy.pan();
+      return addNode(
+        (memo.mousePosition.x - pan.x) / zoom,
+        (memo.mousePosition.y - pan.y) / zoom,
+        DEFAULT_TOKEN
+      );
     } else if (memo.selectedPairs.length === 2) {
       if (e.key === Shortcuts.Edge) {
         connectNodes();
@@ -501,6 +545,7 @@ cy.ready(() => {
     memo.edgeSelections.add(e.target.id());
     if (memo.edgeSelections.size > 1)
       elements.compositionButton.style.display = 'block';
+    positionAbsoluteElement(elements.compositionButton, memo.mousePosition);
   });
   cy.on('select', 'node', e => e.target.style('text-outline-width', 3));
   cy.on('click', 'node', clickNodes);
