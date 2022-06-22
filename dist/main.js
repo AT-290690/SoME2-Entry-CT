@@ -421,8 +421,8 @@ cy.ready(() => {
     const loadFile = (filename) => {
         const json = localStorage.getItem(filename);
         const data = JSON.parse(json);
+        // clearTree();
         offsetElementsIndexes(data.elements);
-        clearTree();
         if (data.elements.nodes) {
             seedGraph(data.elements.nodes, data.elements.edges);
             cy.zoom({
@@ -430,6 +430,7 @@ cy.ready(() => {
                 position: cy.nodes().first().position()
             });
             cy.pan(data.pan);
+            incIndex();
         }
     };
     elements.save.addEventListener('click', () => saveFile('untitled'));

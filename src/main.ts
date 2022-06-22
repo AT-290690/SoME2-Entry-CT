@@ -536,8 +536,8 @@ cy.ready(() => {
       zoom: number;
       pan: Coordinates2D;
     };
+    // clearTree();
     offsetElementsIndexes(data.elements);
-    clearTree();
     if (data.elements.nodes) {
       seedGraph(data.elements.nodes, data.elements.edges);
       cy.zoom({
@@ -545,6 +545,7 @@ cy.ready(() => {
         position: cy.nodes().first().position()
       });
       cy.pan(data.pan);
+      incIndex();
     }
   };
 
