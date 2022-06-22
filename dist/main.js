@@ -26,7 +26,9 @@ const elements = {
     variableInput: document.getElementById('variableInput'),
     autocompleteContainer: document.getElementById('autocomplete'),
     compositionButton: document.getElementById('composition-button'),
-    connectionButton: document.getElementById('connection-button')
+    connectionButton: document.getElementById('connection-button'),
+    save: document.getElementById('save'),
+    load: document.getElementById('load')
 };
 const cy = cytoscape({
     elements: [],
@@ -264,7 +266,7 @@ const positionAbsoluteElement = (element, coordinates) => {
     element.style.left = coordinates.x - 50 + 'px';
     element.style.top = coordinates.y + 50 + 'px';
 };
-const autocomplete = (words) => {
+const autocomplete = (words = []) => {
     elements.autocompleteContainer.innerHTML = '';
     words.forEach(word => {
         const option = document.createElement('button');
@@ -369,6 +371,69 @@ cy.ready(() => {
             return addNode((memo.mousePosition.x - pan.x) / zoom, (memo.mousePosition.y - pan.y) / zoom, DEFAULT_TOKEN);
         }
     });
+    const clearTree = (nodes = true, edges = true) => {
+        if (nodes) {
+            memo.nodeIndex = 0;
+            cy.nodes().remove();
+        }
+        if (edges) {
+            cy.edges().remove();
+            memo.edgeIndex = 0;
+        }
+    };
+    const offsetElementsIndexes = (elements) => {
+        const N = memo.nodeIndex;
+        const E = memo.edgeIndex;
+        const { nodes, edges } = elements;
+        let maxNodeIndex = 0;
+        let maxEdgeIndex = 0;
+        const offsetNodes = nodes === null || nodes === void 0 ? void 0 : nodes.map(n => {
+            n.data.index += N;
+            n.data.id = 'n' + n.data.index;
+            maxNodeIndex = Math.max(maxNodeIndex, n.data.index);
+            return n;
+        });
+        const offsetEdges = edges === null || edges === void 0 ? void 0 : edges.map(e => {
+            const index = Number(e.data.id.substr(1)) + E;
+            e.data.id = 'e' + index;
+            e.data.source = `n${Number(e.data.source.substr(1)) + N}`;
+            e.data.target = `n${Number(e.data.target.substr(1)) + N}`;
+            maxEdgeIndex = Math.max(maxEdgeIndex, index, E);
+            return e;
+        });
+        incIndex(maxNodeIndex);
+        memo.edgeIndex = Math.max(maxEdgeIndex, memo.edgeIndex) + 1;
+        return { nodes: offsetNodes || [], edges: offsetEdges || [] };
+    };
+    const seedGraph = (nodes, edges) => cy.add([...nodes, ...edges]);
+    const saveFile = (filename) => {
+        const data = cy.json();
+        const json = JSON.stringify(data);
+        localStorage.setItem(filename, json);
+        const a = document.createElement('a');
+        const blob = new Blob([json], { type: 'text/json' });
+        const url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = 'object.json';
+        a.click();
+        window.URL.revokeObjectURL(url);
+    };
+    const loadFile = (filename) => {
+        const json = localStorage.getItem(filename);
+        const data = JSON.parse(json);
+        offsetElementsIndexes(data.elements);
+        clearTree();
+        if (data.elements.nodes) {
+            seedGraph(data.elements.nodes, data.elements.edges);
+            cy.zoom({
+                level: data.zoom,
+                position: cy.nodes().first().position()
+            });
+            cy.pan(data.pan);
+        }
+    };
+    elements.save.addEventListener('click', () => saveFile('untitled'));
+    elements.load.addEventListener('click', () => loadFile('untitled'));
     document.addEventListener('keydown', e => {
         if (e.key === 'Enter') {
             renameVariable(elements.variableInput.value);
@@ -450,13 +515,12 @@ cy.ready(() => {
             'line-dash-offset': 1
         })
             .data({ variant: 'Universal' }));
+    cy.on('click', 'edge', e => {
+        clickEdges(e);
+        const data = e.target.data();
+        const incomming = cy.nodes(`#${data.source}`).first();
+        const outgoing = cy.nodes(`#${data.target}`).first();
+        inspectSelectionIndex(memo.lastSelection, '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]');
+    });
+    elements.treeContainer.focus();
 });
-cy.on('click', 'edge', e => {
-    clickEdges(e);
-    const data = e.target.data();
-    const incomming = cy.nodes(`#${data.source}`).first();
-    const outgoing = cy.nodes(`#${data.target}`).first();
-    inspectSelectionIndex(memo.lastSelection, '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]');
-});
-elements.treeContainer.focus();
-;

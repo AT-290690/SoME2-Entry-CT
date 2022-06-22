@@ -1,4 +1,5 @@
 'use strict';
+
 type Roles = 'node' | 'edge';
 type EdgeVariants = 'Morphism' | 'Universal';
 type NodeVariants = 'Object';
@@ -30,7 +31,10 @@ interface Vertex {
 
 type NodeData = Payload;
 type EdgeData = Payload & Vertex;
-
+interface Elements {
+  nodes: { data: NodeData }[];
+  edges: { data: EdgeData }[];
+}
 interface State {
   lastSelection: Seleciton;
   selectedPairs: string[];
@@ -69,7 +73,9 @@ const elements: Record<string, any> = {
   variableInput: document.getElementById('variableInput'),
   autocompleteContainer: document.getElementById('autocomplete'),
   compositionButton: document.getElementById('composition-button'),
-  connectionButton: document.getElementById('connection-button')
+  connectionButton: document.getElementById('connection-button'),
+  save: document.getElementById('save'),
+  load: document.getElementById('load')
 };
 
 const cy = cytoscape({
@@ -339,7 +345,7 @@ const positionAbsoluteElement = (
   element.style.top = coordinates.y + 50 + 'px';
 };
 
-const autocomplete = (words: string[]) => {
+const autocomplete = (words: string[] = []) => {
   elements.autocompleteContainer.innerHTML = '';
   words.forEach(word => {
     const option = document.createElement('button');
@@ -395,6 +401,7 @@ const eraseCharacter = () =>
     0,
     elements.variableInput.value.length - 1
   );
+
 cy.ready(() => {
   elements.connectionButton.addEventListener('click', () => {
     if (memo.selectedPairs.length === 2) {
@@ -457,6 +464,93 @@ cy.ready(() => {
       );
     }
   });
+
+  const clearTree = (nodes = true, edges = true) => {
+    if (nodes) {
+      memo.nodeIndex = 0;
+      cy.nodes().remove();
+    }
+    if (edges) {
+      cy.edges().remove();
+      memo.edgeIndex = 0;
+    }
+  };
+
+  const offsetElementsIndexes = (elements: {
+    nodes: { data: NodeData }[];
+    edges: { data: EdgeData }[];
+  }) => {
+    const N = memo.nodeIndex;
+    const E = memo.edgeIndex;
+    const { nodes, edges } = elements;
+
+    let maxNodeIndex = 0;
+    let maxEdgeIndex = 0;
+
+    const offsetNodes = nodes?.map(n => {
+      n.data.index += N;
+      n.data.id = 'n' + n.data.index;
+      maxNodeIndex = Math.max(maxNodeIndex, n.data.index);
+      return n;
+    });
+
+    const offsetEdges = edges?.map(e => {
+      const index = Number(e.data.id.substr(1)) + E;
+      e.data.id = 'e' + index;
+      e.data.source = `n${Number(e.data.source.substr(1)) + N}`;
+      e.data.target = `n${Number(e.data.target.substr(1)) + N}`;
+      maxEdgeIndex = Math.max(maxEdgeIndex, index, E);
+      return e;
+    });
+
+    incIndex(maxNodeIndex);
+    memo.edgeIndex = Math.max(maxEdgeIndex, memo.edgeIndex) + 1;
+    return { nodes: offsetNodes || [], edges: offsetEdges || [] };
+  };
+  const seedGraph = (
+    nodes: { data: NodeData }[],
+    edges: { data: EdgeData }[]
+  ) => cy.add([...nodes, ...edges]);
+
+  const saveFile = (filename: string) => {
+    const data = cy.json() as {
+      elements: Elements;
+      zoom: number;
+      pan: Coordinates2D;
+    };
+    const json = JSON.stringify(data);
+    localStorage.setItem(filename, json);
+    const a = document.createElement('a');
+    const blob = new Blob([json], { type: 'text/json' });
+    const url = window.URL.createObjectURL(blob);
+    a.href = url;
+    a.download = 'object.json';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
+  const loadFile = (filename: string) => {
+    const json = localStorage.getItem(filename);
+    const data = JSON.parse(json) as {
+      elements: Elements;
+      zoom: number;
+      pan: Coordinates2D;
+    };
+    offsetElementsIndexes(data.elements);
+    clearTree();
+    if (data.elements.nodes) {
+      seedGraph(data.elements.nodes, data.elements.edges);
+      cy.zoom({
+        level: data.zoom,
+        position: cy.nodes().first().position()
+      });
+      cy.pan(data.pan);
+    }
+  };
+
+  elements.save.addEventListener('click', () => saveFile('untitled'));
+  elements.load.addEventListener('click', () => loadFile('untitled'));
+
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter') {
       renameVariable(elements.variableInput.value);
@@ -521,25 +615,22 @@ cy.ready(() => {
   });
   cy.on('select', 'node', e => e.target.style('text-outline-width', 3));
   cy.on('click', 'node', clickNodes);
-  cy.on(
-    'dblclick',
-    'edge',
-    e =>
+  cy.on('dblclick', 'edge', e =>
     e.target.data().variant === 'Universal'
-          ? e.target
-              .style({
-                'line-style': 'solid',
-                'line-dash-pattern': [0, 0],
-                'line-dash-offset': 0
-              })
-              .data({ variant: 'Morphism' })
-          : e.target
-              .style({
-                'line-style': 'dashed',
-                'line-dash-pattern': [6, 3],
-                'line-dash-offset': 1
-              })
-              .data({ variant: 'Universal' }))
+      ? e.target
+          .style({
+            'line-style': 'solid',
+            'line-dash-pattern': [0, 0],
+            'line-dash-offset': 0
+          })
+          .data({ variant: 'Morphism' })
+      : e.target
+          .style({
+            'line-style': 'dashed',
+            'line-dash-pattern': [6, 3],
+            'line-dash-offset': 1
+          })
+          .data({ variant: 'Universal' })
   );
   cy.on('click', 'edge', e => {
     clickEdges(e);

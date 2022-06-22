@@ -93,7 +93,14 @@
       color: var(--color-primary);
       user-select: none;
     }
-
+    #save,
+    #load {
+      font-family: var(--font-secondary);
+      font-size: 15px;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
     #selectedIndex {
       font-family: var(--font-secondary);
       font-size: 15px;
@@ -130,6 +137,11 @@
   <body>
     <div id="tree"></div>
     <div id="autocomplete"></div>
+    <div style="position: absolute; top: 10px; left: 10px">
+      <button id="save">𝐒</button>
+      <button id="load">𝐋</button>
+    </div>
+
     <button id="composition-button" style="display: none">𝒇 ∘ 𝒉</button>
     <button id="connection-button" style="display: none">
       <span style="color: var(--color-incomming)">𝐀</span> →
