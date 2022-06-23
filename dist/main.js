@@ -22,7 +22,7 @@ const COLORS = {
 const DEFAULT_TOKEN = '⦁';
 const COMPOSITION_TOKEN = '∘';
 const memo = {
-    lastSelection: { id: undefined, type: 'node', label: '' },
+    lastSelection: { id: undefined, type: 'node', label: '', comment: '' },
     selectedPairs: [],
     edgeSelections: new Set(),
     mousePosition: { x: 0, y: 0 },
@@ -37,7 +37,8 @@ const elements = {
     compositionButton: document.getElementById('composition-button'),
     connectionButton: document.getElementById('connection-button'),
     save: document.getElementById('save'),
-    load: document.getElementById('load')
+    load: document.getElementById('load'),
+    commentsSection: document.getElementById('comments-section')
 };
 const cy = cytoscape({
     elements: [],
@@ -170,6 +171,7 @@ const addNode = (x, y, label) => {
     const data = {
         index: memo.nodeIndex,
         label,
+        comment: '',
         id: 'n' + memo.nodeIndex,
         type: 'node',
         variant: 'Object'
@@ -188,6 +190,7 @@ const addEdge = (sourceId, targetId, label) => {
         id: `e${memo.edgeIndex}`,
         index: memo.edgeIndex,
         label,
+        comment: '',
         source: `${sourceId}`,
         target: `${targetId}`,
         type: 'edge',
@@ -201,14 +204,15 @@ const addEdge = (sourceId, targetId, label) => {
     memo.edgeIndex += 1;
     return edge;
 };
-const inspectSelectionIndex = (selection, opt = '') => (elements.selectedIndex.innerHTML = `${selection.label || 'none'} : ${selection.type || 'not selected'} ${opt}`);
+const inspectSelectionIndex = (selection, opt = '') => (elements.selectedIndex.innerHTML = `${selection.label || 'none'} : ${selection.type} ${opt}`);
 const clickEdges = (e) => {
-    var _a;
     resetColorOfSelectedNodes();
+    const { label, comment } = e.target.data();
     memo.lastSelection = {
         type: 'edge',
         id: e.target.id(),
-        label: (_a = e.target.data().label) !== null && _a !== void 0 ? _a : ''
+        label: label !== null && label !== void 0 ? label : '',
+        comment: comment !== null && comment !== void 0 ? comment : ''
     };
     elements.variableInput.value = memo.lastSelection.label;
     memo.selectedPairs.length = 0;
@@ -234,12 +238,14 @@ const connectNodes = (label) => {
         return edge;
     }
 };
-const clickNodes = e => {
+const clickNodes = (e) => {
+    var _a, _b;
     const current = e.target.data();
     memo.lastSelection = {
         type: current.type,
         id: e.target.id(),
-        label: current.label
+        label: (_a = current.label) !== null && _a !== void 0 ? _a : '',
+        comment: (_b = current.comment) !== null && _b !== void 0 ? _b : ''
     };
     elements.variableInput.value =
         current.label === DEFAULT_TOKEN ? '' : current.label;
@@ -263,7 +269,7 @@ const clickNodes = e => {
     }
     else if (memo.selectedPairs.length === 2) {
         elements.connectionButton.style.display = 'block';
-        positionAbsoluteElement(elements.connectionButton, memo.mousePosition);
+        positionAbsoluteElement(elements.connectionButton, offsetPosition(memo.mousePosition, -50, 50));
     }
 };
 const hasEdges = (id) => cy.nodes(`#${id}`).connectedEdges().size();
@@ -282,9 +288,10 @@ const resetColorOfSelectedNodes = (nodes = memo.selectedPairs) => {
         'text-outline-color': COLORS.selection
     }));
 };
+const offsetPosition = (position, x, y) => ({ x: position.x + x, y: position.y + y });
 const positionAbsoluteElement = (element, coordinates) => {
-    element.style.left = coordinates.x - 50 + 'px';
-    element.style.top = coordinates.y + 50 + 'px';
+    element.style.left = coordinates.x + 'px';
+    element.style.top = coordinates.y + 'px';
 };
 const autocomplete = (words = []) => {
     elements.autocompleteContainer.innerHTML = '';
@@ -381,10 +388,15 @@ cy.ready(() => {
             y: e.clientY
         };
     });
-    document.addEventListener('dblclick', e => {
+    document.addEventListener('dblclick', () => {
         if (!memo.selectedPairs.length && !memo.lastSelection.id) {
             memo.lastSelection.id = null;
-            inspectSelectionIndex({ type: 'not selected', id: 'none' });
+            inspectSelectionIndex({
+                type: 'none',
+                id: 'none',
+                label: '',
+                comment: ''
+            });
             clearSelection();
             const zoom = cy.zoom();
             const pan = cy.pan();
@@ -477,7 +489,8 @@ cy.ready(() => {
             e.key !== 'CapsLock' &&
             e.key !== 'Tab' &&
             e.key !== 'Escape' &&
-            e.key !== 'Delete') {
+            e.key !== 'Delete' &&
+            e.key !== 'Control') {
             if (e.key === 'Backspace') {
                 elements.autocompleteContainer.innerHTML = '';
                 elements.variableInput.value = eraseCharacter();
@@ -502,7 +515,12 @@ cy.ready(() => {
         }
         if (e.key === 'Escape') {
             clearSelection();
-            inspectSelectionIndex({ type: 'not selected', id: 'none' });
+            inspectSelectionIndex({
+                type: 'none',
+                id: 'none',
+                label: '',
+                comment: ''
+            });
         }
         if (e.key === 'Delete' || (e.ctrlKey && e.key === 'Backspace')) {
             if (memo.lastSelection.type !== 'edge') {
@@ -514,18 +532,23 @@ cy.ready(() => {
                 removeEdge(memo.lastSelection.id);
             }
             clearSelection();
-            inspectSelectionIndex({ type: 'not selected', id: 'none' });
+            inspectSelectionIndex({
+                type: 'none',
+                id: 'none',
+                label: '',
+                comment: ''
+            });
         }
     });
     cy.on('dragfree', 'node', e => {
         clearSelection();
-        inspectSelectionIndex({ type: 'not selected', id: 'none' });
+        inspectSelectionIndex({ type: 'none', id: 'none', label: '', comment: '' });
     });
     cy.on('select', 'edge', e => {
         memo.edgeSelections.add(e.target.id());
         if (memo.edgeSelections.size > 1)
             elements.compositionButton.style.display = 'block';
-        positionAbsoluteElement(elements.compositionButton, memo.mousePosition);
+        positionAbsoluteElement(elements.compositionButton, offsetPosition(memo.mousePosition, -50, 50));
     });
     cy.on('select', 'node', e => e.target.style('text-outline-width', 3));
     cy.on('click', 'node', clickNodes);

@@ -1,0 +1,134 @@
+:root {
+  --background-primary: #efefef;
+  --color-primary: #1b1b1b;
+  --font-primary: 'NatoSansMath';
+  --font-secondary: 'Fantasque';
+  --color-outgoing: #fc6262;
+  --color-incomming: #57b3f7;
+}
+@font-face {
+  font-family: 'NatoSansMath';
+  src: url(assets/fonts/NotoSansMath-Regular.ttf) format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fantasque';
+  src: url(assets/fonts/FantasqueSansMono-Regular.ttf) format('truetype');
+  font-display: swap;
+}
+body {
+  background-color: var(--background-primary);
+  overflow: hidden;
+  margin: 0;
+}
+
+#tree {
+  width: 99vw;
+  height: 98vh;
+  border: none;
+}
+.autocomplete-option:hover {
+  opacity: 1;
+  background-color: gold;
+}
+.autocomplete-option {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 30px;
+  opacity: 0.25;
+}
+#autocomplete {
+  font-family: var(--font-primary);
+  font-weight: 600;
+  position: fixed;
+  bottom: 150px;
+  background-color: transparent;
+  outline: none;
+  width: 100vw;
+  margin: auto;
+  text-align: center;
+  z-index: 1000;
+  color: var(--color-primary);
+}
+#connection-button:hover,
+#composition-button:hover {
+  opacity: 1;
+}
+#connection-button,
+#composition-button {
+  opacity: 0.35;
+  font-family: var(--font-primary);
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  position: absolute;
+  background-color: transparent;
+  text-align: center;
+  width: 100px;
+}
+#comments-section {
+  position: absolute;
+  background: transparent;
+  padding: 20px;
+  top: 50px;
+  left: 10px;
+  user-select: none;
+  pointer-events: none;
+}
+#variableInput {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 600;
+  position: fixed;
+  bottom: 100px;
+  background-color: transparent;
+  border: none;
+  border-bottom: solid 1px black;
+  outline: none;
+  width: 100vw;
+  margin: auto;
+  text-align: center;
+  z-index: 1000;
+  color: var(--color-primary);
+  user-select: none;
+}
+#save,
+#load {
+  font-family: var(--font-secondary);
+  font-size: 15px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+#selectedIndex {
+  font-family: var(--font-secondary);
+  font-size: 15px;
+  font-weight: 600;
+  position: fixed;
+  bottom: 50px;
+  width: 100vw;
+  margin: auto;
+  text-align: center;
+  z-index: 1000;
+  color: var(--color-primary);
+  user-select: none;
+}
+#infoGuide {
+  user-select: none;
+  font-family: var(--font-secondary);
+  display: none;
+  position: absolute;
+  top: -10px;
+  left: 45vw;
+  border: none;
+  background-color: transparent;
+  z-index: 1000;
+  pointer-events: none;
+}
+#tooltip {
+  font-family: var(--font-secondary);
+  color: var(--color-secondary);
+  background-color: transparent;
+  pointer-events: none;
+}
