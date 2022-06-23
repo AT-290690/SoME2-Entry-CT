@@ -215,6 +215,7 @@ const clickEdges = (e) => {
         comment: comment !== null && comment !== void 0 ? comment : ''
     };
     elements.variableInput.value = memo.lastSelection.label;
+    elements.commentsSection.innerHTML = label;
     memo.selectedPairs.length = 0;
 };
 const connectNodes = (label) => {
@@ -249,6 +250,7 @@ const clickNodes = (e) => {
     };
     elements.variableInput.value =
         current.label === DEFAULT_TOKEN ? '' : current.label;
+    elements.commentsSection.innerHTML = current.comment;
     memo.selectedPairs.push(memo.lastSelection.id);
     const couple = memo.selectedPairs;
     const outgoing = cy.nodes(`#${couple[1]}`).first();
