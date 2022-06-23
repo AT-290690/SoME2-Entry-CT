@@ -1,4 +1,13 @@
 'use strict';
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 const COLORS = {
     nodes: '#efefef',
     text: '#1b1b1b',
@@ -139,6 +148,17 @@ const cy = cytoscape({
     motionBlurOpacity: 0.2,
     pixelRatio: 'auto'
 });
+// const convertToString = (buffer: ArrayBuffer | string) =>
+//   typeof buffer === 'string'
+//     ? buffer
+//     : String.fromCharCode.apply(null, new Uint16Array(buffer));
+// const convertToArrayBuffer = (string: string) => {
+//   const buffer = new ArrayBuffer(string.length * 2);
+//   const bufferView = new Uint16Array(buffer);
+//   for (let i = 0, strLen = string.length; i < strLen; i++)
+//     bufferView[i] = string.charCodeAt(i);
+//   return buffer;
+// };
 const setIndex = (v) => {
     memo.nodeIndex = +v;
     memo.edgeIndex += memo.nodeIndex;
@@ -406,10 +426,9 @@ cy.ready(() => {
         return { nodes: offsetNodes || [], edges: offsetEdges || [] };
     };
     const seedGraph = (nodes, edges) => cy.add([...nodes, ...edges]);
-    const saveFile = (filename) => {
+    const saveFile = () => {
         const data = cy.json();
         const json = JSON.stringify(data);
-        localStorage.setItem(filename, json);
         const a = document.createElement('a');
         const blob = new Blob([json], { type: 'text/json' });
         const url = window.URL.createObjectURL(blob);
@@ -418,23 +437,32 @@ cy.ready(() => {
         a.click();
         window.URL.revokeObjectURL(url);
     };
-    const loadFile = (filename) => {
-        const json = localStorage.getItem(filename);
-        const data = JSON.parse(json);
-        // clearTree();
-        offsetElementsIndexes(data.elements);
-        if (data.elements.nodes) {
-            seedGraph(data.elements.nodes, data.elements.edges);
-            cy.zoom({
-                level: data.zoom,
-                position: cy.nodes().first().position()
-            });
-            cy.pan(data.pan);
-            incIndex();
-        }
+    const loadFile = () => {
+        const upload = document.createElement('input');
+        document.body.appendChild(upload);
+        upload.style.display = 'none';
+        upload.type = 'file';
+        upload.name = 'object.json';
+        const reader = new FileReader();
+        reader.onload = (e) => __awaiter(void 0, void 0, void 0, function* () {
+            const data = JSON.parse(e.target.result.toString());
+            // clearTree();
+            offsetElementsIndexes(data.elements);
+            if (data.elements.nodes) {
+                seedGraph(data.elements.nodes, data.elements.edges);
+                cy.zoom({
+                    level: data.zoom,
+                    position: cy.nodes().first().position()
+                });
+                cy.pan(data.pan);
+                incIndex();
+            }
+        });
+        upload.addEventListener('change', (e) => reader.readAsText(e.currentTarget.files[0]));
+        upload.click();
     };
-    elements.save.addEventListener('click', () => saveFile('untitled'));
-    elements.load.addEventListener('click', () => loadFile('untitled'));
+    elements.save.addEventListener('click', () => saveFile());
+    elements.load.addEventListener('click', () => loadFile());
     document.addEventListener('keydown', e => {
         if (e.key === 'Enter') {
             renameVariable(elements.variableInput.value);
