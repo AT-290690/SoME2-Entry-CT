@@ -271,7 +271,7 @@ const clickEdges = (e: cytoscape.EventObjectEdge) => {
     comment: comment ?? ''
   };
   elements.variableInput.value = memo.lastSelection.label;
-  elements.commentsSection.innerHTML = label;
+  elements.commentsSection.innerHTML = comment;
   memo.selectedPairs.length = 0;
 };
 

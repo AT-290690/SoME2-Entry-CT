@@ -215,7 +215,7 @@ const clickEdges = (e) => {
         comment: comment !== null && comment !== void 0 ? comment : ''
     };
     elements.variableInput.value = memo.lastSelection.label;
-    elements.commentsSection.innerHTML = label;
+    elements.commentsSection.innerHTML = comment;
     memo.selectedPairs.length = 0;
 };
 const connectNodes = (label) => {
