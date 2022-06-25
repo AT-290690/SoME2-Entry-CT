@@ -245,7 +245,7 @@ const connectNodes = (label) => {
     }
 };
 const clickNodes = (e) => {
-    var _a, _b;
+    var _a, _b, _c;
     const current = e.target.data();
     memo.lastSelection = {
         type: current.type,
@@ -255,7 +255,7 @@ const clickNodes = (e) => {
     };
     elements.variableInput.value =
         current.label === DEFAULT_TOKEN ? '' : current.label;
-    elements.commentsSection.innerHTML = current.comment;
+    elements.commentsSection.innerHTML = (_c = current.comment) !== null && _c !== void 0 ? _c : '';
     memo.selectedPairs.push(memo.lastSelection.id);
     const couple = memo.selectedPairs;
     const outgoing = cy.nodes(`#${couple[1]}`).first();

@@ -311,7 +311,7 @@ const clickNodes = (e: cytoscape.EventObjectNode) => {
   };
   elements.variableInput.value =
     current.label === DEFAULT_TOKEN ? '' : current.label;
-  elements.commentsSection.innerHTML = current.comment;
+  elements.commentsSection.innerHTML = current.comment ?? '';
   memo.selectedPairs.push(memo.lastSelection.id);
   const couple = memo.selectedPairs;
   const outgoing = cy.nodes(`#${couple[1]}`).first();

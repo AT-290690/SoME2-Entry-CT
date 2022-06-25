@@ -537,7 +537,6 @@ for (let i = 0; i < COUNT; i++) {
     .then(buffer => buffer.text())
     .then(text => {
       CONTENT[i] = { text, object: PREDIFINED_TREES[i] };
-      console.log(CONTENT);
     });
 }
 const latex = window['MathJax'] as { typeset: () => void };
