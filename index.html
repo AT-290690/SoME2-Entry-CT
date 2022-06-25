@@ -4,14 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [
+            ['$', '$'],
+            ['\\(', '\\)']
+          ]
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
+    </script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+    ></script>
+    <link href="./style.css" rel="stylesheet" />
   </head>
-  <link href="./style.css" rel="stylesheet" />
   <body>
     <div id="tree"></div>
     <div id="autocomplete"></div>
-    <div style="position: absolute; top: 10px; left: 10px">
-      <button id="save">Save</button>
-      <button id="load">Load</button>
+    <div id="menu-section">
+      <button id="save">↓</button>
+      <button id="load">↑</button>
     </div>
 
     <button id="composition-button" style="display: none">𝒇 ∘ 𝒉</button>
@@ -19,8 +37,15 @@
       <span style="color: var(--color-incomming)">𝐀</span> →
       <span style="color: var(--color-outgoing)">𝐁</span>
     </button>
-
+    <button id="tutorial-button">start lesson</button>
     <div id="comments-section"></div>
+    <div id="lesson-section">
+      <div style="display: flex; justify-content: space-around">
+        <button id="lesson-button-right">←</button>
+        <button id="lesson-button-left">→</button>
+      </div>
+      <div id="lesson-content"></div>
+    </div>
 
     <input id="variableInput" placeholder="..." spellcheck="false" disabled />
     <a id="selectedIndex">none : none</a>
@@ -29,6 +54,7 @@
       window.exports = {};
     </script>
     <script src="dist/abc.js"></script>
+    <script src="dist/lesson.js"></script>
     <script src="dist/main.js"></script>
   </body>
 </html>

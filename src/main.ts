@@ -78,7 +78,12 @@ const elements: Record<string, any> = {
   connectionButton: document.getElementById('connection-button'),
   save: document.getElementById('save'),
   load: document.getElementById('load'),
-  commentsSection: document.getElementById('comments-section')
+  commentsSection: document.getElementById('comments-section'),
+  lessonSection: document.getElementById('lesson-section'),
+  lessonContent: document.getElementById('lesson-content'),
+  lessonPrev: document.getElementById('lesson-button-right'),
+  lessonNext: document.getElementById('lesson-button-left'),
+  tutorialButton: document.getElementById('tutorial-button')
 };
 
 const cy = cytoscape({
@@ -271,7 +276,7 @@ const clickEdges = (e: cytoscape.EventObjectEdge) => {
     comment: comment ?? ''
   };
   elements.variableInput.value = memo.lastSelection.label;
-  elements.commentsSection.innerHTML = comment;
+  elements.commentsSection.innerHTML = comment ?? '';
   memo.selectedPairs.length = 0;
 };
 
@@ -429,7 +434,93 @@ const eraseCharacter = () =>
     elements.variableInput.value.length - 1
   );
 
+const clearTree = (nodes = true, edges = true) => {
+  if (nodes) {
+    cy.nodes().remove();
+    memo.nodeIndex = 0;
+  }
+  if (edges) {
+    cy.edges().remove();
+    memo.edgeIndex = 0;
+  }
+};
+
+const offsetElementsIndexes = (elements: {
+  nodes: { data: NodeData }[];
+  edges: { data: EdgeData }[];
+}) => {
+  const N = memo.nodeIndex;
+  const E = memo.edgeIndex;
+  const { nodes, edges } = elements;
+
+  let maxNodeIndex = 0;
+  let maxEdgeIndex = 0;
+
+  const offsetNodes = nodes?.map(n => {
+    n.data.index += N;
+    n.data.id = 'n' + n.data.index;
+    maxNodeIndex = Math.max(maxNodeIndex, n.data.index);
+    return n;
+  });
+
+  const offsetEdges = edges?.map(e => {
+    const index = Number(e.data.id.substr(1)) + E;
+    e.data.id = 'e' + index;
+    e.data.source = `n${Number(e.data.source.substr(1)) + N}`;
+    e.data.target = `n${Number(e.data.target.substr(1)) + N}`;
+    maxEdgeIndex = Math.max(maxEdgeIndex, index, E);
+    return e;
+  });
+
+  incIndex(maxNodeIndex);
+  memo.edgeIndex = Math.max(maxEdgeIndex, memo.edgeIndex) + 1;
+  return { nodes: offsetNodes || [], edges: offsetEdges || [] };
+};
+
+const seedGraph = (nodes: { data: NodeData }[], edges: { data: EdgeData }[]) =>
+  cy.add([...nodes, ...edges]);
+
+const graphFromJson = (input: object) => {
+  const data = input as {
+    elements: Elements;
+    zoom: number;
+    pan: Coordinates2D;
+  };
+  // clearTree();
+  offsetElementsIndexes(data.elements);
+  if (data.elements.nodes) {
+    seedGraph(data.elements.nodes, data.elements.edges);
+    cy.zoom({
+      level: data.zoom,
+      position: cy.nodes().first().position()
+    });
+    cy.pan(data.pan);
+    incIndex();
+  }
+};
+const displayLesson = () => {
+  lesson.interface.show(elements.lessonContent);
+  const object = lesson.content[lesson.interface.index].object;
+  clearTree();
+  if (object) {
+    graphFromJson(object);
+  }
+};
 cy.ready(() => {
+  elements.tutorialButton.addEventListener('click', () => {
+    elements.tutorialButton.style.display = 'none';
+    displayLesson();
+  });
+  elements.lessonPrev.addEventListener('click', () => {
+    lesson.interface.decIndex();
+    displayLesson();
+  });
+
+  elements.lessonNext.addEventListener('click', () => {
+    lesson.interface.incIndex();
+    displayLesson();
+  });
+
   elements.connectionButton.addEventListener('click', () => {
     if (memo.selectedPairs.length === 2) {
       connectNodes();
@@ -478,7 +569,11 @@ cy.ready(() => {
     };
   });
   document.addEventListener('dblclick', () => {
-    if (!memo.selectedPairs.length && !memo.lastSelection.id) {
+    if (
+      document.activeElement === document.body &&
+      !memo.selectedPairs.length &&
+      !memo.lastSelection.id
+    ) {
       memo.lastSelection.id = null;
       inspectSelectionIndex({
         type: 'none',
@@ -496,53 +591,6 @@ cy.ready(() => {
       );
     }
   });
-
-  const clearTree = (nodes = true, edges = true) => {
-    if (nodes) {
-      memo.nodeIndex = 0;
-      cy.nodes().remove();
-    }
-    if (edges) {
-      cy.edges().remove();
-      memo.edgeIndex = 0;
-    }
-  };
-
-  const offsetElementsIndexes = (elements: {
-    nodes: { data: NodeData }[];
-    edges: { data: EdgeData }[];
-  }) => {
-    const N = memo.nodeIndex;
-    const E = memo.edgeIndex;
-    const { nodes, edges } = elements;
-
-    let maxNodeIndex = 0;
-    let maxEdgeIndex = 0;
-
-    const offsetNodes = nodes?.map(n => {
-      n.data.index += N;
-      n.data.id = 'n' + n.data.index;
-      maxNodeIndex = Math.max(maxNodeIndex, n.data.index);
-      return n;
-    });
-
-    const offsetEdges = edges?.map(e => {
-      const index = Number(e.data.id.substr(1)) + E;
-      e.data.id = 'e' + index;
-      e.data.source = `n${Number(e.data.source.substr(1)) + N}`;
-      e.data.target = `n${Number(e.data.target.substr(1)) + N}`;
-      maxEdgeIndex = Math.max(maxEdgeIndex, index, E);
-      return e;
-    });
-
-    incIndex(maxNodeIndex);
-    memo.edgeIndex = Math.max(maxEdgeIndex, memo.edgeIndex) + 1;
-    return { nodes: offsetNodes || [], edges: offsetEdges || [] };
-  };
-  const seedGraph = (
-    nodes: { data: NodeData }[],
-    edges: { data: EdgeData }[]
-  ) => cy.add([...nodes, ...edges]);
 
   const saveFile = () => {
     const data = cy.json() as {
@@ -567,24 +615,8 @@ cy.ready(() => {
     upload.type = 'file';
     upload.name = 'object.json';
     const reader = new FileReader();
-    reader.onload = async e => {
-      const data = JSON.parse(e.target.result.toString()) as {
-        elements: Elements;
-        zoom: number;
-        pan: Coordinates2D;
-      };
-      // clearTree();
-      offsetElementsIndexes(data.elements);
-      if (data.elements.nodes) {
-        seedGraph(data.elements.nodes, data.elements.edges);
-        cy.zoom({
-          level: data.zoom,
-          position: cy.nodes().first().position()
-        });
-        cy.pan(data.pan);
-        incIndex();
-      }
-    };
+    reader.onload = async e =>
+      graphFromJson(JSON.parse(e.target.result.toString()));
     upload.addEventListener('change', (e: Event) =>
       reader.readAsText((e.currentTarget as HTMLInputElement).files[0])
     );

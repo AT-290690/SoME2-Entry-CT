@@ -76,6 +76,45 @@ body {
   user-select: none;
   pointer-events: none;
 }
+#menu-section {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+#lesson-section {
+  position: absolute;
+  background: transparent;
+  padding: 10px;
+  margin: auto;
+  top: 0;
+  left: 20vw;
+}
+#lesson-content {
+  text-align: left;
+  padding: 10px;
+  user-select: none;
+  pointer-events: none;
+  width: 50vw;
+}
+#tutorial-button {
+  position: absolute;
+  border: none;
+  cursor: pointer;
+  top: 10px;
+  left: 80px;
+  font-family: var(--font-primary);
+}
+#lesson-button-left,
+#lesson-button-right {
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+#lesson-button-left:hover,
+#lesson-button-right:hover {
+  opacity: 1;
+}
 #variableInput {
   font-family: var(--font-primary);
   font-size: 18px;

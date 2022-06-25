@@ -1,0 +1,3 @@
+1 What is category
+
+During our journey in the country of abstraction, we met something. Its name is C and it pretends to be a category. What does it mean? What can we do with it?
