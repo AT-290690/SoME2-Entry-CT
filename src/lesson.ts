@@ -8,7 +8,7 @@ let latex;
 const lesson = {
   interface: {
     index: 0,
-    show: (element: HTMLElement) => {
+    show: () => {
       // element.textContent = lesson.content[lesson.interface.index].text;
 
       lesson.content[lesson.interface.index].text.style.display = 'block';

@@ -400,7 +400,7 @@ const graphFromJson = (input) => {
     }
 };
 const displayLesson = () => {
-    lesson.interface.show(elements.lessonContent);
+    lesson.interface.show();
     const object = lesson.content[lesson.interface.index].object;
     clearTree();
     if (object) {
