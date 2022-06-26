@@ -2,18 +2,10 @@ const CONTENT = [];
 [...document.getElementsByClassName('slide')].forEach((text, index) => {
     CONTENT[index] = { text, object: window['PREDIFINED_TREES'][index] };
 });
-let latex;
 const lesson = {
     interface: {
         index: 0,
-        show: () => {
-            // element.textContent = lesson.content[lesson.interface.index].text;
-            lesson.content[lesson.interface.index].text.style.display = 'block';
-            if (!latex) {
-                latex = window['MathJax'];
-            }
-            latex.typeset();
-        },
+        show: () => (lesson.content[lesson.interface.index].text.style.display = 'block'),
         incIndex: () => {
             lesson.content[lesson.interface.index].text.style.display = 'none';
             lesson.interface.index < lesson.content.length - 1
