@@ -127,7 +127,6 @@ const cy = cytoscape({
         label: 'data(label)',
         'text-outline-color': COLORS.nodes,
         'text-outline-width': 2,
-        'font-family': 'NatoSansMath',
         'font-size': '15px'
       }
     },
@@ -141,18 +140,22 @@ const cy = cytoscape({
     {
       selector: 'node',
       style: {
-        'text-valign': 'center',
         shape: 'rectangle',
         // 'border-style': 'solid',
-        color: COLORS.text,
-        'text-outline-color': COLORS.selection,
-        'text-outline-width': 0,
         // 'border-color': COLORS.stroke,
         // 'border-width': '2',
         'background-opacity': 0,
-        'font-family': 'NatoSansMath',
-        'font-size': '15px',
         content: 'data(label)'
+      }
+    },
+    {
+      selector: 'node[label]',
+      style: {
+        color: COLORS.text,
+        'text-outline-color': COLORS.selection,
+        'text-outline-width': 0,
+        'text-valign': 'center',
+        'font-size': '15px'
       }
     },
     {
