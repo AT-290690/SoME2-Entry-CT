@@ -1,23 +1,18 @@
-const PREDIFINED_TREES = {};
 const CONTENT = [];
 
-fetch(`./src/lesson/lesson.tex`)
-  .then(buffer => buffer.text())
-  .then(text => {
-    text
-      .split('#Slide')
-      .filter(Boolean)
-      .forEach((text, index) => {
-        CONTENT[index] = { text: text.trim(), object: PREDIFINED_TREES[index] };
-      });
-  });
+[...document.getElementsByClassName('slide')].forEach((text, index) => {
+  CONTENT[index] = { text, object: window['PREDIFINED_TREES'][index] };
+});
 
 let latex;
 const lesson = {
   interface: {
     index: 0,
     show: (element: HTMLElement) => {
-      element.textContent = lesson.content[lesson.interface.index].text;
+      // element.textContent = lesson.content[lesson.interface.index].text;
+
+      lesson.content[lesson.interface.index].text.style.display = 'block';
+
       if (!latex) {
         latex = window['MathJax'] as {
           typeset: () => void;
@@ -27,11 +22,16 @@ const lesson = {
       }
       latex.typeset();
     },
-    incIndex: () =>
+    incIndex: () => {
+      lesson.content[lesson.interface.index].text.style.display = 'none';
       lesson.interface.index < lesson.content.length - 1
         ? lesson.interface.index++
-        : 0,
-    decIndex: () => (lesson.interface.index > 0 ? lesson.interface.index-- : 0)
+        : 0;
+    },
+    decIndex: () => {
+      lesson.content[lesson.interface.index].text.style.display = 'none';
+      lesson.interface.index > 0 ? lesson.interface.index-- : 0;
+    }
   },
   content: CONTENT
 };

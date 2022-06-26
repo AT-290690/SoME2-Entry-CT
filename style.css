@@ -171,3 +171,7 @@ body {
   background-color: transparent;
   pointer-events: none;
 }
+
+.slide {
+  display: none;
+}

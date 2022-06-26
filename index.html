@@ -27,12 +27,19 @@
     </button>
     <button id="tutorial-button">start lesson</button>
     <div id="comments-section"></div>
+
     <div id="lesson-section">
       <div style="display: flex; justify-content: space-around">
         <button id="lesson-button-right">←</button>
         <button id="lesson-button-left">→</button>
       </div>
-      <div id="lesson-content"></div>
+
+      <div id="lesson-content">
+        <div class="slide">
+          \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they
+          are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+        </div>
+      </div>
     </div>
 
     <input id="variableInput" placeholder="..." spellcheck="false" disabled />
@@ -40,7 +47,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.21.1/cytoscape.min.js"></script>
     <script>
       window.exports = {};
-      const PREDIFINED_TREES = {};
+      window.PREDIFINED_TREES = {};
     </script>
     <script defer src="diagram.js"></script>
     <script src="dist/abc.js"></script>

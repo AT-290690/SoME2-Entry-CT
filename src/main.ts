@@ -180,10 +180,10 @@ const cy = cytoscape({
   // interaction options:
   minZoom: 0.4,
   maxZoom: 6,
-  zoomingEnabled: true,
-  userZoomingEnabled: true,
-  panningEnabled: true, // drag
-  userPanningEnabled: true,
+  zoomingEnabled: false,
+  userZoomingEnabled: false,
+  panningEnabled: false, // drag
+  userPanningEnabled: false,
   boxSelectionEnabled: true,
   selectionType: 'single',
   touchTapThreshold: 8,
