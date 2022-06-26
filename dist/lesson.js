@@ -4,10 +4,10 @@ fetch(`./src/lesson/lesson.tex`)
     .then(buffer => buffer.text())
     .then(text => {
     text
-        .split('#Slide\n')
+        .split('#Slide')
         .filter(Boolean)
         .forEach((text, index) => {
-        CONTENT[index] = { text, object: PREDIFINED_TREES[index] };
+        CONTENT[index] = { text: text.trim(), object: PREDIFINED_TREES[index] };
     });
 });
 let latex;
@@ -18,17 +18,6 @@ const lesson = {
             element.textContent = lesson.content[lesson.interface.index].text;
             if (!latex) {
                 latex = window['MathJax'];
-                latex.loader = { load: ['[tex]/ams'] };
-                latex.tex = {
-                    packages: { '[+]': ['ams'] },
-                    inlineMath: [
-                        ['$', '$'],
-                        ['\\(', '\\)']
-                    ]
-                };
-                latex.svg = {
-                    fontCache: 'global'
-                };
             }
             latex.typeset();
         },
