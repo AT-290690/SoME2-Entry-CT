@@ -27,6 +27,14 @@ body {
   height: 98vh;
   border: none;
 }
+#lesson-switch {
+  position: absolute;
+  top: 0;
+  left: 30vw;
+  width: 40vw;
+  display: flex;
+  justify-content: space-around;
+}
 .autocomplete-option:hover {
   opacity: 1;
   background-color: gold;
@@ -171,7 +179,9 @@ body {
   background-color: transparent;
   pointer-events: none;
 }
-
 .slide {
   display: none;
+}
+.slide * {
+  pointer-events: none;
 }

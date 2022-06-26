@@ -13,7 +13,21 @@
     <link href="./style.css" rel="stylesheet" />
   </head>
   <body>
+    <div id="lesson-section">
+      <div id="lesson-content">
+        <div class="slide">
+          <p>
+            \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and
+            they are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+          </p>
+      </div>
+    </div>
+
     <div id="tree"></div>
+    <div id="lesson-switch">
+      <button id="lesson-button-right">←</button>
+      <button id="lesson-button-left">→</button>
+    </div>
     <div id="autocomplete"></div>
     <div id="menu-section">
       <button id="save">↓</button>
@@ -27,24 +41,6 @@
     </button>
     <button id="tutorial-button">start lesson</button>
     <div id="comments-section"></div>
-
-    <div id="lesson-section">
-      <div style="display: flex; justify-content: space-around">
-        <button id="lesson-button-right">←</button>
-        <button id="lesson-button-left">→</button>
-      </div>
-
-      <div id="lesson-content">
-        <div class="slide">
-          \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they
-          are $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
-        </div>
-        <div class="slide">
-          \(a \ne 0\), sdlutions to \(ax^2 + bx + c = 0\) and they are $$x = {-b
-          \pm \sqrt{b^2-4ac} \over 2a}.$$
-        </div>
-      </div>
-    </div>
 
     <input id="variableInput" placeholder="..." spellcheck="false" disabled />
     <a id="selectedIndex">none : none</a>
