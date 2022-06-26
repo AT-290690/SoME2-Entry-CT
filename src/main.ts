@@ -504,6 +504,7 @@ const graphFromJson = (input: object) => {
 const displayLesson = () => {
   lesson.interface.show();
   const object = lesson.content[lesson.interface.index].object;
+  clearSelection();
   clearTree();
   if (object) {
     graphFromJson(object);
