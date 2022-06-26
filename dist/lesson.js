@@ -1,13 +1,15 @@
 const PREDIFINED_TREES = {};
 const CONTENT = [];
-const COUNT = 3;
-for (let i = 0; i < COUNT; i++) {
-    fetch(`./src/lessons/${i}.txt`)
-        .then(buffer => buffer.text())
-        .then(text => {
-        CONTENT[i] = { text, object: PREDIFINED_TREES[i] };
+fetch(`./src/lesson/lesson.tex`)
+    .then(buffer => buffer.text())
+    .then(text => {
+    text
+        .split('#Slide\n')
+        .filter(Boolean)
+        .forEach((text, index) => {
+        CONTENT[index] = { text, object: PREDIFINED_TREES[index] };
     });
-}
+});
 let latex;
 const lesson = {
     interface: {
@@ -16,7 +18,9 @@ const lesson = {
             element.textContent = lesson.content[lesson.interface.index].text;
             if (!latex) {
                 latex = window['MathJax'];
+                latex.loader = { load: ['[tex]/ams'] };
                 latex.tex = {
+                    packages: { '[+]': ['ams'] },
                     inlineMath: [
                         ['$', '$'],
                         ['\\(', '\\)']
