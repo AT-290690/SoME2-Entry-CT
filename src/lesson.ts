@@ -533,7 +533,7 @@ PREDIFINED_TREES[1] = {
 const COUNT = 3;
 
 for (let i = 0; i < COUNT; i++) {
-  fetch(`/src/lessons/${i}.txt`)
+  fetch(`./src/lessons/${i}.txt`)
     .then(buffer => buffer.text())
     .then(text => {
       CONTENT[i] = { text, object: PREDIFINED_TREES[i] };
@@ -544,7 +544,7 @@ const lesson = {
   interface: {
     index: 0,
     show: (element: HTMLElement) => {
-      element.innerHTML = lesson.content[lesson.interface.index].text;
+      element.textContent = lesson.content[lesson.interface.index].text;
       latex?.typeset();
     },
     incIndex: () =>
