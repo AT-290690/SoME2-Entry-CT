@@ -131,7 +131,6 @@ body {
   bottom: 100px;
   background-color: transparent;
   border: none;
-  border-bottom: solid 1px black;
   outline: none;
   width: 100vw;
   margin: auto;
@@ -153,13 +152,18 @@ body {
   font-size: 15px;
   font-weight: 600;
   position: fixed;
-  bottom: 50px;
+  bottom: 0;
   width: 100vw;
   margin: auto;
   text-align: center;
   z-index: 1000;
   color: var(--color-primary);
   user-select: none;
+  border-top: solid 1px black;
+  border-bottom: solid 1px black;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: var(--background-primary);
 }
 #infoGuide {
   user-select: none;
