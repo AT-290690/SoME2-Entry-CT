@@ -5,7 +5,11 @@ const CONTENT = [];
 const lesson = {
     interface: {
         index: 0,
-        show: () => (lesson.content[lesson.interface.index].text.style.display = 'block'),
+        show: () => {
+            const currentLesson = lesson.content[lesson.interface.index].text;
+            currentLesson.style.display = 'block';
+            return currentLesson;
+        },
         incIndex: () => {
             lesson.content[lesson.interface.index].text.style.display = 'none';
             lesson.interface.index < lesson.content.length - 1

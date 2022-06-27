@@ -139,8 +139,8 @@ const cy = cytoscape({
     maxZoom: 6,
     zoomingEnabled: false,
     userZoomingEnabled: false,
-    panningEnabled: false,
-    userPanningEnabled: false,
+    panningEnabled: true,
+    userPanningEnabled: true,
     boxSelectionEnabled: true,
     selectionType: 'single',
     touchTapThreshold: 8,
@@ -400,15 +400,23 @@ const graphFromJson = (input) => {
     }
 };
 const displayLesson = () => {
-    lesson.interface.show();
+    const element = lesson.interface.show();
     const object = lesson.content[lesson.interface.index].object;
     clearSelection();
     clearTree();
     if (object) {
         graphFromJson(object);
     }
+    positionAbsoluteElement(element, { x: 0, y: 0 });
 };
 cy.ready(() => {
+    cy.on('pan', () => {
+        const currentLesson = lesson.content[lesson.interface.index].text;
+        if (currentLesson) {
+            const pan = cy.pan();
+            positionAbsoluteElement(currentLesson, pan);
+        }
+    });
     elements.tutorialButton.addEventListener('click', () => {
         elements.tutorialButton.style.display = 'none';
         displayLesson();

@@ -23,8 +23,8 @@ body {
 }
 
 #tree {
-  width: 99vw;
-  height: 98vh;
+  width: 100vw;
+  height: 100vh;
   border: none;
 }
 #lesson-switch {
@@ -102,7 +102,7 @@ body {
   padding: 10px;
   user-select: none;
   pointer-events: none;
-  width: 50vw;
+  width: 100vw;
 }
 #tutorial-button {
   position: absolute;
@@ -181,6 +181,7 @@ body {
 }
 .slide {
   display: none;
+  position: absolute;
 }
 .slide * {
   pointer-events: none;
