@@ -13,22 +13,50 @@
     <link href="./style.css" rel="stylesheet" />
   </head>
   <body>
-    <!--Bunch of Latex command I use over and over-->
-    \(
-      \newcommand{\C}{\mathcal{C}}
-      \newcommand{\ob}{\operatorname{Ob}}
-    \)
+
     <div id="lesson-section">
+      <!--Bunch of Latex command I use over and over-->
+      \(
+        \newcommand{\C}{\mathcal{C}}
+        \newcommand{\ob}{\operatorname{Ob}}
+        \newcommand{\id}{\operatorname{id}}
+      \)  
       <div id="lesson-content">
         <div class="slide">
-          <h2>Lesson 1 : What is category</h2>
-          <div style="display: grid; gap: 100px">
+          <!--style="display: grid; gap: 100px"-->
+          <div style="display: grid; width: 50em; text-align: justify;">
+            <h3>The data required for $\C$ to be a category</h3>
             <p>
-              During our journey in the country of abstraction, we met something. Its name is $\C$ and it pretends to be a category. What does it mean? What can we do with it?
-  
-              <h3>The data required for $\C$ to be called a category</h3>
-              To be a category, $\C$ has to possess a bunch of <i>objects</i>. Those objects can be anything and we assume that they form a collection called $\ob \C$. <i>Double click anywhere on the screen to create a new object of $\C$.</i>
+              To be a category, $\C$ has to possess a bunch of <i>objects</i>. Those objects can be anything and we assume that they form a collection called $\ob \C$. 
+              <br>
+              <i>Double click anywhere on the screen to create a new object of the category $\C$.</i>
             </p>
+            <p>
+              Usually, $\ob \C$ is an homogeneous collection of things, concepts, ideas, constructions... For instance, $\ob \C$ could be the collection of all human being, one object of $\C$ per human being. $\ob \C$ could also be the natural numbers, one object of $\C$ per natural number. But the truth is, we don't really need to know, the only thing to remember is that we have this collection. What it represents is none of our business.
+            </p>
+            <p>
+              Objects are lonely, hence category connects them. For any two objects, let's call them $X, Y \in \ob \C$, we have a new collection of things. We call it $\C(X, Y)$. This collection represents the links (also called arrows or morphisms) from $X$ to $Y$. Beware, $\C(X, Y)$ is not the same thing as $\C(Y, X)$, arrows are directed! To denote an arrow $f \in \C(X, Y)$, we often write $f : X \to Y$. It represents a way to link $X$ to $Y$, and there could be a lot of ways to link $X$ to $Y$, the collection $\C(X, Y)$ can have a lot of entities.
+              <br>
+              <i>Invoke two objects $X, Y$ of $\C$. Click on $X$, $Y$ and then on the connection button to create a morphism from $X$ to $Y$. Try to create multiple links between the two, in different directions.</i>
+            </p>
+            <p>
+              For every object $X \in \ob \C$, there is a special arrow from $X$ to $X$, called the identity. We write $\id_X : X \to X$.
+              <br>
+              <i>When you try to draw an arrow between objects with the same name, you can can choose the identity button.</i>
+            </p>
+            <p>
+              One piece of data is missing in order to form a category. We need a way to merge arrows together. Suppose we have three objects $X, Y, Z \in \ob C$ and two arrows $f \in \C(X, Y)$ and $g : \C(Y, Z)$. The composition of $f$ and $g$ is the data of an arrow in $\C(X, Z)$ and is written $g\circ f$.
+              <br>
+              <i>Select $f$, then $g$ and click on the composition button to see the compisite arrow.</i>
+            </p>
+          </div>
+        </div>
+        <div class="slide">
+          <div style="display: grid; width: 50em; text-align: justify;">
+            <p>
+
+            </p>
+            Two more pieces of data are needed. They are not things, like objects and morphisms but rather and way to 
           </div>
         </div>
       </div>
