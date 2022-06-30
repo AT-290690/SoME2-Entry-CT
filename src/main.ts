@@ -1,8 +1,9 @@
 'use strict';
 
 type Roles = 'node' | 'edge';
-type EdgeVariants = 'Morphism' | 'Universal' | 'Composition';
+type EdgeVariants = 'Morphism' | 'Universal';
 type NodeVariants = 'Object';
+type Properties = 'Composition';
 
 type Variant = NodeVariants | EdgeVariants;
 interface Seleciton {
@@ -24,6 +25,7 @@ interface Payload {
   id: string;
   type: Roles;
   variant: Variant;
+  properties?: Properties[];
 }
 
 interface Vertex {
@@ -506,10 +508,13 @@ const graphFromJson = (input: object) => {
           'line-dash-offset': 1
         });
         edge.data({ variant: 'Universal' });
-      } else if (data.variant === 'Composition') {
-        edge.style({
-          'curve-style': 'unbundled-bezier'
-        });
+      }
+      if (data.properties) {
+        if (data.properties.includes('Composition')) {
+          edge.style({
+            'curve-style': 'unbundled-bezier'
+          });
+        }
       }
     });
     cy.zoom({
@@ -577,7 +582,12 @@ cy.ready(() => {
         const edge = connectNodes(label).style({
           'curve-style': 'unbundled-bezier'
         });
-        edge.data({ variant: 'Composition' });
+        const data = edge.data();
+        if (data.properties) {
+          edge.data({ properties: [...data.properties, 'Composition'] });
+        } else {
+          edge.data({ properties: ['Composition'] });
+        }
       } catch (err) {
         return console.error(err);
       }
@@ -729,7 +739,6 @@ cy.ready(() => {
   });
   cy.on('select', 'edge', e => {
     memo.edgeSelections.add(e.target.id());
-
     if (memo.edgeSelections.size > 1)
       elements.compositionButton.style.display = 'block';
     positionAbsoluteElement(

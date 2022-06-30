@@ -403,10 +403,12 @@ const graphFromJson = (input) => {
                 });
                 edge.data({ variant: 'Universal' });
             }
-            else if (data.variant === 'Composition') {
-                edge.style({
-                    'curve-style': 'unbundled-bezier'
-                });
+            if (data.properties) {
+                if (data.properties.includes('Composition')) {
+                    edge.style({
+                        'curve-style': 'unbundled-bezier'
+                    });
+                }
             }
         });
         cy.zoom({
@@ -471,7 +473,13 @@ cy.ready(() => {
                 const edge = connectNodes(label).style({
                     'curve-style': 'unbundled-bezier'
                 });
-                edge.data({ variant: 'Composition' });
+                const data = edge.data();
+                if (data.properties) {
+                    edge.data({ properties: [...data.properties, 'Composition'] });
+                }
+                else {
+                    edge.data({ properties: ['Composition'] });
+                }
             }
             catch (err) {
                 return console.error(err);
