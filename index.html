@@ -58,7 +58,9 @@
               The first law concerns the identity, it tells us that for any arrow $f : X \to Y$, then $f \circ \id_X = f$ and $\id_Y \circ f = f$.
             </p>
             <p>
-              The second law is associativity, thanks to it, we can 
+              The second law is associativity, thanks to it, we can <i>not care</i> when we follow a path in a diagram. Indeed, look at the three arrows below. There are two ways of composing them, one gives $h\circ (g\circ f)$ and the other $(h\circ g) \circ f$. A priori, these arrows need not to be equal, and associativity states they indeed are.
+              $$ h\circ (g\circ f) = (h\circ g) \circ f$$
+              This allows us to simply write $h\circ g \circ f$. Convenient, we can follow a path in a diagram without worrying about the parenthesis.
             </p>
           </div>
         </div>
@@ -96,3 +98,4 @@
     <script src="dist/main.js"></script>
   </body>
 </html>
+ 
