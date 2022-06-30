@@ -384,13 +384,31 @@ const offsetElementsIndexes = (elements) => {
     memo.edgeIndex = Math.max(maxEdgeIndex, memo.edgeIndex) + 1;
     return { nodes: offsetNodes || [], edges: offsetEdges || [] };
 };
-const seedGraph = (nodes, edges) => cy.add([...nodes, ...edges]);
+const seedGraph = (nodes, edges) => {
+    (edges === null || edges === void 0 ? void 0 : edges.length) ? cy.add([...nodes, ...edges]) : cy.add([...nodes]);
+};
 const graphFromJson = (input) => {
     const data = input;
     // clearTree();
     offsetElementsIndexes(data.elements);
     if (data.elements.nodes) {
         seedGraph(data.elements.nodes, data.elements.edges);
+        cy.edges().forEach(edge => {
+            const data = edge.data();
+            if (data.variant === 'Universal') {
+                edge.style({
+                    'line-style': 'dashed',
+                    'line-dash-pattern': [6, 3],
+                    'line-dash-offset': 1
+                });
+                edge.data({ variant: 'Universal' });
+            }
+            else if (data.variant === 'Composition') {
+                edge.style({
+                    'curve-style': 'unbundled-bezier'
+                });
+            }
+        });
         cy.zoom({
             level: data.zoom,
             position: cy.nodes().first().position()
@@ -450,7 +468,10 @@ cy.ready(() => {
                     .filter(Boolean)
                     .reverse()
                     .join(COMPOSITION_TOKEN);
-                connectNodes(label).style({ 'curve-style': 'unbundled-bezier' });
+                const edge = connectNodes(label).style({
+                    'curve-style': 'unbundled-bezier'
+                });
+                edge.data({ variant: 'Composition' });
             }
             catch (err) {
                 return console.error(err);
