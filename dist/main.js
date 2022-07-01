@@ -330,6 +330,12 @@ const clearSelection = () => {
         'text-outline-color': COLORS.selection
     })
         .unselect());
+    cy.edges().map(e => e
+        .style({
+        'line-color': COLORS.edges,
+        width: 1
+    })
+        .unselect());
     memo.selectedPairs.length = 0;
     memo.edgeSelections.clear();
     memo.lastSelection.id = undefined;
@@ -523,6 +529,7 @@ cy.ready(() => {
         }
     });
     const saveFile = () => {
+        clearSelection();
         const data = cy.json();
         const json = JSON.stringify(data);
         const a = document.createElement('a');
@@ -616,6 +623,28 @@ cy.ready(() => {
         inspectSelectionIndex({ type: 'none', id: 'none', label: '', comment: '' });
     });
     cy.on('select', 'edge', e => {
+        // const connections = edges.connectedNodes().map(
+        //   x => x.data().id
+        //   // x.connectedEdges().map(x => {
+        //   //   const data = x.data();
+        //   //   return { source: data.source, target: data.target };
+        //   // })
+        // );
+        e.target.style({ 'line-color': COLORS.selection, width: 3 });
+        const connections = [...memo.edgeSelections].map(x => {
+            const edge = cy.edges(`#${x}`).first();
+            edge.style({
+                'line-color': COLORS.selection,
+                width: 3
+            });
+            const { source, target } = edge.data();
+            return { source, target };
+        });
+        for (let i = 1; i < connections.length; i += 1) {
+            if (connections[i].source !== connections[i - 1].target) {
+                return clearSelection();
+            }
+        }
         memo.edgeSelections.add(e.target.id());
         if (memo.edgeSelections.size > 1)
             elements.compositionButton.style.display = 'block';
