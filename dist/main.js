@@ -462,7 +462,24 @@ cy.ready(() => {
     });
     elements.compositionButton.addEventListener('click', () => {
         if (memo.edgeSelections.size) {
-            const edges = [...memo.edgeSelections].map(x => cy.edges(`#${x}`).first());
+            const edgeSelectionArray = [...memo.edgeSelections];
+            const connections = edgeSelectionArray.map(x => {
+                const edge = cy.edges(`#${x}`).first();
+                edge.style({
+                    'line-color': COLORS.selection,
+                    width: 3
+                });
+                const data = edge.data();
+                return { source: data.source, target: data.target };
+            });
+            for (let i = 1; i < connections.length; i += 1) {
+                if (connections[i].source !== connections[i - 1].target) {
+                    return clearSelection();
+                }
+            }
+            if (edgeSelectionArray.length === 0)
+                return;
+            const edges = edgeSelectionArray.map(x => cy.edges(`#${x}`).first());
             const first = edges[0];
             const last = edges[edges.length - 1];
             const fId = first.connectedNodes().first().id();
@@ -635,20 +652,6 @@ cy.ready(() => {
         if (memo.edgeSelections.size > 1)
             elements.compositionButton.style.display = 'block';
         positionAbsoluteElement(elements.compositionButton, offsetPosition(memo.mousePosition, -50, 50));
-        const connections = [...memo.edgeSelections].map(x => {
-            const edge = cy.edges(`#${x}`).first();
-            edge.style({
-                'line-color': COLORS.selection,
-                width: 3
-            });
-            const data = edge.data();
-            return { source: data.source, target: data.target };
-        });
-        for (let i = 1; i < connections.length; i += 1) {
-            if (connections[i].source !== connections[i - 1].target) {
-                return clearSelection();
-            }
-        }
     });
     cy.on('select', 'node', e => e.target.style('text-outline-width', 3));
     cy.on('click', 'node', clickNodes);
