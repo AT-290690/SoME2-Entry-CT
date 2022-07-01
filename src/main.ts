@@ -78,6 +78,8 @@ const elements: Record<string, any> = {
   autocompleteContainer: document.getElementById('autocomplete'),
   compositionButton: document.getElementById('composition-button'),
   connectionButton: document.getElementById('connection-button'),
+  connectionA: document.getElementById('connection-node-A'),
+  connectionB: document.getElementById('connection-node-B'),
   save: document.getElementById('save'),
   load: document.getElementById('load'),
   commentsSection: document.getElementById('comments-section'),
@@ -319,8 +321,9 @@ const clickNodes = (e: cytoscape.EventObjectNode) => {
   elements.commentsSection.innerHTML = current.comment ?? '';
   memo.selectedPairs.push(memo.lastSelection.id);
   const couple = memo.selectedPairs;
+  const incomming = cy.nodes(`#${couple[0]}`).first();
   const outgoing = cy.nodes(`#${couple[1]}`).first();
-  e.target.style({
+  incomming.style({
     'text-outline-width': 3,
     'text-outline-color': COLORS.selectionIncoming
   });
@@ -332,14 +335,17 @@ const clickNodes = (e: cytoscape.EventObjectNode) => {
   inspectSelectionIndex(
     memo.lastSelection,
     couple[1]
-      ? '[ ' + e.target.data().label + ' -> ' + outgoing.data().label + ' ]'
-      : '[ ' + e.target.data().label + ' -> ? ]'
+      ? '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
+      : '[ ' + incomming.data().label + ' -> ? ]'
   );
   if (memo.selectedPairs.length > 2) {
     clearSelection();
     clickNodes(e);
   } else if (memo.selectedPairs.length === 2) {
     elements.connectionButton.style.display = 'block';
+    elements.connectionA.textContent = incomming.data().label;
+    elements.connectionB.textContent = outgoing.data().label;
+
     positionAbsoluteElement(
       elements.connectionButton,
       offsetPosition(memo.mousePosition, -50, 50)

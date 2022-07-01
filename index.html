@@ -13,65 +13,126 @@
     <link href="./style.css" rel="stylesheet" />
   </head>
   <body>
-
     <div id="lesson-section">
       <!--Bunch of Latex command I use over and over-->
-      \(
-        \newcommand{\C}{\mathcal{C}}
-        \newcommand{\ob}{\operatorname{Ob}}
-        \newcommand{\id}{\operatorname{id}}
-      \)  
+      \( \newcommand{\C}{\mathcal{C}} \newcommand{\ob}{\operatorname{Ob}}
+      \newcommand{\id}{\operatorname{id}} \)
       <div id="lesson-content">
         <!--LESSON TUTORIAL-->
         <div class="slide">
           <!--style="display: grid; gap: 100px"-->
-          <div style="display: grid; width: 50em; text-align: justify;">
+          <div style="display: grid; width: 50em; text-align: justify">
             <h3>The data required for $\C$ to be a category</h3>
             <p>
-              To be a category, $\C$ has to possess a bunch of <i>objects</i>. Those objects can be anything and we assume that they form a collection called $\ob \C$. 
-              <br>
-              <i>Double click anywhere on the screen to create a new object of the category $\C$.</i>
+              To be a category, $\C$ has to possess a bunch of <i>objects</i>.
+              Those objects can be anything and we assume that they form a
+              collection called $\ob \C$.
+              <br />
+              <i
+                >Double click anywhere on the screen to create a new object of
+                the category $\C$.</i
+              >
             </p>
             <p>
-              Usually, $\ob \C$ is an homogeneous collection of things, concepts, ideas, constructions... For instance, $\ob \C$ could be the collection of all human being, one object of $\C$ per human being. $\ob \C$ could also be the natural numbers, one object of $\C$ per natural number. But the truth is, we don't really need to know, the only thing to remember is that we have this collection. What it represents is none of our business.
+              Usually, $\ob \C$ is an homogeneous collection of things,
+              concepts, ideas, constructions... For instance, $\ob \C$ could be
+              the collection of all human being, one object of $\C$ per human
+              being. $\ob \C$ could also be the natural numbers, one object of
+              $\C$ per natural number. But the truth is, we don't really need to
+              know, the only thing to remember is that we have this collection.
+              What it represents is none of our business.
             </p>
             <p>
-              Objects are lonely, hence category connects them. For any two objects, let's call them $X, Y \in \ob \C$, we have a new collection of things. We call it $\C(X, Y)$. This collection represents the links (also called arrows or morphisms) from $X$ to $Y$. Beware, $\C(X, Y)$ is not the same thing as $\C(Y, X)$, arrows are directed! To denote an arrow $f \in \C(X, Y)$, we often write $f : X \to Y$. It represents a way to link $X$ to $Y$, and there could be a lot of ways to link $X$ to $Y$, the collection $\C(X, Y)$ can have a lot of entities.
-              <br>
-              <i>Invoke two objects $X, Y$ of $\C$. Click on $X$, $Y$ and then on the connection button to create a morphism from $X$ to $Y$. Try to create multiple links between the two, in different directions.</i>
+              Objects are lonely, hence category connects them. For any two
+              objects, let's call them $X, Y \in \ob \C$, we have a new
+              collection of things. We call it $\C(X, Y)$. This collection
+              represents the links (also called arrows or morphisms) from $X$ to
+              $Y$. Beware, $\C(X, Y)$ is not the same thing as $\C(Y, X)$,
+              arrows are directed! To denote an arrow $f \in \C(X, Y)$, we often
+              write $f : X \to Y$. It represents a way to link $X$ to $Y$, and
+              there could be a lot of ways to link $X$ to $Y$, the collection
+              $\C(X, Y)$ can have a lot of entities.
+              <br />
+              <i
+                >Invoke two objects $X, Y$ of $\C$. Click on $X$, $Y$ and then
+                on the connection button to create a morphism from $X$ to $Y$.
+                Try to create multiple links between the two, in different
+                directions.</i
+              >
             </p>
             <p>
-              For every object $X \in \ob \C$, there is a special arrow from $X$ to $X$, called the identity. We write $\id_X : X \to X$.
-              <br>
-              <i>When you try to draw an arrow between objects with the same name, you can can choose the identity button.</i>
+              For every object $X \in \ob \C$, there is a special arrow from $X$
+              to $X$, called the identity. We write $\id_X : X \to X$.
+              <br />
+              <i
+                >When you try to draw an arrow between objects with the same
+                name, you can can choose the identity button.</i
+              >
             </p>
             <p>
-              One piece of data is missing in order to form a category. We need a way to merge arrows together. Suppose we have three objects $X, Y, Z \in \ob C$ and two arrows $f \in \C(X, Y)$ and $g : \C(Y, Z)$. The composition of $f$ and $g$ is the data of an arrow in $\C(X, Z)$ and is written $g\circ f$.
-              <br>
-              <i>Select $f$, then $g$ and click on the composition button to see the compisite arrow.</i>
+              One piece of data is missing in order to form a category. We need
+              a way to merge arrows together. Suppose we have three objects $X,
+              Y, Z \in \ob C$ and two arrows $f \in \C(X, Y)$ and $g : \C(Y,
+              Z)$. The composition of $f$ and $g$ is the data of an arrow in
+              $\C(X, Z)$ and is written $g\circ f$.
+              <br />
+              <i
+                >Select $f$, then $g$ and click on the composition button to see
+                the compisite arrow.</i
+              >
             </p>
           </div>
         </div>
         <div class="slide">
-          <div style="display: grid; width: 50em; text-align: justify;">
+          <div style="display: grid; width: 50em; text-align: justify">
             <h3>The laws this data must follow for $\C$ to be a category</h3>
             <p>
-              The first law concerns the identity, it tells us that for any arrow $f : X \to Y$, then $f \circ \id_X = f$ and $\id_Y \circ f = f$.
+              The first law concerns the identity, it tells us that for any
+              arrow $f : X \to Y$, then $f \circ \id_X = f$ and $\id_Y \circ f =
+              f$.
             </p>
             <p>
-              The second law is associativity, thanks to it, we can <i>not care</i> when we follow a path in a diagram. Indeed, look at the three arrows below. There are two ways of composing them, one gives $h\circ (g\circ f)$ and the other $(h\circ g) \circ f$. A priori, these arrows need not to be equal, and associativity states they indeed are.
-              $$ h\circ (g\circ f) = (h\circ g) \circ f$$
-              This allows us to simply write $h\circ g \circ f$. Convenient, we can follow a path in a diagram without worrying about the parenthesis.
+              The second law is associativity, thanks to it, we can
+              <i>not care</i> when we follow a path in a diagram. Indeed, look
+              at the three arrows below. There are two ways of composing them,
+              one gives $h\circ (g\circ f)$ and the other $(h\circ g) \circ f$.
+              A priori, these arrows need not to be equal, and associativity
+              states they indeed are. $$ h\circ (g\circ f) = (h\circ g) \circ
+              f$$ This allows us to simply write $h\circ g \circ f$. Convenient,
+              we can follow a path in a diagram without worrying about the
+              parenthesis.
             </p>
           </div>
         </div>
         <!------------------->
         <!--LESSON PRODUCT--->
         <div class="slide">
-          <div style="display: grid; width: 50em; text-align: justify;">
-            <p>Now that we know what a category is, it is time to start doing interesting construction with it. Inside the category $\C$, we can construct particular objects that come with <i>superpower</i>. In general, when we have two object $X, Y$ of the category, we don't know a priori what are the morphisms between them. There could be none, there could be a lot, they could have interesting properties, or not. We don't know. We say that an object $X$ has a <i>superpower</i>, (really called a <i>universal property</i>) if we have interesting things to say about the arrows from (or to) $X$. The most basic example is the notion of initial object. An object $I \in \C$ is initial if, for any other object $Y$ of the category, there exists one and only one arrow from $I$ to $Y$.</p>
-            <p>Dually, an object $T$ is terminal if there exactly one arrow from any object $Y$ to $T$.</p>
-            <p><i>We instanciated a terminal and an initial object on the screen. Instantiate other objects and draw some arrows using their superpower.</i></p>
+          <div style="display: grid; width: 50em; text-align: justify">
+            <p>
+              Now that we know what a category is, it is time to start doing
+              interesting construction with it. Inside the category $\C$, we can
+              construct particular objects that come with <i>superpower</i>. In
+              general, when we have two object $X, Y$ of the category, we don't
+              know a priori what are the morphisms between them. There could be
+              none, there could be a lot, they could have interesting
+              properties, or not. We don't know. We say that an object $X$ has a
+              <i>superpower</i>, (really called a <i>universal property</i>) if
+              we have interesting things to say about the arrows from (or to)
+              $X$. The most basic example is the notion of initial object. An
+              object $I \in \C$ is initial if, for any other object $Y$ of the
+              category, there exists one and only one arrow from $I$ to $Y$.
+            </p>
+            <p>
+              Dually, an object $T$ is terminal if there exactly one arrow from
+              any object $Y$ to $T$.
+            </p>
+            <p>
+              <i
+                >We instanciated a terminal and an initial object on the screen.
+                Instantiate other objects and draw some arrows using their
+                superpower.</i
+              >
+            </p>
           </div>
         </div>
 
@@ -91,8 +152,11 @@
 
     <button id="composition-button" style="display: none">𝒇 ∘ 𝒉</button>
     <button id="connection-button" style="display: none">
-      <span style="color: var(--color-incomming)">𝐀</span> →
-      <span style="color: var(--color-outgoing)">𝐁</span>
+      <span style="color: var(--color-incomming)" id="connection-node-A"
+        >𝐀</span
+      >
+      →
+      <span style="color: var(--color-outgoing)" id="connection-node-B">𝐁</span>
     </button>
     <button id="tutorial-button">start lesson</button>
     <div id="comments-section"></div>
@@ -110,4 +174,3 @@
     <script src="dist/main.js"></script>
   </body>
 </html>
- 
