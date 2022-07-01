@@ -90,6 +90,7 @@ body {
   left: 10px;
 }
 #lesson-section {
+  visibility: hidden;
   position: absolute;
   background: transparent;
   padding: 10px;
@@ -114,6 +115,7 @@ body {
 }
 #lesson-button-left,
 #lesson-button-right {
+  display: none;
   border: none;
   cursor: pointer;
   opacity: 0.5;

@@ -553,6 +553,9 @@ cy.ready(() => {
   });
   elements.tutorialButton.addEventListener('click', () => {
     elements.tutorialButton.style.display = 'none';
+    elements.lessonPrev.style.display = 'block';
+    elements.lessonNext.style.display = 'block';
+    elements.lessonSection.style.visibility = 'visible';
     displayLesson();
   });
   elements.lessonPrev.addEventListener('click', () => {
