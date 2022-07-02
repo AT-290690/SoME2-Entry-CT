@@ -193,7 +193,6 @@ body {
 }
 
 rules {
-  visibility: 'hidden';
   pointer-events: none;
   user-select: none;
 }
