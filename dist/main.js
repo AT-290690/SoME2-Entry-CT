@@ -32,7 +32,8 @@ const memo = {
     edgeSelections: new Set(),
     mousePosition: { x: 0, y: 0 },
     nodeIndex: 0,
-    edgeIndex: 0
+    edgeIndex: 0,
+    ruleBook: []
 };
 const elements = {
     selectedIndex: document.getElementById('selectedIndex'),
@@ -279,7 +280,8 @@ const clickNodes = (e) => {
         clearSelection();
         clickNodes(e);
     }
-    else if (memo.nodePairsSelections.length === 2) {
+    else if (memo.nodePairsSelections.length === 2 &&
+        !memo.ruleBook.includes('No Edge Creation')) {
         elements.connectionButton.style.display = 'block';
         elements.connectionA.textContent = incomming.data().label;
         elements.connectionB.textContent = outgoing.data().label;
@@ -346,14 +348,16 @@ const clearSelection = () => {
 };
 const renameVariable = (value = DEFAULT_TOKEN) => {
     const label = value.trim();
-    if (memo.lastSelection.type === 'node') {
+    if (memo.lastSelection.type === 'node' &&
+        !memo.ruleBook.includes('No Node Renaming')) {
         cy.nodes(`#${memo.lastSelection.id}`)
             .first()
             .data({
             label: label === '' ? DEFAULT_TOKEN : label
         });
     }
-    else if (memo.lastSelection.type === 'edge') {
+    else if (memo.lastSelection.type === 'edge' &&
+        !memo.ruleBook.includes('No Edge Renaming')) {
         cy.edges(`#${memo.lastSelection.id}`).first().data({
             label
         });
@@ -432,7 +436,17 @@ const graphFromJson = (input) => {
         incIndex();
     }
 };
+const rules = [...document.getElementsByTagName('rules')].map(el => el.textContent
+    .trim()
+    .split(',')
+    .filter(Boolean)
+    .map(rule => rule.trim()));
+const applyRules = () => {
+    var _a;
+    memo.ruleBook = (_a = rules[lesson.interface.index]) !== null && _a !== void 0 ? _a : [];
+};
 const displayLesson = () => {
+    applyRules();
     const element = lesson.interface.show();
     const object = lesson.content[lesson.interface.index].object;
     clearSelection();
@@ -466,7 +480,8 @@ cy.ready(() => {
         displayLesson();
     });
     elements.connectionButton.addEventListener('click', () => {
-        if (memo.nodePairsSelections.length === 2) {
+        if (memo.nodePairsSelections.length === 2 &&
+            !memo.ruleBook.includes('No Edge Creation')) {
             connectNodes(elements.connectionA.textContent !== DEFAULT_TOKEN &&
                 elements.connectionA.textContent === elements.connectionB.textContent
                 ? toSuperscript('id') + elements.connectionA.textContent
@@ -555,7 +570,8 @@ cy.ready(() => {
         };
     });
     document.addEventListener('dblclick', () => {
-        if (document.activeElement === document.body &&
+        if (!memo.ruleBook.includes('No Node Creation') &&
+            document.activeElement === document.body &&
             !memo.nodePairsSelections.length &&
             !memo.lastSelection.id) {
             memo.lastSelection.id = null;
@@ -648,12 +664,14 @@ cy.ready(() => {
             });
         }
         if (e.key === 'Delete' || (e.ctrlKey && e.key === 'Backspace')) {
-            if (memo.lastSelection.type !== 'edge') {
+            if (memo.lastSelection.type === 'node' &&
+                !memo.ruleBook.includes('No Node Destruction')) {
                 hasEdges(memo.lastSelection.id)
                     ? removeNodeEdges(memo.lastSelection.id)
                     : removeNode(memo.lastSelection.id);
             }
-            else {
+            else if (memo.lastSelection.type === 'edge' &&
+                !memo.ruleBook.includes('No Edge Destruction')) {
                 removeEdge(memo.lastSelection.id);
             }
             clearSelection();
@@ -679,14 +697,16 @@ cy.ready(() => {
         // );
         e.target.style({ 'line-color': COLORS.selection, width: 3 });
         memo.edgeSelections.add(e.target.id());
-        if (memo.edgeSelections.size > 1) {
+        if (memo.edgeSelections.size > 1 &&
+            !memo.ruleBook.includes('No Composition')) {
             elements.compositionButton.style.display = 'block';
             positionAbsoluteElement(elements.compositionButton, offsetPosition(memo.mousePosition, -50, 50));
         }
     });
     cy.on('select', 'node', e => e.target.style('text-outline-width', 3));
     cy.on('click', 'node', clickNodes);
-    cy.on('dblclick', 'edge', e => e.target.data().variant === 'Universal'
+    cy.on('dblclick', 'edge', e => e.target.data().variant === 'Universal' &&
+        !memo.ruleBook.includes('No Universal Property')
         ? e.target
             .style({
             'line-style': 'solid',

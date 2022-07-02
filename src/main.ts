@@ -4,7 +4,15 @@ type Roles = 'node' | 'edge';
 type EdgeVariants = 'Morphism' | 'Universal';
 type NodeVariants = 'Object';
 type Properties = 'Composition-Unbundled' | 'Composition-Bundled';
-
+type Rules =
+  | 'No Node Renaming'
+  | 'No Node Creation'
+  | 'No Node Destruction'
+  | 'No Edge Renaming'
+  | 'No Edge Creation'
+  | 'No Edge Destruction'
+  | 'No Composition'
+  | 'No Universal Property';
 type Variant = NodeVariants | EdgeVariants;
 interface Seleciton {
   id?: string;
@@ -46,6 +54,7 @@ interface State {
   mousePosition: Coordinates2D;
   nodeIndex: number;
   edgeIndex: number;
+  ruleBook: Rules[];
 }
 
 const COLORS: Record<string, string> = {
@@ -76,7 +85,8 @@ const memo: State = {
   edgeSelections: new Set(),
   mousePosition: { x: 0, y: 0 },
   nodeIndex: 0,
-  edgeIndex: 0
+  edgeIndex: 0,
+  ruleBook: []
 };
 
 const elements: Record<string, any> = {
@@ -340,7 +350,10 @@ const clickNodes = (e: cytoscape.EventObjectNode) => {
   if (memo.nodePairsSelections.length > 2) {
     clearSelection();
     clickNodes(e);
-  } else if (memo.nodePairsSelections.length === 2) {
+  } else if (
+    memo.nodePairsSelections.length === 2 &&
+    !memo.ruleBook.includes('No Edge Creation')
+  ) {
     elements.connectionButton.style.display = 'block';
     elements.connectionA.textContent = incomming.data().label;
     elements.connectionB.textContent = outgoing.data().label;
@@ -434,13 +447,19 @@ const clearSelection = () => {
 
 const renameVariable = (value = DEFAULT_TOKEN) => {
   const label = value.trim();
-  if (memo.lastSelection.type === 'node') {
+  if (
+    memo.lastSelection.type === 'node' &&
+    !memo.ruleBook.includes('No Node Renaming')
+  ) {
     cy.nodes(`#${memo.lastSelection.id}`)
       .first()
       .data({
         label: label === '' ? DEFAULT_TOKEN : label
       });
-  } else if (memo.lastSelection.type === 'edge') {
+  } else if (
+    memo.lastSelection.type === 'edge' &&
+    !memo.ruleBook.includes('No Edge Renaming')
+  ) {
     cy.edges(`#${memo.lastSelection.id}`).first().data({
       label
     });
@@ -541,7 +560,20 @@ const graphFromJson = (input: object) => {
     incIndex();
   }
 };
+
+const rules = [...document.getElementsByTagName('rules')].map(
+  el =>
+    el.textContent
+      .trim()
+      .split(',')
+      .filter(Boolean)
+      .map(rule => rule.trim()) as Rules[]
+);
+const applyRules = () => {
+  memo.ruleBook = rules[lesson.interface.index] ?? [];
+};
 const displayLesson = () => {
+  applyRules();
   const element = lesson.interface.show();
   const object = lesson.content[lesson.interface.index].object;
   clearSelection();
@@ -577,7 +609,10 @@ cy.ready(() => {
   });
 
   elements.connectionButton.addEventListener('click', () => {
-    if (memo.nodePairsSelections.length === 2) {
+    if (
+      memo.nodePairsSelections.length === 2 &&
+      !memo.ruleBook.includes('No Edge Creation')
+    ) {
       connectNodes(
         elements.connectionA.textContent !== DEFAULT_TOKEN &&
           elements.connectionA.textContent === elements.connectionB.textContent
@@ -671,6 +706,7 @@ cy.ready(() => {
   });
   document.addEventListener('dblclick', () => {
     if (
+      !memo.ruleBook.includes('No Node Creation') &&
       document.activeElement === document.body &&
       !memo.nodePairsSelections.length &&
       !memo.lastSelection.id
@@ -778,11 +814,17 @@ cy.ready(() => {
     }
 
     if (e.key === 'Delete' || (e.ctrlKey && e.key === 'Backspace')) {
-      if (memo.lastSelection.type !== 'edge') {
+      if (
+        memo.lastSelection.type === 'node' &&
+        !memo.ruleBook.includes('No Node Destruction')
+      ) {
         hasEdges(memo.lastSelection.id)
           ? removeNodeEdges(memo.lastSelection.id)
           : removeNode(memo.lastSelection.id);
-      } else {
+      } else if (
+        memo.lastSelection.type === 'edge' &&
+        !memo.ruleBook.includes('No Edge Destruction')
+      ) {
         removeEdge(memo.lastSelection.id);
       }
       clearSelection();
@@ -809,7 +851,10 @@ cy.ready(() => {
     e.target.style({ 'line-color': COLORS.selection, width: 3 });
 
     memo.edgeSelections.add(e.target.id());
-    if (memo.edgeSelections.size > 1) {
+    if (
+      memo.edgeSelections.size > 1 &&
+      !memo.ruleBook.includes('No Composition')
+    ) {
       elements.compositionButton.style.display = 'block';
       positionAbsoluteElement(
         elements.compositionButton,
@@ -821,7 +866,8 @@ cy.ready(() => {
   cy.on('select', 'node', e => e.target.style('text-outline-width', 3));
   cy.on('click', 'node', clickNodes);
   cy.on('dblclick', 'edge', e =>
-    e.target.data().variant === 'Universal'
+    e.target.data().variant === 'Universal' &&
+    !memo.ruleBook.includes('No Universal Property')
       ? e.target
           .style({
             'line-style': 'solid',

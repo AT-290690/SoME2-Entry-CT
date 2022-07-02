@@ -191,3 +191,9 @@ body {
 .slide * {
   pointer-events: none;
 }
+
+rules {
+  visibility: 'hidden';
+  pointer-events: none;
+  user-select: none;
+}
