@@ -20,7 +20,8 @@ const COLORS = {
     selectionBox: '#83e665'
 };
 const CURVES = {
-    composition: 'unbundled-bezier',
+    composition1: 'unbundled-bezier',
+    composition2: 'bezier',
     morphism: 'bezier'
 };
 const DEFAULT_TOKEN = '⦁';
@@ -412,9 +413,14 @@ const graphFromJson = (input) => {
                 });
                 edge.data({ variant: 'Universal' });
             }
-            if (data.properties.includes('Composition')) {
+            if (data.properties.includes('Composition-Unbundled')) {
                 edge.style({
-                    'curve-style': CURVES.composition
+                    'curve-style': CURVES.composition1
+                });
+            }
+            if (data.properties.includes('Composition-Bundled')) {
+                edge.style({
+                    'curve-style': CURVES.composition2
                 });
             }
         });
@@ -487,10 +493,14 @@ cy.ready(() => {
             if (edgeSelectionArray.length === 0)
                 return;
             const edges = edgeSelectionArray.map(x => cy.edges(`#${x}`).first());
-            const first = edges[0];
-            const last = edges[edges.length - 1];
-            const fId = first.connectedNodes().first().id();
-            const lId = last.connectedNodes().last().id();
+            const firstEdge = edges[0];
+            const lastEdge = edges[edges.length - 1];
+            const firstNode = firstEdge.connectedNodes().first();
+            const lastNode = lastEdge.connectedNodes().last();
+            // already existing edges between them
+            const exisingEdges = firstNode.edgesWith(lastNode);
+            const fId = firstNode.id();
+            const lId = lastNode.id();
             if (!fId || !lId)
                 return;
             memo.nodePairsSelections = [fId, lId];
@@ -499,11 +509,30 @@ cy.ready(() => {
                 .filter(Boolean)
                 .reverse()
                 .join(COMPOSITION_TOKEN);
-            const edge = connectNodes(label).style({
-                'curve-style': CURVES.composition
-            });
+            const edge = connectNodes(label);
             const data = edge.data();
-            edge.data({ properties: [...data.properties, 'Composition'] });
+            if (exisingEdges.length) {
+                exisingEdges.map(x => {
+                    x.style({
+                        'curve-style': CURVES.composition2
+                    });
+                    x.data({
+                        properties: [...x.data().properties, 'Composition-Bundled']
+                    });
+                });
+                edge.style({
+                    'curve-style': CURVES.composition2
+                });
+                edge.data({ properties: [...data.properties, 'Composition-Bundled'] });
+            }
+            else {
+                edge.style({
+                    'curve-style': CURVES.composition1
+                });
+                edge.data({
+                    properties: [...data.properties, 'Composition-Unbundled']
+                });
+            }
             // const size = edges.length;
             // if (edges.length > 2) {
             //   edges.forEach((element, index) => {
