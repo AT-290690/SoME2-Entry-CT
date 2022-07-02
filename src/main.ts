@@ -41,7 +41,7 @@ interface Elements {
 }
 interface State {
   lastSelection: Seleciton;
-  selectedPairs: string[];
+  nodePairsSelections: string[];
   edgeSelections: Set<string>;
   mousePosition: Coordinates2D;
   nodeIndex: number;
@@ -64,7 +64,7 @@ const COMPOSITION_TOKEN = '∘';
 
 const memo: State = {
   lastSelection: { id: undefined, type: 'node', label: '', comment: '' },
-  selectedPairs: [],
+  nodePairsSelections: [],
   edgeSelections: new Set(),
   mousePosition: { x: 0, y: 0 },
   nodeIndex: 0,
@@ -286,11 +286,11 @@ const clickEdges = (e: cytoscape.EventObjectEdge) => {
   };
   elements.variableInput.value = memo.lastSelection.label;
   elements.commentsSection.innerHTML = comment ?? '';
-  memo.selectedPairs.length = 0;
+  memo.nodePairsSelections.length = 0;
 };
 
 const connectNodes = (label?: string) => {
-  const couple = memo.selectedPairs;
+  const couple = memo.nodePairsSelections;
   if (!couple[0] && !couple[1]) {
     resetColorOfSelectedNodes(couple);
     clearSelection();
@@ -313,8 +313,8 @@ const clickNodes = (e: cytoscape.EventObjectNode) => {
   elements.variableInput.value =
     current.label === DEFAULT_TOKEN ? '' : current.label;
   elements.commentsSection.innerHTML = current.comment ?? '';
-  memo.selectedPairs.push(memo.lastSelection.id);
-  const couple = memo.selectedPairs;
+  memo.nodePairsSelections.push(memo.lastSelection.id);
+  const couple = memo.nodePairsSelections;
   const incomming = cy.nodes(`#${couple[0]}`).first();
   const outgoing = cy.nodes(`#${couple[1]}`).first();
   incomming.style({
@@ -331,10 +331,10 @@ const clickNodes = (e: cytoscape.EventObjectNode) => {
       ? '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
       : '[ ' + incomming.data().label + ' -> ? ]'
   );
-  if (memo.selectedPairs.length > 2) {
+  if (memo.nodePairsSelections.length > 2) {
     clearSelection();
     clickNodes(e);
-  } else if (memo.selectedPairs.length === 2) {
+  } else if (memo.nodePairsSelections.length === 2) {
     elements.connectionButton.style.display = 'block';
     elements.connectionA.textContent = incomming.data().label;
     elements.connectionB.textContent = outgoing.data().label;
@@ -360,7 +360,7 @@ const removeEdge = (id: string) => {
   cy.edges(`#${id}`).remove();
 };
 
-const resetColorOfSelectedNodes = (nodes = memo.selectedPairs) => {
+const resetColorOfSelectedNodes = (nodes = memo.nodePairsSelections) => {
   nodes.map((id: string) =>
     cy.nodes(`#${id}`).style({
       'text-outline-width': 0,
@@ -421,7 +421,7 @@ const clearSelection = () => {
       })
       .unselect()
   );
-  memo.selectedPairs.length = 0;
+  memo.nodePairsSelections.length = 0;
   memo.edgeSelections.clear();
   memo.lastSelection.id = undefined;
 };
@@ -566,7 +566,7 @@ cy.ready(() => {
   });
 
   elements.connectionButton.addEventListener('click', () => {
-    if (memo.selectedPairs.length === 2) {
+    if (memo.nodePairsSelections.length === 2) {
       connectNodes(
         elements.connectionA.textContent !== DEFAULT_TOKEN &&
           elements.connectionA.textContent === elements.connectionB.textContent
@@ -601,21 +601,17 @@ cy.ready(() => {
       const fId = first.connectedNodes().first().id();
       const lId = last.connectedNodes().last().id();
       if (!fId || !lId) return;
-      try {
-        memo.selectedPairs = [fId, lId];
-        const label = edges
-          .map(x => x.data().label)
-          .filter(Boolean)
-          .reverse()
-          .join(COMPOSITION_TOKEN);
-        const edge = connectNodes(label).style({
-          'curve-style': 'unbundled-bezier'
-        });
-        const data = edge.data();
-        edge.data({ properties: [...data.properties, 'Composition'] });
-      } catch (err) {
-        return console.error(err);
-      }
+      memo.nodePairsSelections = [fId, lId];
+      const label = edges
+        .map(x => x.data().label)
+        .filter(Boolean)
+        .reverse()
+        .join(COMPOSITION_TOKEN);
+      const edge = connectNodes(label).style({
+        'curve-style': 'unbundled-bezier'
+      });
+      const data = edge.data();
+      edge.data({ properties: [...data.properties, 'Composition'] });
       // const size = edges.length;
       // if (edges.length > 2) {
       //   edges.forEach((element, index) => {
@@ -640,7 +636,7 @@ cy.ready(() => {
   document.addEventListener('dblclick', () => {
     if (
       document.activeElement === document.body &&
-      !memo.selectedPairs.length &&
+      !memo.nodePairsSelections.length &&
       !memo.lastSelection.id
     ) {
       memo.lastSelection.id = null;
@@ -702,7 +698,8 @@ cy.ready(() => {
       elements.variableInput.value = '';
       clearSelection();
     } else if (
-      (memo.selectedPairs.length === 1 || memo.lastSelection.type === 'edge') &&
+      (memo.nodePairsSelections.length === 1 ||
+        memo.lastSelection.type === 'edge') &&
       e.key !== 'Shift' &&
       e.key !== 'Command' &&
       e.key !== 'Alt' &&
@@ -774,12 +771,13 @@ cy.ready(() => {
     e.target.style({ 'line-color': COLORS.selection, width: 3 });
 
     memo.edgeSelections.add(e.target.id());
-    if (memo.edgeSelections.size > 1)
+    if (memo.edgeSelections.size > 1) {
       elements.compositionButton.style.display = 'block';
-    positionAbsoluteElement(
-      elements.compositionButton,
-      offsetPosition(memo.mousePosition, -50, 50)
-    );
+      positionAbsoluteElement(
+        elements.compositionButton,
+        offsetPosition(memo.mousePosition, -50, 50)
+      );
+    }
   });
 
   cy.on('select', 'node', e => e.target.style('text-outline-width', 3));
