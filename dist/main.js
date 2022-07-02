@@ -457,7 +457,8 @@ cy.ready(() => {
     });
     elements.connectionButton.addEventListener('click', () => {
         if (memo.selectedPairs.length === 2) {
-            connectNodes(elements.connectionA.textContent === elements.connectionB.textContent
+            connectNodes(elements.connectionA.textContent !== DEFAULT_TOKEN &&
+                elements.connectionA.textContent === elements.connectionB.textContent
                 ? toSuperscript('id') + elements.connectionA.textContent
                 : undefined);
         }
