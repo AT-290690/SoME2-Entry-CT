@@ -19,6 +19,10 @@ const COLORS = {
     selectionIncoming: '#57b3f7',
     selectionBox: '#83e665'
 };
+const CURVES = {
+    composition: 'unbundled-bezier',
+    morphism: 'bezier'
+};
 const DEFAULT_TOKEN = '⦁';
 const COMPOSITION_TOKEN = '∘';
 const memo = {
@@ -76,7 +80,7 @@ const cy = cytoscape({
                 'target-arrow-fill': 'filled',
                 'target-arrow-shape': 'vee',
                 'target-arrow-color': COLORS.edges,
-                'curve-style': 'bezier',
+                'curve-style': CURVES.morphism,
                 'line-color': COLORS.edges,
                 color: COLORS.text
             }
@@ -410,7 +414,7 @@ const graphFromJson = (input) => {
             }
             if (data.properties.includes('Composition')) {
                 edge.style({
-                    'curve-style': 'unbundled-bezier'
+                    'curve-style': CURVES.composition
                 });
             }
         });
@@ -496,7 +500,7 @@ cy.ready(() => {
                 .reverse()
                 .join(COMPOSITION_TOKEN);
             const edge = connectNodes(label).style({
-                'curve-style': 'unbundled-bezier'
+                'curve-style': CURVES.composition
             });
             const data = edge.data();
             edge.data({ properties: [...data.properties, 'Composition'] });
