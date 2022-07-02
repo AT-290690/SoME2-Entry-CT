@@ -447,7 +447,7 @@ cy.ready(() => {
         const currentLesson = lesson.content[lesson.interface.index].text;
         if (currentLesson) {
             const pan = cy.pan();
-            positionAbsoluteElement(currentLesson, pan);
+            positionAbsoluteElement(currentLesson, offsetPosition(pan, -30, 0));
         }
     });
     elements.tutorialButton.addEventListener('click', () => {
