@@ -225,7 +225,7 @@ const incIndex = (v = 1) => {
   memo.nodeIndex += v;
 };
 
-const addNode = (x: number, y: number, label: string) => {
+const addNode = (coordinates: Coordinates2D, label: string) => {
   const data: NodeData = {
     index: memo.nodeIndex,
     label,
@@ -240,14 +240,13 @@ const addNode = (x: number, y: number, label: string) => {
       group: 'nodes',
       data
     })
-    .position({ x, y });
+    .position({ x: coordinates.x, y: coordinates.y });
   incIndex();
   return node;
 };
 
 const addEdge = (
-  sourceId: string,
-  targetId: string,
+  vertex: Vertex,
   label: string
 ): cytoscape.CollectionReturnValue => {
   const data: EdgeData = {
@@ -255,8 +254,8 @@ const addEdge = (
     index: memo.edgeIndex,
     label,
     comment: '',
-    source: `${sourceId}`,
-    target: `${targetId}`,
+    source: `${vertex.source}`,
+    target: `${vertex.target}`,
     type: 'edge',
     variant: 'Morphism',
     properties: []
@@ -295,7 +294,7 @@ const connectNodes = (label?: string) => {
     resetColorOfSelectedNodes(couple);
     clearSelection();
   } else if (couple.length > 1) {
-    const edge = addEdge(couple[0], couple[1], label);
+    const edge = addEdge({ source: couple[0], target: couple[1] }, label);
     resetColorOfSelectedNodes(couple);
     clearSelection();
     return edge;
@@ -650,8 +649,10 @@ cy.ready(() => {
       const zoom = cy.zoom();
       const pan = cy.pan();
       return addNode(
-        (memo.mousePosition.x - pan.x) / zoom,
-        (memo.mousePosition.y - pan.y) / zoom,
+        {
+          x: (memo.mousePosition.x - pan.x) / zoom,
+          y: (memo.mousePosition.y - pan.y) / zoom
+        },
         DEFAULT_TOKEN
       );
     }

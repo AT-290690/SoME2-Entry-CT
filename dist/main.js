@@ -177,7 +177,7 @@ const setIndex = (v) => {
 const incIndex = (v = 1) => {
     memo.nodeIndex += v;
 };
-const addNode = (x, y, label) => {
+const addNode = (coordinates, label) => {
     const data = {
         index: memo.nodeIndex,
         label,
@@ -192,18 +192,18 @@ const addNode = (x, y, label) => {
         group: 'nodes',
         data
     })
-        .position({ x, y });
+        .position({ x: coordinates.x, y: coordinates.y });
     incIndex();
     return node;
 };
-const addEdge = (sourceId, targetId, label) => {
+const addEdge = (vertex, label) => {
     const data = {
         id: `e${memo.edgeIndex}`,
         index: memo.edgeIndex,
         label,
         comment: '',
-        source: `${sourceId}`,
-        target: `${targetId}`,
+        source: `${vertex.source}`,
+        target: `${vertex.target}`,
         type: 'edge',
         variant: 'Morphism',
         properties: []
@@ -237,7 +237,7 @@ const connectNodes = (label) => {
         clearSelection();
     }
     else if (couple.length > 1) {
-        const edge = addEdge(couple[0], couple[1], label);
+        const edge = addEdge({ source: couple[0], target: couple[1] }, label);
         resetColorOfSelectedNodes(couple);
         clearSelection();
         return edge;
@@ -535,7 +535,10 @@ cy.ready(() => {
             clearSelection();
             const zoom = cy.zoom();
             const pan = cy.pan();
-            return addNode((memo.mousePosition.x - pan.x) / zoom, (memo.mousePosition.y - pan.y) / zoom, DEFAULT_TOKEN);
+            return addNode({
+                x: (memo.mousePosition.x - pan.x) / zoom,
+                y: (memo.mousePosition.y - pan.y) / zoom
+            }, DEFAULT_TOKEN);
         }
     });
     const saveFile = () => {
