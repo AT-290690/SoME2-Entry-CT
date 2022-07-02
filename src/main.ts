@@ -25,7 +25,7 @@ interface Payload {
   id: string;
   type: Roles;
   variant: Variant;
-  properties?: Properties[];
+  properties: Properties[];
 }
 
 interface Vertex {
@@ -232,7 +232,8 @@ const addNode = (x: number, y: number, label: string) => {
     comment: '',
     id: 'n' + memo.nodeIndex,
     type: 'node',
-    variant: 'Object'
+    variant: 'Object',
+    properties: []
   };
   const node = cy
     .add({
@@ -257,7 +258,8 @@ const addEdge = (
     source: `${sourceId}`,
     target: `${targetId}`,
     type: 'edge',
-    variant: 'Morphism'
+    variant: 'Morphism',
+    properties: []
   };
   const edge = cy.add({
     group: 'edges',
@@ -523,12 +525,10 @@ const graphFromJson = (input: object) => {
         });
         edge.data({ variant: 'Universal' });
       }
-      if (data.properties) {
-        if (data.properties.includes('Composition')) {
-          edge.style({
-            'curve-style': 'unbundled-bezier'
-          });
-        }
+      if (data.properties.includes('Composition')) {
+        edge.style({
+          'curve-style': 'unbundled-bezier'
+        });
       }
     });
     cy.zoom({
@@ -616,11 +616,7 @@ cy.ready(() => {
           'curve-style': 'unbundled-bezier'
         });
         const data = edge.data();
-        if (data.properties) {
-          edge.data({ properties: [...data.properties, 'Composition'] });
-        } else {
-          edge.data({ properties: ['Composition'] });
-        }
+        edge.data({ properties: [...data.properties, 'Composition'] });
       } catch (err) {
         return console.error(err);
       }
