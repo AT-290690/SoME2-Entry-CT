@@ -236,16 +236,8 @@ const connectNodes = (label) => {
         resetColorOfSelectedNodes(couple);
         clearSelection();
     }
-    else if (couple.length > 1 &&
-        couple[0] !== couple[1] // don't connect self to avoid bad user experience
-    ) {
+    else if (couple.length > 1) {
         const edge = addEdge(couple[0], couple[1], label);
-        resetColorOfSelectedNodes(couple);
-        clearSelection();
-        return edge;
-    }
-    else if (couple[0] === couple[1]) {
-        const edge = addEdge(couple[0], couple[0], label);
         resetColorOfSelectedNodes(couple);
         clearSelection();
         return edge;
@@ -465,7 +457,9 @@ cy.ready(() => {
     });
     elements.connectionButton.addEventListener('click', () => {
         if (memo.selectedPairs.length === 2) {
-            connectNodes();
+            connectNodes(elements.connectionA.textContent === elements.connectionB.textContent
+                ? toSuperscript('id') + elements.connectionA.textContent
+                : undefined);
         }
     });
     elements.compositionButton.addEventListener('click', () => {
