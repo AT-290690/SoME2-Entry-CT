@@ -73,7 +73,7 @@ body {
   position: absolute;
   background-color: transparent;
   text-align: center;
-  width: 100px;
+  width: fit-content;
 }
 #comments-section {
   position: absolute;
