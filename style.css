@@ -140,6 +140,7 @@ body {
   z-index: 1000;
   color: var(--color-primary);
   user-select: none;
+  pointer-events: none;
 }
 #save,
 #load {
