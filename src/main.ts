@@ -310,8 +310,10 @@ const clickEdges = (e: cytoscape.EventObjectEdge) => {
   memo.nodePairsSelections.length = 0;
 };
 
-const connectNodes = (label?: string) => {
-  const couple = memo.nodePairsSelections;
+const connectNodes = (
+  couple: string[] = memo.nodePairsSelections,
+  label?: string
+) => {
   if (!couple[0] && !couple[1]) {
     resetColorOfSelectedNodes(couple);
     clearSelection();
@@ -578,7 +580,7 @@ const rules = [...document.getElementsByTagName('rules')].map(
       .map(rule => rule.trim()) as Rules[]
 );
 
-const hint = (): void => {
+const hint = (memo: State): void => {
   if (memo.nodePairsSelections.length === 2) {
     const a = cy.nodes(`#${memo.nodePairsSelections[0]}`).first();
     const b = cy.nodes(`#${memo.nodePairsSelections[1]}`).first();
@@ -590,41 +592,47 @@ const hint = (): void => {
       dataB.meta.isUniversalTarget &&
       dataA.meta.universalData
     ) {
-      connectNodes()
-        .style({
-          'line-style': 'dashed',
-          'line-dash-pattern': [6, 3],
-          'line-dash-offset': 1
-        })
-        .data({
-          variant: 'Universal',
-          label:
-            dataA.meta.universalProperty === 'Product'
-              ? `<${
-                  cy
-                    .edges(`#${dataA.meta.universalData.leftEdgeId}`)
-                    .first()
-                    .data().label
-                };${
-                  cy
-                    .edges(`#${dataA.meta.universalData.rightEdgeId}`)
-                    .first()
-                    .data().label
-                }>`
-              : dataA.meta.universalProperty === 'Sum'
-              ? `[${
-                  cy
-                    .edges(`#${dataA.meta.universalData.leftEdgeId}`)
-                    .first()
-                    .data().label
-                };${
-                  cy
-                    .edges(`#${dataA.meta.universalData.rightEdgeId}`)
-                    .first()
-                    .data().label
-                }]`
-              : ''
-        });
+      const edge = connectNodes(memo.nodePairsSelections).style({
+        'line-style': 'dashed',
+        'line-dash-pattern': [6, 3],
+        'line-dash-offset': 1
+      });
+      switch (dataA.meta.universalProperty) {
+        case 'Product':
+          edge.data({
+            variant: 'Universal',
+            label: `<${
+              cy.edges(`#${dataA.meta.universalData.leftEdgeId}`).first().data()
+                .label
+            };${
+              cy
+                .edges(`#${dataA.meta.universalData.rightEdgeId}`)
+                .first()
+                .data().label
+            }>`
+          });
+          break;
+        case 'Sum':
+          edge.data({
+            variant: 'Universal',
+            label: `[${
+              cy.edges(`#${dataA.meta.universalData.leftEdgeId}`).first().data()
+                .label
+            };${
+              cy
+                .edges(`#${dataA.meta.universalData.rightEdgeId}`)
+                .first()
+                .data().label
+            }]`
+          });
+          break;
+        default:
+          edge.data({
+            variant: 'Universal',
+            label: ''
+          });
+          break;
+      }
     }
   }
 };
@@ -669,7 +677,7 @@ cy.ready(() => {
   });
   elements.hintsButton.addEventListener('click', () => {
     if (!memo.ruleBook.includes('No Hints')) {
-      hint();
+      hint(memo);
     }
   });
   elements.connectionButton.addEventListener('click', () => {
@@ -678,6 +686,7 @@ cy.ready(() => {
       !memo.ruleBook.includes('No Edge Creation')
     ) {
       connectNodes(
+        memo.nodePairsSelections,
         elements.connectionA.textContent !== DEFAULT_TOKEN &&
           elements.connectionA.textContent === elements.connectionB.textContent
           ? toSuperscript('id') + elements.connectionA.textContent
@@ -724,7 +733,7 @@ cy.ready(() => {
         .reverse()
         .join(COMPOSITION_TOKEN);
 
-      const edge = connectNodes(label);
+      const edge = connectNodes(memo.nodePairsSelections, label);
       const data = edge.data();
       if (exisingEdges.length) {
         exisingEdges.map(x => {
