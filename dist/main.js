@@ -40,6 +40,7 @@ const elements = {
     treeContainer: document.getElementById('tree'),
     variableInput: document.getElementById('variableInput'),
     autocompleteContainer: document.getElementById('autocomplete'),
+    analizeButton: document.getElementById('analize-button'),
     compositionButton: document.getElementById('composition-button'),
     connectionButton: document.getElementById('connection-button'),
     connectionA: document.getElementById('connection-node-A'),
@@ -276,16 +277,22 @@ const clickNodes = (e) => {
     inspectSelectionIndex(memo.lastSelection, couple[1]
         ? '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
         : '[ ' + incomming.data().label + ' -> ? ]');
-    if (memo.nodePairsSelections.length > 2) {
-        clearSelection();
-        clickNodes(e);
+    if (memo.nodePairsSelections.length === 1 &&
+        !memo.ruleBook.includes('No Analize')) {
+        elements.analizeButton.style.display = 'block';
+        positionAbsoluteElement(elements.analizeButton, offsetPosition(memo.mousePosition, -20, 50));
     }
     else if (memo.nodePairsSelections.length === 2 &&
         !memo.ruleBook.includes('No Edge Creation')) {
         elements.connectionButton.style.display = 'block';
+        elements.analizeButton.style.display = 'none';
         elements.connectionA.textContent = incomming.data().label;
         elements.connectionB.textContent = outgoing.data().label;
         positionAbsoluteElement(elements.connectionButton, offsetPosition(memo.mousePosition, -50, 50));
+    }
+    else if (memo.nodePairsSelections.length > 2) {
+        clearSelection();
+        clickNodes(e);
     }
 };
 const hasEdges = (id) => cy.nodes(`#${id}`).connectedEdges().size();
@@ -328,6 +335,7 @@ const clearSelection = () => {
     elements.autocompleteContainer.innerHTML = '';
     elements.compositionButton.style.display = 'none';
     elements.connectionButton.style.display = 'none';
+    elements.analizeButton.style.display = 'none';
     cy.$(':selected')
         .nodes()
         .map(n => n
@@ -441,6 +449,39 @@ const rules = [...document.getElementsByTagName('rules')].map(el => el.textConte
     .split(',')
     .filter(Boolean)
     .map(rule => rule.trim()));
+const analizeNode = (nodeId) => {
+    const node = cy.nodes(`#${nodeId}`);
+    const edges = node.connectedEdges();
+    const edgesData = edges.map(x => x.data());
+    const sources = edgesData.filter(x => x.source === nodeId);
+    const targets = edgesData.filter(x => x.target === nodeId);
+    const edgesOtherNodes = edges.map(x => x
+        .connectedNodes()
+        // .sort((a, b) => (a.position('x') > b.position('x') ? -1 : 1))
+        .filter(x => x.id() !== nodeId));
+    const otherNodes = edgesOtherNodes
+        .map(x => x.incomers().filter(x => x.isNode() && x.id() !== nodeId))
+        .flat(Infinity);
+    const isUniversalSource = sources.length >= 2;
+    const isUniversalTarget = targets.length >= 2;
+    if (isUniversalSource) {
+        if (otherNodes.length >= 2) {
+            //    .sort((a, b) => (a.position('x') > b.position('x') ? -1 : 1));
+            //edgesWith(otherNodes[0]).first()
+            const edges = edgesOtherNodes.map(x => { var _a; return (_a = x.edgesWith(otherNodes[0]).first().data().label) !== null && _a !== void 0 ? _a : '?'; });
+            memo.nodePairsSelections = [otherNodes[0].id(), nodeId];
+            connectNodes()
+                .style({
+                'line-style': 'dashed',
+                'line-dash-pattern': [6, 3],
+                'line-dash-offset': 1
+            })
+                .data({ variant: 'Universal', label: `<${edges[0]};${edges[1]}>` });
+        }
+    }
+    if (isUniversalTarget) {
+    }
+};
 const applyRules = () => {
     var _a;
     memo.ruleBook = (_a = rules[lesson.interface.index]) !== null && _a !== void 0 ? _a : [];
@@ -478,6 +519,12 @@ cy.ready(() => {
     elements.lessonNext.addEventListener('click', () => {
         lesson.interface.incIndex();
         displayLesson();
+    });
+    elements.analizeButton.addEventListener('click', () => {
+        if (memo.nodePairsSelections.length === 1 &&
+            !memo.ruleBook.includes('No Analize')) {
+            analizeNode(memo.nodePairsSelections[0]);
+        }
     });
     elements.connectionButton.addEventListener('click', () => {
         if (memo.nodePairsSelections.length === 2 &&

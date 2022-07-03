@@ -59,10 +59,13 @@ body {
   z-index: 1000;
   color: var(--color-primary);
 }
+
+#analize-button:hover,
 #connection-button:hover,
 #composition-button:hover {
   opacity: 1;
 }
+#analize-button,
 #connection-button,
 #composition-button {
   opacity: 0.35;
