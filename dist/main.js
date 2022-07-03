@@ -189,6 +189,7 @@ const addNode = (coordinates, label) => {
         index: memo.nodeIndex,
         label,
         comment: '',
+        meta: {},
         id: 'n' + memo.nodeIndex,
         type: 'node',
         variant: 'Object',
@@ -209,6 +210,7 @@ const addEdge = (vertex, label) => {
         index: memo.edgeIndex,
         label,
         comment: '',
+        meta: {},
         source: `${vertex.source}`,
         target: `${vertex.target}`,
         type: 'edge',
@@ -277,13 +279,15 @@ const clickNodes = (e) => {
     inspectSelectionIndex(memo.lastSelection, couple[1]
         ? '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
         : '[ ' + incomming.data().label + ' -> ? ]');
-    if (memo.nodePairsSelections.length === 1 &&
-        !memo.ruleBook.includes('No Analize')) {
-        elements.analizeButton.style.display = 'block';
-        positionAbsoluteElement(elements.analizeButton, offsetPosition(memo.mousePosition, -20, 50));
-    }
-    else if (memo.nodePairsSelections.length === 2 &&
+    if (memo.nodePairsSelections.length === 2 &&
         !memo.ruleBook.includes('No Edge Creation')) {
+        // if (!memo.ruleBook.includes('No Analize')) {
+        //   elements.analizeButton.style.display = 'block';
+        //   positionAbsoluteElement(
+        //     elements.analizeButton,
+        //     offsetPosition(memo.mousePosition, -20, 50)
+        //   );
+        // }
         elements.connectionButton.style.display = 'block';
         elements.analizeButton.style.display = 'none';
         elements.connectionA.textContent = incomming.data().label;
@@ -449,38 +453,11 @@ const rules = [...document.getElementsByTagName('rules')].map(el => el.textConte
     .split(',')
     .filter(Boolean)
     .map(rule => rule.trim()));
-const analizeNode = (nodeId) => {
-    const node = cy.nodes(`#${nodeId}`);
-    const edges = node.connectedEdges();
-    const edgesData = edges.map(x => x.data());
-    const sources = edgesData.filter(x => x.source === nodeId);
-    const targets = edgesData.filter(x => x.target === nodeId);
-    const edgesOtherNodes = edges.map(x => x
-        .connectedNodes()
-        // .sort((a, b) => (a.position('x') > b.position('x') ? -1 : 1))
-        .filter(x => x.id() !== nodeId));
-    const otherNodes = edgesOtherNodes
-        .map(x => x.incomers().filter(x => x.isNode() && x.id() !== nodeId))
-        .flat(Infinity);
-    const isUniversalSource = sources.length >= 2;
-    const isUniversalTarget = targets.length >= 2;
-    if (isUniversalSource) {
-        if (otherNodes.length >= 2) {
-            //    .sort((a, b) => (a.position('x') > b.position('x') ? -1 : 1));
-            //edgesWith(otherNodes[0]).first()
-            const edges = edgesOtherNodes.map(x => { var _a; return (_a = x.edgesWith(otherNodes[0]).first().data().label) !== null && _a !== void 0 ? _a : '?'; });
-            memo.nodePairsSelections = [otherNodes[0].id(), nodeId];
-            connectNodes()
-                .style({
-                'line-style': 'dashed',
-                'line-dash-pattern': [6, 3],
-                'line-dash-offset': 1
-            })
-                .data({ variant: 'Universal', label: `<${edges[0]};${edges[1]}>` });
-        }
-    }
-    if (isUniversalTarget) {
-    }
+const analizeNodes = (a, b) => {
+    const dataA = a.data();
+    const dataB = b.data();
+    dataA.meta.universal.source;
+    dataB.meta.universal.target;
 };
 const applyRules = () => {
     var _a;
@@ -521,9 +498,9 @@ cy.ready(() => {
         displayLesson();
     });
     elements.analizeButton.addEventListener('click', () => {
-        if (memo.nodePairsSelections.length === 1 &&
+        if (memo.nodePairsSelections.length === 2 &&
             !memo.ruleBook.includes('No Analize')) {
-            analizeNode(memo.nodePairsSelections[0]);
+            analizeNodes(cy.nodes(`#${memo.nodePairsSelections[0]}`).first(), cy.nodes(`#${memo.nodePairsSelections[1]}`).first());
         }
     });
     elements.connectionButton.addEventListener('click', () => {
