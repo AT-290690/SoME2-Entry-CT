@@ -60,12 +60,10 @@ body {
   color: var(--color-primary);
 }
 
-#analize-button:hover,
 #connection-button:hover,
 #composition-button:hover {
   opacity: 1;
 }
-#analize-button,
 #connection-button,
 #composition-button {
   opacity: 0.35;
@@ -112,6 +110,14 @@ body {
   cursor: pointer;
   top: 10px;
   left: 80px;
+  font-family: var(--font-primary);
+}
+#hints-button {
+  position: absolute;
+  border: none;
+  cursor: pointer;
+  top: 10px;
+  right: 10px;
   font-family: var(--font-primary);
 }
 #lesson-button-left,
