@@ -279,18 +279,19 @@ const clickNodes = (e) => {
     inspectSelectionIndex(memo.lastSelection, couple[1]
         ? '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
         : '[ ' + incomming.data().label + ' -> ? ]');
-    if (memo.nodePairsSelections.length === 2 &&
-        !memo.ruleBook.includes('No Edge Creation')) {
+    if (memo.nodePairsSelections.length === 2) {
         // elements.hintsButton.style.display = 'none';
         elements.connectionA.textContent = incomming.data().label;
         elements.connectionB.textContent = outgoing.data().label;
-        if (elements.connectionA.textContent === DEFAULT_TOKEN ||
-            elements.connectionB.textContent === DEFAULT_TOKEN ||
-            elements.connectionA.textContent !== elements.connectionB.textContent) {
+        if (!memo.ruleBook.includes('No Edge Creation') &&
+            (elements.connectionA.textContent === DEFAULT_TOKEN ||
+                elements.connectionB.textContent === DEFAULT_TOKEN ||
+                elements.connectionA.textContent !== elements.connectionB.textContent)) {
             elements.connectionButton.style.display = 'block';
             positionAbsoluteElement(elements.connectionButton, offsetPosition(memo.mousePosition, -50, 50));
         }
-        else {
+        else if (!memo.ruleBook.includes('No Identity Creation') &&
+            elements.connectionA.textContent === elements.connectionB.textContent) {
             elements.identityButton.style.display = 'block';
             positionAbsoluteElement(elements.identityButton, offsetPosition(memo.mousePosition, -50, 50));
         }
