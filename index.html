@@ -14,7 +14,6 @@
   </head>
   <body>
     <div id="lesson-section">
-     
       <!--Bunch of Latex command I use over and over-->
       \( \newcommand{\C}{\mathcal{C}} \newcommand{\ob}{\operatorname{Ob}}
       \newcommand{\id}{\operatorname{id}} \)
@@ -129,9 +128,11 @@
               any object $Y$ to $T$.
             </p>
             <p>
-              <i>We instanciated a terminal and an initial object on the screen.
+              <i
+                >We instanciated a terminal and an initial object on the screen.
                 Instantiate other objects and draw some arrows using their
-                superpower.</i>
+                superpower.</i
+              >
             </p>
           </div>
         </div>
@@ -140,68 +141,80 @@
           <rules> No Edge Creation, No Node Renaming</rules>
           <div style="display: grid; width: 50em; text-align: justify">
             <p>
-             Let's move on to another interesting construction, the product. When we 
-             have two objects $A, B \in \ob \C$, we can form their product. It is the 
-             data of a new object, that we call $A\times B$, and two arrows, the projections. 
-             The first one is $p : A\times B \to A$ and the second is $q : A\times B \to B$.
+              Let's move on to another interesting construction, the product.
+              When we have two objects $A, B \in \ob \C$, we can form their
+              product. It is the data of a new object, that we call $A\times B$,
+              and two arrows, the projections. The first one is $p : A\times B
+              \to A$ and the second is $q : A\times B \to B$.
             </p>
             <p>
-              The interesting thing with the product is its superpower, it can instantiate arrow
-              from nothingness! Suppose we have another object $X \in \ob C$ and two maps $f : X \to A$,
-              and $g : X \to B$. Then the superpower of the product creates a (unique, but let's not bother too much with that)
-              new arrow $\langle f, g\rangle : X \to A \times B$. This new arrow is such that
-              $$ p \circ \langle f; g\rangle = f$$
-              and
-              $$ q \circ \langle f; g\rangle = g$$
-              To understand the product, click on $X$, $A\times B$, then on the question mark to see the 
-              magical arrow appear. The equations above means that the two triangles inside the big one are 
-              commutative. To go from $X$ to $A$, it is the same thing to follow $f$, or to follow 
-              $\langle f; g\rangle$ and then $p$.
+              The interesting thing with the product is its superpower, it can
+              instantiate arrow from nothingness! Suppose we have another object
+              $X \in \ob C$ and two maps $f : X \to A$, and $g : X \to B$. Then
+              the superpower of the product creates a (unique, but let's not
+              bother too much with that) new arrow $\langle f, g\rangle : X \to
+              A \times B$. This new arrow is such that $$ p \circ \langle f;
+              g\rangle = f$$ and $$ q \circ \langle f; g\rangle = g$$ To
+              understand the product, click on $X$, $A\times B$, then on the
+              question mark to see the magical arrow appear. The equations above
+              means that the two triangles inside the big one are commutative.
+              To go from $X$ to $A$, it is the same thing to follow $f$, or to
+              follow $\langle f; g\rangle$ and then $p$.
             </p>
           </div>
         </div>
         <div class="slide">
           <div style="display: grid; width: 50em; text-align: justify">
             <p>
-              So what is this weird construction for? Well you know it, it is the greatest common divisor! Indeed,
-              say our category $\C$ has for objects the natural numbers $0, 1, 2, \dots$. Between any two natural number
-              $n$ and $m$, put one, and only one, arrow $n \to m$ if $n$ divides $m$. For instance there is an arrow
-              from $2$ to $4$ but none from $9$ to $3$. (what are the initial and terminal object here?). In this category,
-              let's compute the product of any two numbers $a$ and $b$. It is an object, let's call it $a \land b$. It has two
-              projections $p : a\land b \to a$ and $q : a\land b \to b$. By definition of the arrows, it means this object divides 
+              So what is this weird construction for? Well you know it, it is
+              the greatest common divisor! Indeed, say our category $\C$ has for
+              objects the natural numbers $0, 1, 2, \dots$. Between any two
+              natural number $n$ and $m$, put one, and only one, arrow $n \to m$
+              if $n$ divides $m$. For instance there is an arrow from $2$ to $4$
+              but none from $9$ to $3$. (what are the initial and terminal
+              object here?). In this category, let's compute the product of any
+              two numbers $a$ and $b$. It is an object, let's call it $a \land
+              b$. It has two projections $p : a\land b \to a$ and $q : a\land b
+              \to b$. By definition of the arrows, it means this object divides
               both $a$ and $b$.
             </p>
             <p>
-              Now, we unfold the definition of its superpower. For any other number $x$, if we have an arrow $f : x \to a$, that is 
-              if $x \mid a$, and another arrow $g : x \to b$, that is $x \mid b$, then we have an arrow 
-              $\langle f; g\rangle : x \to a \land b$, that is $x \mid a \land b$. Let's rewrite all of that in mathematical terms.
-              We have
-              $$ \forall x \in \mathbb{N}, \;\;\text{ if } \;\; x \mid a \;\; \text{ and } \;\; x \mid b \;\; \text{ then } \;\; x \mid a \land b $$
-              This is the definition of the greatest common divisor! 
-
+              Now, we unfold the definition of its superpower. For any other
+              number $x$, if we have an arrow $f : x \to a$, that is if $x \mid
+              a$, and another arrow $g : x \to b$, that is $x \mid b$, then we
+              have an arrow $\langle f; g\rangle : x \to a \land b$, that is $x
+              \mid a \land b$. Let's rewrite all of that in mathematical terms.
+              We have $$ \forall x \in \mathbb{N}, \;\;\text{ if } \;\; x \mid a
+              \;\; \text{ and } \;\; x \mid b \;\; \text{ then } \;\; x \mid a
+              \land b $$ This is the definition of the greatest common divisor!
             </p>
             <p>
-              So why is it called <i>product</i> then? Oh, because this is also the cartesian product of sets. Take $\C$ to be the category of all sets 
-              and the arrows between any two objects $X, Y$ are the usual functions between sets. For two object (so two sets here) $A$ and $B$, we define
-              $$ A \times B = \{ (a, b) \mid a \in A, \; b \in B \} $$
-              to be the cartesian product. We have to natural maps $p : A \times B \to A$ and $q : A\times B \to B$ defined by
-              $$ p((a, b)) = a $$
-              and 
-              $$ q((a, b)) = b $$
-              Then having two functions $f : X \to A$ and $g : X \to B$ creates a new function $\langle f, g \rangle : X \to A\times B$ such that for
-              all $x \in X$
-              $$ \langle f, g \rangle(x) = (f(x), g(x)) $$
-              and indeed $p \circ \langle f, g \rangle(x) = f(x)$ and $$q \circ \langle f, g \rangle(x) = g(x)$$
+              So why is it called <i>product</i> then? Oh, because this is also
+              the cartesian product of sets. Take $\C$ to be the category of all
+              sets and the arrows between any two objects $X, Y$ are the usual
+              functions between sets. For two object (so two sets here) $A$ and
+              $B$, we define $$ A \times B = \{ (a, b) \mid a \in A, \; b \in B
+              \} $$ to be the cartesian product. We have to natural maps $p : A
+              \times B \to A$ and $q : A\times B \to B$ defined by $$ p((a, b))
+              = a $$ and $$ q((a, b)) = b $$ Then having two functions $f : X
+              \to A$ and $g : X \to B$ creates a new function $\langle f, g
+              \rangle : X \to A\times B$ such that for all $x \in X$ $$ \langle
+              f, g \rangle(x) = (f(x), g(x)) $$ and indeed $p \circ \langle f, g
+              \rangle(x) = f(x)$ and $$q \circ \langle f, g \rangle(x) = g(x)$$
             </p>
           </div>
         </div>
         <div class="slide">
-          <rules> No Edge Creation, No Edge Renaming, No Node Renaming, No Node Creation</rules>
+          <rules>
+            No Edge Creation, No Edge Renaming, No Node Renaming, No Node
+            Creation</rules
+          >
           <div style="display: grid; width: 50em; text-align: justify">
             <p>
-              Now it's you to play. Back to our general category $\C$. Here's an object $A$, and the product to itself $A\times A$.
-              Your goal is to create an arrow from the top $A$ to $A\times A$. Recall that in a category, the arrow cannot be instiated from nowhere.
-              Good luck.
+              Now it's you to play. Back to our general category $\C$. Here's an
+              object $A$, and the product to itself $A\times A$. Your goal is to
+              create an arrow from the top $A$ to $A\times A$. Recall that in a
+              category, the arrow cannot be instiated from nowhere. Good luck.
             </p>
           </div>
         </div>
@@ -228,6 +241,7 @@
       →
       <span style="color: var(--color-outgoing)" id="connection-node-B">𝐁</span>
     </button>
+    <button id="identity-button" style="display: none">Identity</button>
     <button id="tutorial-button">start lesson</button>
     <div id="comments-section"></div>
 

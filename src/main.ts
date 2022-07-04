@@ -13,7 +13,9 @@ type Rules =
   | 'No Edge Destruction'
   | 'No Composition'
   | 'No Universal Property'
-  | 'No Hints';
+  | 'No Hints'
+  | 'No Identity Creation';
+
 type Variant = NodeVariants | EdgeVariants;
 interface Seleciton {
   id?: string;
@@ -99,6 +101,7 @@ const elements: Record<string, any> = {
   hintsButton: document.getElementById('hints-button'),
   compositionButton: document.getElementById('composition-button'),
   connectionButton: document.getElementById('connection-button'),
+  identityButton: document.getElementById('identity-button'),
   connectionA: document.getElementById('connection-node-A'),
   connectionB: document.getElementById('connection-node-B'),
   save: document.getElementById('save'),
@@ -359,15 +362,26 @@ const clickNodes = (e: cytoscape.EventObjectNode) => {
     memo.nodePairsSelections.length === 2 &&
     !memo.ruleBook.includes('No Edge Creation')
   ) {
-    elements.connectionButton.style.display = 'block';
     // elements.hintsButton.style.display = 'none';
     elements.connectionA.textContent = incomming.data().label;
     elements.connectionB.textContent = outgoing.data().label;
-
-    positionAbsoluteElement(
-      elements.connectionButton,
-      offsetPosition(memo.mousePosition, -50, 50)
-    );
+    if (
+      elements.connectionA.textContent === DEFAULT_TOKEN ||
+      elements.connectionB.textContent === DEFAULT_TOKEN ||
+      elements.connectionA.textContent !== elements.connectionB.textContent
+    ) {
+      elements.connectionButton.style.display = 'block';
+      positionAbsoluteElement(
+        elements.connectionButton,
+        offsetPosition(memo.mousePosition, -50, 50)
+      );
+    } else {
+      elements.identityButton.style.display = 'block';
+      positionAbsoluteElement(
+        elements.identityButton,
+        offsetPosition(memo.mousePosition, -50, 50)
+      );
+    }
   } else if (memo.nodePairsSelections.length > 2) {
     clearSelection();
     clickNodes(e);
@@ -431,6 +445,7 @@ const clearSelection = () => {
   elements.autocompleteContainer.innerHTML = '';
   elements.compositionButton.style.display = 'none';
   elements.connectionButton.style.display = 'none';
+  elements.identityButton.style.display = 'none';
 
   cy.$(':selected')
     .nodes()
@@ -684,6 +699,15 @@ cy.ready(() => {
     if (
       memo.nodePairsSelections.length === 2 &&
       !memo.ruleBook.includes('No Edge Creation')
+    ) {
+      connectNodes(memo.nodePairsSelections);
+    }
+  });
+
+  elements.identityButton.addEventListener('click', () => {
+    if (
+      memo.nodePairsSelections.length === 2 &&
+      !memo.ruleBook.includes('No Identity Creation')
     ) {
       connectNodes(
         memo.nodePairsSelections,
