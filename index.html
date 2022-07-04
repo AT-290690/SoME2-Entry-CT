@@ -14,6 +14,7 @@
   </head>
   <body>
     <div id="lesson-section">
+     
       <!--Bunch of Latex command I use over and over-->
       \( \newcommand{\C}{\mathcal{C}} \newcommand{\ob}{\operatorname{Ob}}
       \newcommand{\id}{\operatorname{id}} \)
@@ -128,15 +129,37 @@
               any object $Y$ to $T$.
             </p>
             <p>
-              <i
-                >We instanciated a terminal and an initial object on the screen.
+              <i>We instanciated a terminal and an initial object on the screen.
                 Instantiate other objects and draw some arrows using their
-                superpower.</i
-              >
+                superpower.</i>
             </p>
           </div>
         </div>
 
+        <div class="slide">
+          <rules> No Edge Creation, No Node Renaming</rules>
+          <div style="display: grid; width: 50em; text-align: justify">
+            <p>
+             Let's move on to another interesting construction, the product. When we 
+             have two objects $A, B \in \ob \C$, we can form their product. It is the 
+             data of a new object, that we call $A\times B$, and two arrows, the projections. 
+             The first one is $p : A\times B \to A$ and the second is $q : A\times B \to B$.
+            </p>
+            <p>
+              The interesting thing with the product is its superpower, it can instantiate arrow
+              from nothingness! Suppose we have another object $X \in \ob C$ and two maps $f : X \to A$,
+              and $g : X \to B$. Then the superpower of of product creates a new arrow $\langle f, g\rangle
+              : X \to A \times B$. This new arrow is such that
+              $$ p \circ \langle f; g\rangle = f$$
+              and
+              $$ q \circ \langle f; g\rangle = g$$
+              To understand the prodcut, click below on $X$, $A\times B$, then on the question mark to see the 
+              magical arrow appear. The equations above means that the two triangles inside the big one are 
+              commutative, it's the same thing to follow $f$ to go from $X$ to $A$, or to follow 
+              $\langle f; g\rangle$ and then $p$.
+            </p>
+          </div>
+        </div>
         <!------------------>
       </div>
     </div>
