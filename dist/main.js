@@ -230,6 +230,7 @@ const inspectSelectionIndex = (selection, opt = '') => (elements.selectedIndex.i
 const clickEdges = (e) => {
     resetColorOfSelectedNodes();
     const { label, comment } = e.target.data();
+    elements.hintsButton.style.display = 'block';
     memo.lastSelection = {
         type: 'edge',
         id: e.target.id(),
@@ -255,6 +256,7 @@ const connectNodes = (couple = memo.nodePairsSelections, label) => {
 const clickNodes = (e) => {
     var _a, _b, _c;
     const current = e.target.data();
+    elements.hintsButton.style.display = 'block';
     memo.lastSelection = {
         type: current.type,
         id: e.target.id(),
@@ -497,6 +499,7 @@ const hint = (memo) => {
             }
         }
     }
+    elements.hintsButton.style.display = 'none';
 };
 const applyRules = () => {
     var _a;
@@ -537,7 +540,7 @@ cy.ready(() => {
         displayLesson();
     });
     elements.hintsButton.addEventListener('click', () => {
-        if (!memo.ruleBook.includes('No Hints')) {
+        if (!memo.ruleBook.includes('No Hints') && memo.lastSelection) {
             hint(memo);
         }
     });

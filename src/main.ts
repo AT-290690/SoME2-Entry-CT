@@ -302,6 +302,7 @@ const inspectSelectionIndex = (selection: Seleciton, opt = '') =>
 const clickEdges = (e: cytoscape.EventObjectEdge) => {
   resetColorOfSelectedNodes();
   const { label, comment } = e.target.data();
+  elements.hintsButton.style.display = 'block';
   memo.lastSelection = {
     type: 'edge',
     id: e.target.id(),
@@ -330,6 +331,7 @@ const connectNodes = (
 
 const clickNodes = (e: cytoscape.EventObjectNode) => {
   const current = e.target.data();
+  elements.hintsButton.style.display = 'block';
   memo.lastSelection = {
     type: current.type,
     id: e.target.id(),
@@ -647,6 +649,7 @@ const hint = (memo: State): void => {
       }
     }
   }
+  elements.hintsButton.style.display = 'none';
 };
 
 const applyRules = () => {
@@ -688,7 +691,7 @@ cy.ready(() => {
     displayLesson();
   });
   elements.hintsButton.addEventListener('click', () => {
-    if (!memo.ruleBook.includes('No Hints')) {
+    if (!memo.ruleBook.includes('No Hints') && memo.lastSelection) {
       hint(memo);
     }
   });
