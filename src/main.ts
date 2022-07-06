@@ -362,18 +362,14 @@ const clickNodes = (e: cytoscape.EventObjectNode) => {
     // elements.hintsButton.style.display = 'none';
     elements.connectionA.textContent = incomming.data().label;
     elements.connectionB.textContent = outgoing.data().label;
-    if (
-      !memo.ruleBook.includes('No Edge Creation') &&
-      (elements.connectionA.textContent === DEFAULT_TOKEN ||
-        elements.connectionB.textContent === DEFAULT_TOKEN ||
-        elements.connectionA.textContent !== elements.connectionB.textContent)
-    ) {
+    if (!memo.ruleBook.includes('No Edge Creation')) {
       elements.connectionButton.style.display = 'block';
       positionAbsoluteElement(
         elements.connectionButton,
         offsetPosition(memo.mousePosition, -50, 50)
       );
-    } else if (
+    }
+    if (
       !memo.ruleBook.includes('No Identity Creation') &&
       elements.connectionA.textContent === elements.connectionB.textContent
     ) {
