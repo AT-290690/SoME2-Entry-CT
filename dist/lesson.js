@@ -1,6 +1,18 @@
 const CONTENT = [];
+const META = window['PREDIFINED_TREES_METADATA'];
+const DIAGRAMS = window['PREDIFINED_TREES_DRAWING'];
+for (const key in META) {
+    META[key].forEach(meta => {
+        const isNode = meta.id[0] === 'n';
+        const current = isNode
+            ? DIAGRAMS[key].elements.nodes.find(node => node.data.id === meta.id)
+            : DIAGRAMS[key].elements.edges.find(edge => edge.data.id === meta.id);
+        current.data.meta = meta;
+    });
+}
+console.log(DIAGRAMS);
 [...document.getElementsByClassName('slide')].forEach((text, index) => {
-    CONTENT[index] = { text, object: window['PREDIFINED_TREES'][index] };
+    CONTENT[index] = { text, object: DIAGRAMS[index] };
 });
 const lesson = {
     interface: {
