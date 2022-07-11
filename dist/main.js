@@ -818,7 +818,7 @@ cy.ready(() => {
             ' ]' +
             ' or ( ' +
             incomming.data().id +
-            ' -> ' +
+            ` - ${data.id} -> ` +
             outgoing.data().id +
             ' )');
     });
