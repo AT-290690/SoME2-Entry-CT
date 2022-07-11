@@ -10,7 +10,6 @@ for (const key in META) {
         current.data.meta = meta;
     });
 }
-console.log(DIAGRAMS);
 [...document.getElementsByClassName('slide')].forEach((text, index) => {
     CONTENT[index] = { text, object: DIAGRAMS[index] };
 });
