@@ -279,8 +279,22 @@ const clickNodes = (e) => {
         'text-outline-color': COLORS.selectionOutgoing
     });
     inspectSelectionIndex(memo.lastSelection, couple[1]
-        ? '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
-        : '[ ' + incomming.data().label + ' -> ? ]');
+        ? '[ ' +
+            incomming.data().label +
+            ' -> ' +
+            outgoing.data().label +
+            ' ]' +
+            ' or ( ' +
+            incomming.data().id +
+            ' -> ' +
+            outgoing.data().id +
+            ' )'
+        : '[ ' +
+            incomming.data().label +
+            ' -> ? ]' +
+            ' or ( ' +
+            incomming.data().id +
+            ' -> ? )');
     if (memo.nodePairsSelections.length === 2) {
         // elements.hintsButton.style.display = 'none';
         elements.connectionA.textContent = incomming.data().label;
@@ -797,7 +811,16 @@ cy.ready(() => {
         const data = e.target.data();
         const incomming = cy.nodes(`#${data.source}`).first();
         const outgoing = cy.nodes(`#${data.target}`).first();
-        inspectSelectionIndex(memo.lastSelection, '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]');
+        inspectSelectionIndex(memo.lastSelection, '[ ' +
+            incomming.data().label +
+            ' -> ' +
+            outgoing.data().label +
+            ' ]' +
+            ' or ( ' +
+            incomming.data().id +
+            ' -> ' +
+            outgoing.data().id +
+            ' )');
     });
     elements.treeContainer.focus();
 });

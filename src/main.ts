@@ -356,8 +356,22 @@ const clickNodes = (e: cytoscape.EventObjectNode) => {
   inspectSelectionIndex(
     memo.lastSelection,
     couple[1]
-      ? '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
-      : '[ ' + incomming.data().label + ' -> ? ]'
+      ? '[ ' +
+          incomming.data().label +
+          ' -> ' +
+          outgoing.data().label +
+          ' ]' +
+          ' or ( ' +
+          incomming.data().id +
+          ' -> ' +
+          outgoing.data().id +
+          ' )'
+      : '[ ' +
+          incomming.data().label +
+          ' -> ? ]' +
+          ' or ( ' +
+          incomming.data().id +
+          ' -> ? )'
   );
 
   if (memo.nodePairsSelections.length === 2) {
@@ -988,7 +1002,16 @@ cy.ready(() => {
 
     inspectSelectionIndex(
       memo.lastSelection,
-      '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
+      '[ ' +
+        incomming.data().label +
+        ' -> ' +
+        outgoing.data().label +
+        ' ]' +
+        ' or ( ' +
+        incomming.data().id +
+        ' -> ' +
+        outgoing.data().id +
+        ' )'
     );
   });
   elements.treeContainer.focus();
