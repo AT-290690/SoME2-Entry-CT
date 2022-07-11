@@ -295,9 +295,9 @@ const addEdge = (
   return edge;
 };
 const inspectSelectionIndex = (selection: Seleciton, opt = '') =>
-  (elements.selectedIndex.innerHTML = `${selection.label || 'none'} : ${
-    selection.type
-  } ${opt}`);
+  (elements.selectedIndex.innerHTML = `${selection.label || 'none'} (${
+    selection.id
+  }) : ${selection.type} ${opt}`);
 
 const clickEdges = (e: cytoscape.EventObjectEdge) => {
   resetColorOfSelectedNodes();
@@ -356,22 +356,8 @@ const clickNodes = (e: cytoscape.EventObjectNode) => {
   inspectSelectionIndex(
     memo.lastSelection,
     couple[1]
-      ? '[ ' +
-          incomming.data().label +
-          ' -> ' +
-          outgoing.data().label +
-          ' ]' +
-          ' or ( ' +
-          incomming.data().id +
-          ' -> ' +
-          outgoing.data().id +
-          ' )'
-      : '[ ' +
-          incomming.data().label +
-          ' -> ? ]' +
-          ' or ( ' +
-          incomming.data().id +
-          ' -> ? )'
+      ? '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
+      : '[ ' + incomming.data().label + ' -> ? ]'
   );
 
   if (memo.nodePairsSelections.length === 2) {
@@ -1002,16 +988,7 @@ cy.ready(() => {
 
     inspectSelectionIndex(
       memo.lastSelection,
-      '[ ' +
-        incomming.data().label +
-        ' -> ' +
-        outgoing.data().label +
-        ' ]' +
-        ' or ( ' +
-        incomming.data().id +
-        ` - ${data.id} -> ` +
-        outgoing.data().id +
-        ' )'
+      '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
     );
   });
   elements.treeContainer.focus();
