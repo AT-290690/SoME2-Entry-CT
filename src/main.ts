@@ -106,8 +106,8 @@ const DARK_THEME: ThemeSettings = {
   nodesBG: '#1b1b1b',
   edges: '#efefef',
   selection: '#8b12db',
-  selectionOutgoing: '#fc6262',
-  selectionIncoming: '#57b3f7',
+  selectionOutgoing: '#bd2047',
+  selectionIncoming: '#2e5ed1',
   selectionBox: '#8b12db',
   styles: {
     '--background-primary': '#1b1b1b',
