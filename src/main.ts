@@ -60,18 +60,64 @@ interface State {
   edgeIndex: number;
   ruleBook: Rules[];
 }
+type Theme = 'Light' | 'Dark';
+type ThemeSettings = {
+  type: string;
+  nodes: string;
+  text: string;
+  stroke: string;
+  nodesBG: string;
+  edges: string;
+  selection: string;
+  selectionOutgoing: string;
+  selectionIncoming: string;
+  selectionBox: string;
+  styles: {
+    '--background-primary': string;
+    '--color-primary': string;
+    '--color-outgoing': string;
+    '--color-incomming': string;
+  };
+};
 
-const COLORS: Record<string, string> = {
+const LIGTH_THEME: ThemeSettings = {
+  type: 'Light',
   nodes: '#efefef',
   text: '#1b1b1b',
   stroke: '#efefef',
   nodesBG: '#efefef',
   edges: '#1b1b1b',
-  selection: '#83e665',
+  selection: '#ffcc00',
   selectionOutgoing: '#fc6262',
   selectionIncoming: '#57b3f7',
-  selectionBox: '#83e665'
+  selectionBox: '#ffcc00',
+  styles: {
+    '--background-primary': '#efefef',
+    '--color-primary': '#1b1b1b',
+    '--color-outgoing': '#fc6262',
+    '--color-incomming': '#57b3f7'
+  }
 };
+const DARK_THEME: ThemeSettings = {
+  type: 'Dark' as Theme,
+  nodes: '#1b1b1b',
+  text: '#efefef',
+  stroke: '#1b1b1b',
+  nodesBG: '#1b1b1b',
+  edges: '#efefef',
+  selection: '#8b12db',
+  selectionOutgoing: '#fc6262',
+  selectionIncoming: '#57b3f7',
+  selectionBox: '#8b12db',
+  styles: {
+    '--background-primary': '#1b1b1b',
+    '--color-primary': '#efefef',
+    '--color-outgoing': '#fc6262',
+    '--color-incomming': '#57b3f7'
+  }
+};
+
+const CURRENT_THEME: ThemeSettings = { ...LIGTH_THEME };
 const CURVES: Record<
   string,
   'haystack' | 'straight' | 'bezier' | 'unbundled-bezier' | 'segments' | 'taxi'
@@ -111,7 +157,16 @@ const elements: Record<string, any> = {
   lessonContent: document.getElementById('lesson-content'),
   lessonPrev: document.getElementById('lesson-button-right'),
   lessonNext: document.getElementById('lesson-button-left'),
-  tutorialButton: document.getElementById('tutorial-button')
+  tutorialButton: document.getElementById('tutorial-button'),
+  themeButton: document.getElementById('theme-button')
+};
+
+const changeTheme = (theme: ThemeSettings) => {
+  for (const key in CURRENT_THEME) CURRENT_THEME[key] = theme[key];
+  const style = document.documentElement.style;
+  for (const color in CURRENT_THEME.styles) {
+    style.setProperty(color, CURRENT_THEME.styles[color]);
+  }
 };
 
 const cy = cytoscape({
@@ -122,9 +177,9 @@ const cy = cytoscape({
       selector: 'core',
       style: {
         'selection-box-opacity': 0.5,
-        'selection-box-color': COLORS.selectionBox,
+        'selection-box-color': CURRENT_THEME.selectionBox,
         'selection-box-border-color': 'transparent',
-        'active-bg-color': COLORS.selectionBox,
+        'active-bg-color': CURRENT_THEME.selectionBox,
         'active-bg-opacity': 0.8,
         'active-bg-size': 10,
         'selection-box-border-width': 0,
@@ -143,17 +198,17 @@ const cy = cytoscape({
         width: 1,
         'target-arrow-fill': 'filled',
         'target-arrow-shape': 'vee',
-        'target-arrow-color': COLORS.edges,
+        'target-arrow-color': CURRENT_THEME.edges,
         'curve-style': CURVES.morphism,
-        'line-color': COLORS.edges,
-        color: COLORS.text
+        'line-color': CURRENT_THEME.edges,
+        color: CURRENT_THEME.text
       }
     },
     {
       selector: 'edge[label]',
       style: {
         label: 'data(label)',
-        'text-outline-color': COLORS.nodes,
+        'text-outline-color': CURRENT_THEME.nodes,
         'text-outline-width': 2,
         'font-size': '15px'
       }
@@ -161,7 +216,7 @@ const cy = cytoscape({
     {
       selector: 'edge[label]:selected',
       style: {
-        'text-outline-color': COLORS.selection,
+        'text-outline-color': CURRENT_THEME.selection,
         'text-outline-width': 3
       }
     },
@@ -170,7 +225,7 @@ const cy = cytoscape({
       style: {
         shape: 'rectangle',
         // 'border-style': 'solid',
-        // 'border-color': COLORS.stroke,
+        // 'border-color': CURRENT_THEME.stroke,
         // 'border-width': '2',
         'background-opacity': 0,
         content: 'data(label)'
@@ -179,8 +234,8 @@ const cy = cytoscape({
     {
       selector: 'node[label]',
       style: {
-        color: COLORS.text,
-        'text-outline-color': COLORS.selection,
+        color: CURRENT_THEME.text,
+        'text-outline-color': CURRENT_THEME.selection,
         'text-outline-width': 0,
         'text-valign': 'center',
         'font-size': '15px'
@@ -189,7 +244,7 @@ const cy = cytoscape({
     {
       selector: 'node:selected',
       style: {
-        'text-outline-color': COLORS.selection,
+        'text-outline-color': CURRENT_THEME.selection,
         'text-outline-width': 3
       }
     },
@@ -347,11 +402,11 @@ const clickNodes = (e: cytoscape.EventObjectNode) => {
   const outgoing = cy.nodes(`#${couple[1]}`).first();
   incomming.style({
     'text-outline-width': 3,
-    'text-outline-color': COLORS.selectionIncoming
+    'text-outline-color': CURRENT_THEME.selectionIncoming
   });
   outgoing.style({
     'text-outline-width': 3,
-    'text-outline-color': COLORS.selectionOutgoing
+    'text-outline-color': CURRENT_THEME.selectionOutgoing
   });
   inspectSelectionIndex(
     memo.lastSelection,
@@ -405,7 +460,7 @@ const resetColorOfSelectedNodes = (nodes = memo.nodePairsSelections) => {
   nodes.map((id: string) =>
     cy.nodes(`#${id}`).style({
       'text-outline-width': 0,
-      'text-outline-color': COLORS.selection
+      'text-outline-color': CURRENT_THEME.selection
     })
   );
 };
@@ -452,14 +507,14 @@ const clearSelection = () => {
       n
         .style({
           'text-outline-width': 0,
-          'text-outline-color': COLORS.selection
+          'text-outline-color': CURRENT_THEME.selection
         })
         .unselect()
     );
   cy.edges().map(e =>
     e
       .style({
-        'line-color': COLORS.edges,
+        'line-color': CURRENT_THEME.edges,
         width: 1
       })
       .unselect()
@@ -674,6 +729,102 @@ cy.ready(() => {
       positionAbsoluteElement(currentLesson, offsetPosition(pan, -30, 0));
     }
   });
+  elements.themeButton.addEventListener('click', () => {
+    if (CURRENT_THEME.type === 'Dark') {
+      changeTheme(LIGTH_THEME);
+      elements.themeButton.textContent = '☾';
+    } else {
+      elements.themeButton.textContent = '☼';
+      changeTheme(DARK_THEME);
+    }
+    cy.style([
+      {
+        selector: 'core',
+        style: {
+          'selection-box-opacity': 0.5,
+          'selection-box-color': CURRENT_THEME.selectionBox,
+          'selection-box-border-color': 'transparent',
+          'active-bg-color': CURRENT_THEME.selectionBox,
+          'active-bg-opacity': 0.8,
+          'active-bg-size': 10,
+          'selection-box-border-width': 0,
+          'outside-texture-bg-color': 'transparent',
+          'outside-texture-bg-opacity': 0.5
+        }
+      },
+      // {
+      //   selector: '.autorotate',
+      //   style: { 'edge-text-rotation': 'autorotate' }
+      // },
+
+      {
+        selector: 'edge',
+        style: {
+          width: 1,
+          'target-arrow-fill': 'filled',
+          'target-arrow-shape': 'vee',
+          'target-arrow-color': CURRENT_THEME.edges,
+          'curve-style': CURVES.morphism,
+          'line-color': CURRENT_THEME.edges,
+          color: CURRENT_THEME.text
+        }
+      },
+      {
+        selector: 'edge[label]',
+        style: {
+          label: 'data(label)',
+          'text-outline-color': CURRENT_THEME.nodes,
+          'text-outline-width': 2,
+          'font-size': '15px'
+        }
+      },
+      {
+        selector: 'edge[label]:selected',
+        style: {
+          'text-outline-color': CURRENT_THEME.selection,
+          'text-outline-width': 3
+        }
+      },
+      {
+        selector: 'node',
+        style: {
+          shape: 'rectangle',
+          // 'border-style': 'solid',
+          // 'border-color': CURRENT_THEME.stroke,
+          // 'border-width': '2',
+          'background-opacity': 0,
+          content: 'data(label)'
+        }
+      },
+      {
+        selector: 'node[label]',
+        style: {
+          color: CURRENT_THEME.text,
+          'text-outline-color': CURRENT_THEME.selection,
+          'text-outline-width': 0,
+          'text-valign': 'center',
+          'font-size': '15px'
+        }
+      },
+      {
+        selector: 'node:selected',
+        style: {
+          'text-outline-color': CURRENT_THEME.selection,
+          'text-outline-width': 3
+        }
+      },
+      {
+        selector: 'node:active',
+        style: {
+          'text-outline-width': 3
+        }
+      }
+    ]);
+    // if (elements.tutorialButton.style.display === 'none') {
+    //   displayLesson();
+    // }
+  });
+
   elements.tutorialButton.addEventListener('click', () => {
     elements.tutorialButton.style.display = 'none';
     elements.lessonPrev.style.display = 'block';
@@ -681,6 +832,7 @@ cy.ready(() => {
     elements.lessonSection.style.visibility = 'visible';
     displayLesson();
   });
+
   elements.lessonPrev.addEventListener('click', () => {
     lesson.interface.decIndex();
     displayLesson();
@@ -724,7 +876,7 @@ cy.ready(() => {
       const connections = edgeSelectionArray.map(x => {
         const edge = cy.edges(`#${x}`).first();
         edge.style({
-          'line-color': COLORS.selection,
+          'line-color': CURRENT_THEME.selection,
           width: 3
         });
 
@@ -945,7 +1097,7 @@ cy.ready(() => {
     //   //   return { source: data.source, target: data.target };
     //   // })
     // );
-    e.target.style({ 'line-color': COLORS.selection, width: 3 });
+    e.target.style({ 'line-color': CURRENT_THEME.selection, width: 3 });
 
     memo.edgeSelections.add(e.target.id());
     if (
