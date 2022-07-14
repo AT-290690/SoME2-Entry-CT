@@ -568,6 +568,7 @@ cy.ready(() => {
             elements.themeButton.textContent = '☼';
             changeTheme(DARK_THEME);
         }
+        clearSelection();
         cy.style([
             {
                 selector: 'core',
