@@ -1,6 +1,8 @@
 :root {
   --background-primary: #efefef;
   --color-primary: #1b1b1b;
+  --color-secondary: #ffcc00;
+  --color-inverted: #1b1b1b;
   --font-primary: 'NatoSansMath';
   --font-secondary: 'Fantasque';
   --color-outgoing: #fc6262;
@@ -37,7 +39,7 @@ body {
 }
 .autocomplete-option:hover {
   opacity: 1;
-  background-color: gold;
+  background-color: var(--color-secondary);
 }
 .autocomplete-option {
   border: none;
@@ -45,6 +47,7 @@ body {
   background-color: transparent;
   font-size: 30px;
   opacity: 0.25;
+  color: var(--color-inverted);
 }
 #autocomplete {
   font-family: var(--font-primary);
@@ -57,7 +60,6 @@ body {
   margin: auto;
   text-align: center;
   z-index: 1000;
-  color: var(--color-primary);
 }
 
 #connection-button:hover {

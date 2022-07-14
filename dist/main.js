@@ -22,8 +22,10 @@ const LIGTH_THEME = {
     styles: {
         '--background-primary': '#efefef',
         '--color-primary': '#1b1b1b',
+        '--color-secondary': '#ffcc00',
         '--color-outgoing': '#fc6262',
-        '--color-incomming': '#57b3f7'
+        '--color-incomming': '#57b3f7',
+        '--color-inverted': '#1b1b1b'
     }
 };
 const DARK_THEME = {
@@ -40,8 +42,10 @@ const DARK_THEME = {
     styles: {
         '--background-primary': '#1b1b1b',
         '--color-primary': '#efefef',
+        '--color-secondary': '#8b12db',
         '--color-outgoing': '#fc6262',
-        '--color-incomming': '#57b3f7'
+        '--color-incomming': '#57b3f7',
+        '--color-inverted': '#efefef'
     }
 };
 const CURRENT_THEME = Object.assign({}, LIGTH_THEME);
