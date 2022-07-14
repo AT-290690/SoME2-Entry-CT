@@ -148,6 +148,7 @@ const memo: State = {
 
 const elements: Record<string, any> = {
   selectedIndex: document.getElementById('selectedIndex'),
+  infoPannel: document.getElementById('info-pannel'),
   treeContainer: document.getElementById('tree'),
   variableInput: document.getElementById('variableInput'),
   autocompleteContainer: document.getElementById('autocomplete'),
@@ -356,11 +357,17 @@ const addEdge = (
   memo.edgeIndex += 1;
   return edge;
 };
-const inspectSelectionIndex = (selection: Seleciton, opt = '') =>
-  (elements.selectedIndex.innerHTML = `${selection.label || 'none'} (${
+const inspectSelectionIndex = (selection: Seleciton, opt = '') => {
+  elements.infoPannel.style.display = 'block';
+  elements.selectedIndex.textContent = `${selection.label || 'none'} (${
     selection.id
-  }) : ${selection.type} ${opt}`);
+  }) : ${selection.type} ${opt}`;
+};
 
+const deselectIndex = () => {
+  elements.selectedIndex.textContent = '';
+  elements.infoPannel.style.display = 'none';
+};
 const clickEdges = (e: cytoscape.EventObjectEdge) => {
   resetColorOfSelectedNodes();
   const { label, comment } = e.target.data();
@@ -969,12 +976,7 @@ cy.ready(() => {
       !memo.lastSelection.id
     ) {
       memo.lastSelection.id = null;
-      inspectSelectionIndex({
-        type: 'none',
-        id: 'none',
-        label: '',
-        comment: ''
-      });
+      deselectIndex();
       clearSelection();
       const zoom = cy.zoom();
       const pan = cy.pan();
@@ -1062,12 +1064,7 @@ cy.ready(() => {
 
     if (e.key === 'Escape') {
       clearSelection();
-      inspectSelectionIndex({
-        type: 'none',
-        id: 'none',
-        label: '',
-        comment: ''
-      });
+      deselectIndex();
     }
 
     if (e.key === 'Delete' || (e.ctrlKey && e.key === 'Backspace')) {
@@ -1085,17 +1082,12 @@ cy.ready(() => {
         removeEdge(memo.lastSelection.id);
       }
       clearSelection();
-      inspectSelectionIndex({
-        type: 'none',
-        id: 'none',
-        label: '',
-        comment: ''
-      });
+      deselectIndex();
     }
   });
   cy.on('dragfree', 'node', e => {
     clearSelection();
-    inspectSelectionIndex({ type: 'none', id: 'none', label: '', comment: '' });
+    deselectIndex();
   });
   cy.on('select', 'edge', e => {
     // const connections = edges.connectedNodes().map(

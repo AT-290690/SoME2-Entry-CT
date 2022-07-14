@@ -138,6 +138,7 @@ body {
 #hints-button,
 #identity-button,
 #composition-button {
+  display: none;
   border: none;
   cursor: pointer;
   font-family: var(--font-primary);
@@ -199,16 +200,14 @@ body {
   font-weight: 600;
   position: fixed;
   bottom: 0;
-  width: 100vw;
+  width: fit-content;
   margin: auto;
   text-align: center;
   z-index: 1000;
   color: var(--color-primary);
   user-select: none;
-  border-top: solid 1px var(--color-primary);
-  border-bottom: solid 1px var(--color-primary);
-  padding-top: 40px;
-  padding-bottom: 40px;
+  border: solid 1px var(--color-primary);
+  padding: 40px;
   background-color: var(--background-primary);
 }
 #infoGuide {
@@ -240,4 +239,8 @@ body {
 rules {
   pointer-events: none;
   user-select: none;
+}
+
+#info-pannel {
+  display: none;
 }

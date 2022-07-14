@@ -247,9 +247,12 @@
     <button id="theme-button">☾</button>
     <button id="tutorial-button">start lesson</button>
     <div id="comments-section"></div>
-
-    <input id="variableInput" placeholder="..." spellcheck="false" disabled />
-    <a id="selectedIndex">none : none</a>
+    <div id="info-pannel">
+      <input id="variableInput" placeholder="..." spellcheck="false" disabled />
+      <div style="display: flex; justify-content: center">
+        <span id="selectedIndex"></span>
+      </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.21.1/cytoscape.min.js"></script>
     <script>
       window.exports = {};
