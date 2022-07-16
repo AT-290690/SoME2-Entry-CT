@@ -5,5 +5,7 @@ PREDIFINED_TREES_METADATA[3] = [
     universalProperty: 'Product',
     universalData: { leftEdgeId: 'e3', rightEdgeId: 'e2' }
   },
-  { id: 'n3', isUniversalTarget: true }
+  { id: 'n3', isUniversalTarget: true },
+  { id: 'e3' },
+  { id: 'e2' }
 ];

@@ -608,7 +608,7 @@ const offsetElementsIndexes = (elements: {
 };
 const invertAllEdges = () =>
   cy.edges().forEach(edge => {
-    const { target, source, label, ...rest } = edge.data();
+    const { target, source, label, id, ...rest } = edge.data();
     const vertex: Vertex = { target: source, source: target };
     edge.remove();
     const newEdge = addEdge(vertex, label);
@@ -667,6 +667,17 @@ const graphFromJson = (input: object) => {
   }
 };
 
+const findNodeByMetaId = (id: string): cytoscape.NodeSingular | undefined =>
+  cy
+    .nodes()
+    .toArray()
+    .find(node => node.data().meta.id === id);
+
+const findEdgeByMetaId = (id: string): cytoscape.EdgeSingular | undefined =>
+  cy
+    .edges()
+    .toArray()
+    .find(edge => edge.data().meta.id === id);
 const rules = [...document.getElementsByTagName('rules')].map(
   el =>
     el.textContent
@@ -695,32 +706,36 @@ const hint = (memo: State): void => {
       });
       switch (dataA.meta.universalProperty) {
         case 'Product':
-          edge.data({
-            variant: 'Universal',
-            label: `<${
-              cy.edges(`#${dataA.meta.universalData.leftEdgeId}`).first().data()
-                .label
-            };${
-              cy
-                .edges(`#${dataA.meta.universalData.rightEdgeId}`)
-                .first()
-                .data().label
-            }>`
-          });
+          {
+            const leftEdge = findEdgeByMetaId(
+              dataA.meta.universalData.leftEdgeId
+            );
+            const rightEdge = findEdgeByMetaId(
+              dataA.meta.universalData.rightEdgeId
+            );
+            if (leftEdge && rightEdge) {
+              edge.data({
+                variant: 'Universal',
+                label: `<${leftEdge.data().label};${rightEdge.data().label}>`
+              });
+            }
+          }
           break;
         case 'Sum':
-          edge.data({
-            variant: 'Universal',
-            label: `[${
-              cy.edges(`#${dataA.meta.universalData.leftEdgeId}`).first().data()
-                .label
-            };${
-              cy
-                .edges(`#${dataA.meta.universalData.rightEdgeId}`)
-                .first()
-                .data().label
-            }]`
-          });
+          {
+            const leftEdge = findEdgeByMetaId(
+              dataA.meta.universalData.leftEdgeId
+            );
+            const rightEdge = findEdgeByMetaId(
+              dataA.meta.universalData.rightEdgeId
+            );
+            if (leftEdge && rightEdge) {
+              edge.data({
+                variant: 'Universal',
+                label: `[${leftEdge.data().label};${rightEdge.data().label}]`
+              });
+            }
+          }
           break;
         default:
           edge.data({

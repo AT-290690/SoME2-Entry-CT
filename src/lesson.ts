@@ -7,6 +7,7 @@ for (const key in META) {
     const current = isNode
       ? DIAGRAMS[key].elements.nodes.find(node => node.data.id === meta.id)
       : DIAGRAMS[key].elements.edges.find(edge => edge.data.id === meta.id);
+
     current.data.meta = meta;
   });
 }
