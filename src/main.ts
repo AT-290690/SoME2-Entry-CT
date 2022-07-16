@@ -608,12 +608,12 @@ const offsetElementsIndexes = (elements: {
 };
 const invertAllEdges = () =>
   cy.edges().forEach(edge => {
-    const data = edge.data();
-    const target = data.target;
-    const source = data.source;
+    const { target, source, label, ...rest } = edge.data();
     const vertex: Vertex = { target: source, source: target };
     edge.remove();
-    addEdge(vertex, data.label);
+    const newEdge = addEdge(vertex, label);
+    newEdge.data(rest);
+    setEdgeVariant(newEdge);
   });
 const seedGraph = (
   nodes: { data: NodeData }[],
@@ -621,7 +621,30 @@ const seedGraph = (
 ) => {
   edges?.length ? cy.add([...nodes, ...edges]) : cy.add([...nodes]);
 };
-
+const setEdgeVariant = (
+  edge: cytoscape.EdgeSingular
+): cytoscape.EdgeSingular => {
+  const data = edge.data();
+  if (data.variant === 'Universal') {
+    edge.style({
+      'line-style': 'dashed',
+      'line-dash-pattern': [6, 3],
+      'line-dash-offset': 1
+    });
+    edge.data({ variant: 'Universal' });
+  }
+  if (data.properties.includes('Composition-Unbundled')) {
+    edge.style({
+      'curve-style': CURVES.composition1
+    });
+  }
+  if (data.properties.includes('Composition-Bundled')) {
+    edge.style({
+      'curve-style': CURVES.composition2
+    });
+  }
+  return edge;
+};
 const graphFromJson = (input: object) => {
   const data = input as {
     elements: Elements;
@@ -633,25 +656,7 @@ const graphFromJson = (input: object) => {
   if (data.elements.nodes) {
     seedGraph(data.elements.nodes, data.elements.edges);
     cy.edges().forEach(edge => {
-      const data = edge.data();
-      if (data.variant === 'Universal') {
-        edge.style({
-          'line-style': 'dashed',
-          'line-dash-pattern': [6, 3],
-          'line-dash-offset': 1
-        });
-        edge.data({ variant: 'Universal' });
-      }
-      if (data.properties.includes('Composition-Unbundled')) {
-        edge.style({
-          'curve-style': CURVES.composition1
-        });
-      }
-      if (data.properties.includes('Composition-Bundled')) {
-        edge.style({
-          'curve-style': CURVES.composition2
-        });
-      }
+      setEdgeVariant(edge);
     });
     cy.zoom({
       level: data.zoom,
