@@ -735,6 +735,12 @@ const displayLesson = () => {
   }
   positionAbsoluteElement(element, { x: 0, y: 0 });
 };
+
+const toggleTagsVisibility = (tags: string, visibility: string) => {
+  for (const el of document.getElementsByTagName(tags)) {
+    el.setAttribute('style', `visibility: ${visibility}`);
+  }
+};
 cy.ready(() => {
   cy.on('pan', () => {
     const currentLesson = lesson.content[lesson.interface.index].text;
@@ -746,9 +752,13 @@ cy.ready(() => {
   elements.themeButton.addEventListener('click', () => {
     if (CURRENT_THEME.type === 'Dark') {
       changeTheme(LIGTH_THEME);
+      toggleTagsVisibility('light', 'visible');
+      toggleTagsVisibility('dark', 'hidden');
       elements.themeButton.textContent = '☾';
     } else {
       elements.themeButton.textContent = '☼';
+      toggleTagsVisibility('dark', 'visible');
+      toggleTagsVisibility('light', 'hidden');
       changeTheme(DARK_THEME);
     }
     clearSelection();

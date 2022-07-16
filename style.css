@@ -244,3 +244,11 @@ rules {
 #info-pannel {
   display: none;
 }
+dark {
+  visibility: hidden;
+  height: 0;
+}
+light {
+  visibility: visible;
+  height: 0;
+}
