@@ -473,7 +473,10 @@ const invertAllEdges = () => cy.edges().forEach(edge => {
     const _a = edge.data(), { target, source, label, id } = _a, rest = __rest(_a, ["target", "source", "label", "id"]);
     const vertex = { target: source, source: target };
     edge.remove();
-    const newEdge = addEdge(vertex, label);
+    const newLabel = (label === null || label === void 0 ? void 0 : label.includes(COMPOSITION_TOKEN))
+        ? label.split(COMPOSITION_TOKEN).reverse().join(COMPOSITION_TOKEN)
+        : label;
+    const newEdge = addEdge(vertex, newLabel);
     newEdge.data(rest);
     setEdgeVariant(newEdge);
 });

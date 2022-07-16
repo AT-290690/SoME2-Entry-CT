@@ -611,7 +611,10 @@ const invertAllEdges = () =>
     const { target, source, label, id, ...rest } = edge.data();
     const vertex: Vertex = { target: source, source: target };
     edge.remove();
-    const newEdge = addEdge(vertex, label);
+    const newLabel = label?.includes(COMPOSITION_TOKEN)
+      ? label.split(COMPOSITION_TOKEN).reverse().join(COMPOSITION_TOKEN)
+      : label;
+    const newEdge = addEdge(vertex, newLabel);
     newEdge.data(rest);
     setEdgeVariant(newEdge);
   });
