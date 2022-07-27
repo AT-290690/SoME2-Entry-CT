@@ -1119,6 +1119,7 @@ cy.ready(() => {
     if (e.key === 'Escape') {
       clearSelection();
       deselectIndex();
+      elements.hintsButton.style.display = 'none';
     }
 
     if (e.key === 'Delete' || (e.ctrlKey && e.key === 'Backspace')) {
