@@ -83,7 +83,7 @@ type ThemeSettings = {
 };
 
 const LIGTH_THEME: ThemeSettings = {
-  type: 'Light',
+  type: 'Light' as Theme,
   nodes: '#efefef',
   text: '#1b1b1b',
   stroke: '#efefef',
@@ -123,7 +123,7 @@ const DARK_THEME: ThemeSettings = {
     '--color-inverted': '#efefef'
   }
 };
-
+const LESSON_OFFSET: Coordinates2D = { x: 0, y: 20 };
 const CURRENT_THEME: ThemeSettings = { ...LIGTH_THEME };
 const CURVES: Record<
   string,
@@ -765,7 +765,8 @@ const displayLesson = () => {
   if (object) {
     graphFromJson(object);
   }
-  positionAbsoluteElement(element, { x: 0, y: 0 });
+  positionAbsoluteElement(element, LESSON_OFFSET);
+  cy.pan(LESSON_OFFSET);
 };
 
 const toggleTagsVisibility = (tags: string, visibility: string) => {
@@ -773,29 +774,36 @@ const toggleTagsVisibility = (tags: string, visibility: string) => {
     el.setAttribute('style', `visibility: ${visibility}`);
   }
 };
+
+const toggleTheme = () => {
+  if (CURRENT_THEME.type === 'Dark') {
+    changeTheme(LIGTH_THEME);
+    toggleTagsVisibility('light', 'visible');
+    toggleTagsVisibility('dark', 'hidden');
+    elements.themeButton.textContent = '☾';
+    invertAllEdges();
+  } else {
+    changeTheme(DARK_THEME);
+    toggleTagsVisibility('dark', 'visible');
+    toggleTagsVisibility('light', 'hidden');
+    elements.themeButton.textContent = '☼';
+    invertAllEdges();
+  }
+  localStorage.setItem('theme', CURRENT_THEME.type);
+};
+
 cy.ready(() => {
   cy.on('pan', () => {
     const currentLesson = lesson.content[lesson.interface.index].text;
     if (currentLesson) {
       const pan = cy.pan();
-      positionAbsoluteElement(currentLesson, offsetPosition(pan, -30, 0));
+      positionAbsoluteElement(currentLesson, offsetPosition(pan, 0, 0));
     }
   });
+
   elements.themeButton.addEventListener('click', () => {
-    if (CURRENT_THEME.type === 'Dark') {
-      changeTheme(LIGTH_THEME);
-      toggleTagsVisibility('light', 'visible');
-      toggleTagsVisibility('dark', 'hidden');
-      elements.themeButton.textContent = '☾';
-      invertAllEdges();
-    } else {
-      changeTheme(DARK_THEME);
-      toggleTagsVisibility('dark', 'visible');
-      toggleTagsVisibility('light', 'hidden');
-      elements.themeButton.textContent = '☼';
-      invertAllEdges();
-    }
     clearSelection();
+    toggleTheme();
     cy.style([
       {
         selector: 'core',
@@ -1189,5 +1197,6 @@ cy.ready(() => {
       '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
     );
   });
+
   elements.treeContainer.focus();
 });

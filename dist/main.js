@@ -59,6 +59,7 @@ const DARK_THEME = {
         '--color-inverted': '#efefef'
     }
 };
+const LESSON_OFFSET = { x: 0, y: 20 };
 const CURRENT_THEME = Object.assign({}, LIGTH_THEME);
 const CURVES = {
     composition1: 'unbundled-bezier',
@@ -599,37 +600,42 @@ const displayLesson = () => {
     if (object) {
         graphFromJson(object);
     }
-    positionAbsoluteElement(element, { x: 0, y: 0 });
+    positionAbsoluteElement(element, LESSON_OFFSET);
+    cy.pan(LESSON_OFFSET);
 };
 const toggleTagsVisibility = (tags, visibility) => {
     for (const el of document.getElementsByTagName(tags)) {
         el.setAttribute('style', `visibility: ${visibility}`);
     }
 };
+const toggleTheme = () => {
+    if (CURRENT_THEME.type === 'Dark') {
+        changeTheme(LIGTH_THEME);
+        toggleTagsVisibility('light', 'visible');
+        toggleTagsVisibility('dark', 'hidden');
+        elements.themeButton.textContent = '☾';
+        invertAllEdges();
+    }
+    else {
+        changeTheme(DARK_THEME);
+        toggleTagsVisibility('dark', 'visible');
+        toggleTagsVisibility('light', 'hidden');
+        elements.themeButton.textContent = '☼';
+        invertAllEdges();
+    }
+    localStorage.setItem('theme', CURRENT_THEME.type);
+};
 cy.ready(() => {
     cy.on('pan', () => {
         const currentLesson = lesson.content[lesson.interface.index].text;
         if (currentLesson) {
             const pan = cy.pan();
-            positionAbsoluteElement(currentLesson, offsetPosition(pan, -30, 0));
+            positionAbsoluteElement(currentLesson, offsetPosition(pan, 0, 0));
         }
     });
     elements.themeButton.addEventListener('click', () => {
-        if (CURRENT_THEME.type === 'Dark') {
-            changeTheme(LIGTH_THEME);
-            toggleTagsVisibility('light', 'visible');
-            toggleTagsVisibility('dark', 'hidden');
-            elements.themeButton.textContent = '☾';
-            invertAllEdges();
-        }
-        else {
-            changeTheme(DARK_THEME);
-            toggleTagsVisibility('dark', 'visible');
-            toggleTagsVisibility('light', 'hidden');
-            elements.themeButton.textContent = '☼';
-            invertAllEdges();
-        }
         clearSelection();
+        toggleTheme();
         cy.style([
             {
                 selector: 'core',
