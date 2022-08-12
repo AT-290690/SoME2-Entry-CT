@@ -59,6 +59,7 @@ const DARK_THEME = {
         '--color-inverted': '#efefef'
     }
 };
+const PAN_STEP = 50;
 const LESSON_OFFSET = { x: 0, y: 20 };
 const CURRENT_THEME = Object.assign({}, LIGTH_THEME);
 const CURVES = {
@@ -887,11 +888,11 @@ cy.ready(() => {
     elements.load.addEventListener('click', () => loadFile());
     elements.upScrollButton.addEventListener('click', () => {
         const pan = cy.pan();
-        cy.pan({ x: pan.x, y: pan.y - 30 });
+        cy.pan({ x: pan.x, y: pan.y - PAN_STEP });
     });
     elements.downScrollButton.addEventListener('click', () => {
         const pan = cy.pan();
-        cy.pan({ x: pan.x, y: pan.y + 30 });
+        cy.pan({ x: pan.x, y: pan.y + PAN_STEP });
     });
     document.addEventListener('keydown', e => {
         if (e.key === 'Enter') {

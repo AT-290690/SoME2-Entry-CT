@@ -123,6 +123,7 @@ const DARK_THEME: ThemeSettings = {
     '--color-inverted': '#efefef'
   }
 };
+const PAN_STEP = 50;
 const LESSON_OFFSET: Coordinates2D = { x: 0, y: 20 };
 const CURRENT_THEME: ThemeSettings = { ...LIGTH_THEME };
 const CURVES: Record<
@@ -1083,12 +1084,12 @@ cy.ready(() => {
 
   elements.upScrollButton.addEventListener('click', () => {
     const pan = cy.pan();
-    cy.pan({ x: pan.x, y: pan.y - 30 });
+    cy.pan({ x: pan.x, y: pan.y - PAN_STEP });
   });
 
   elements.downScrollButton.addEventListener('click', () => {
     const pan = cy.pan();
-    cy.pan({ x: pan.x, y: pan.y + 30 });
+    cy.pan({ x: pan.x, y: pan.y + PAN_STEP });
   });
 
   document.addEventListener('keydown', e => {
