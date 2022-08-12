@@ -100,6 +100,12 @@ body {
   top: 10px;
   left: 10px;
 }
+#scroll {
+  display: grid;
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+}
 #lesson-section {
   visibility: hidden;
   position: absolute;
@@ -140,10 +146,13 @@ body {
 
 #save:hover,
 #load:hover,
+#up:hover,
+#down:hover,
 #tutorial-button:hover,
 #theme-button:hover {
   opacity: 1;
 }
+
 #hints-button,
 #identity-button,
 #composition-button {
@@ -205,6 +214,8 @@ body {
   user-select: none;
   pointer-events: none;
 }
+#up,
+#down,
 #save,
 #load {
   opacity: 0.5;
@@ -215,6 +226,7 @@ body {
   color: var(--color-primary);
   background: transparent;
 }
+
 #selectedIndex {
   font-family: var(--font-secondary);
   font-size: 15px;

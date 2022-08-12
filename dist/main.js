@@ -97,7 +97,9 @@ const elements = {
     lessonPrev: document.getElementById('lesson-button-right'),
     lessonNext: document.getElementById('lesson-button-left'),
     tutorialButton: document.getElementById('tutorial-button'),
-    themeButton: document.getElementById('theme-button')
+    themeButton: document.getElementById('theme-button'),
+    upScrollButton: document.getElementById('up'),
+    downScrollButton: document.getElementById('down')
 };
 const changeTheme = (theme) => {
     for (const key in CURRENT_THEME)
@@ -883,6 +885,14 @@ cy.ready(() => {
     };
     elements.save.addEventListener('click', () => saveFile());
     elements.load.addEventListener('click', () => loadFile());
+    elements.upScrollButton.addEventListener('click', () => {
+        const pan = cy.pan();
+        cy.pan({ x: pan.x, y: pan.y - 30 });
+    });
+    elements.downScrollButton.addEventListener('click', () => {
+        const pan = cy.pan();
+        cy.pan({ x: pan.x, y: pan.y + 30 });
+    });
     document.addEventListener('keydown', e => {
         if (e.key === 'Enter') {
             renameVariable(elements.variableInput.value);
