@@ -708,14 +708,6 @@ const findEdgeByMetaId = (id: string): cytoscape.EdgeSingular | undefined =>
     .edges()
     .toArray()
     .find(edge => edge.data().meta.id === id);
-const rules = [...document.getElementsByTagName('rules')].map(
-  el =>
-    el.textContent
-      .trim()
-      .split(',')
-      .filter(Boolean)
-      .map(rule => rule.trim()) as Rules[]
-);
 
 const hint = (memo: State): void => {
   const a = cy.nodes(`#${memo.nodePairsSelections[0]}`).first();
@@ -785,6 +777,14 @@ const getElementOffset = (element: Element) => {
   };
 };
 const applyRules = () => {
+  const rules = [...document.getElementsByTagName('rules')].map(
+    el =>
+      el.textContent
+        .trim()
+        .split(',')
+        .filter(Boolean)
+        .map(rule => rule.trim()) as Rules[]
+  );
   memo.ruleBook = rules[lesson.interface.index] ?? [];
 };
 

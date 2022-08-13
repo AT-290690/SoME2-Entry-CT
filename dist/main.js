@@ -554,11 +554,6 @@ const findEdgeByMetaId = (id) => cy
     .edges()
     .toArray()
     .find(edge => edge.data().meta.id === id);
-const rules = [...document.getElementsByTagName('rules')].map(el => el.textContent
-    .trim()
-    .split(',')
-    .filter(Boolean)
-    .map(rule => rule.trim()));
 const hint = (memo) => {
     const a = cy.nodes(`#${memo.nodePairsSelections[0]}`).first();
     const b = cy.nodes(`#${memo.nodePairsSelections[1]}`).first();
@@ -617,6 +612,11 @@ const getElementOffset = (element) => {
 };
 const applyRules = () => {
     var _a;
+    const rules = [...document.getElementsByTagName('rules')].map(el => el.textContent
+        .trim()
+        .split(',')
+        .filter(Boolean)
+        .map(rule => rule.trim()));
     memo.ruleBook = (_a = rules[lesson.interface.index]) !== null && _a !== void 0 ? _a : [];
 };
 const displayLesson = () => {
