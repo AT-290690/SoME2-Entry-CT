@@ -115,90 +115,7 @@
         }
       ]
     },
-    "style": [
-      {
-        "selector": "core",
-        "style": {
-          "selection-box-opacity": "0.5",
-          "selection-box-color": "rgb(255,204,0)",
-          "selection-box-border-color": "rgb(0,0,0)",
-          "active-bg-color": "rgb(255,204,0)",
-          "active-bg-opacity": "0.8",
-          "active-bg-size": "10px",
-          "selection-box-border-width": "0px",
-          "outside-texture-bg-color": "rgb(0,0,0)",
-          "outside-texture-bg-opacity": "0.5"
-        }
-      },
-      {
-        "selector": "edge",
-        "style": {
-          "width": "1px",
-          "target-arrow-fill": "filled",
-          "target-arrow-shape": "vee",
-          "target-arrow-color": "rgb(27,27,27)",
-          "curve-style": "bezier",
-          "line-color": "rgb(27,27,27)",
-          "color": "rgb(27,27,27)"
-        }
-      },
-      {
-        "selector": "edge[label]",
-        "style": {
-          "label": "data(label)",
-          "text-outline-color": "rgb(239,239,239)",
-          "text-outline-width": "2px",
-          "font-size": "15px"
-        }
-      },
-      {
-        "selector": "edge[label]:selected",
-        "style": {
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "3px"
-        }
-      },
-      {
-        "selector": "node",
-        "style": {
-          "shape": "rectangle",
-          "background-opacity": "0",
-          "label": "data(label)"
-        }
-      },
-      {
-        "selector": "node[label]",
-        "style": {
-          "color": "rgb(27,27,27)",
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "0px",
-          "text-valign": "center",
-          "font-size": "15px"
-        }
-      },
-      {
-        "selector": "node:selected",
-        "style": {
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "3px"
-        }
-      },
-      { "selector": "node:active", "style": { "text-outline-width": "3px" } }
-    ],
-    "data": {},
-    "zoomingEnabled": false,
-    "userZoomingEnabled": false,
-    "zoom": 1.5,
-    "minZoom": 0.4,
-    "maxZoom": 6,
-    "panningEnabled": true,
-    "userPanningEnabled": true,
-    "pan": { "x": 0, "y": 50 },
-    "boxSelectionEnabled": true,
-    "renderer": { "name": "canvas" },
-    "hideEdgesOnViewport": false,
-    "textureOnViewport": false,
-    "motionBlur": false
+    "pan": { "x": 0, "y": 50 }
   },
 
   "1": {
@@ -1061,90 +978,7 @@
         }
       ]
     },
-    "style": [
-      {
-        "selector": "core",
-        "style": {
-          "selection-box-opacity": "0.5",
-          "selection-box-color": "rgb(255,204,0)",
-          "selection-box-border-color": "rgb(0,0,0)",
-          "active-bg-color": "rgb(255,204,0)",
-          "active-bg-opacity": "0.8",
-          "active-bg-size": "10px",
-          "selection-box-border-width": "0px",
-          "outside-texture-bg-color": "rgb(0,0,0)",
-          "outside-texture-bg-opacity": "0.5"
-        }
-      },
-      {
-        "selector": "edge",
-        "style": {
-          "width": "1px",
-          "target-arrow-fill": "filled",
-          "target-arrow-shape": "vee",
-          "target-arrow-color": "rgb(27,27,27)",
-          "curve-style": "bezier",
-          "line-color": "rgb(27,27,27)",
-          "color": "rgb(27,27,27)"
-        }
-      },
-      {
-        "selector": "edge[label]",
-        "style": {
-          "label": "data(label)",
-          "text-outline-color": "rgb(239,239,239)",
-          "text-outline-width": "2px",
-          "font-size": "15px"
-        }
-      },
-      {
-        "selector": "edge[label]:selected",
-        "style": {
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "3px"
-        }
-      },
-      {
-        "selector": "node",
-        "style": {
-          "shape": "rectangle",
-          "background-opacity": "0",
-          "label": "data(label)"
-        }
-      },
-      {
-        "selector": "node[label]",
-        "style": {
-          "color": "rgb(27,27,27)",
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "0px",
-          "text-valign": "center",
-          "font-size": "15px"
-        }
-      },
-      {
-        "selector": "node:selected",
-        "style": {
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "3px"
-        }
-      },
-      { "selector": "node:active", "style": { "text-outline-width": "3px" } }
-    ],
-    "data": {},
-    "zoomingEnabled": false,
-    "userZoomingEnabled": false,
-    "zoom": 1.5,
-    "minZoom": 0.4,
-    "maxZoom": 6,
-    "panningEnabled": true,
-    "userPanningEnabled": true,
-    "pan": { "x": 0, "y": 50 },
-    "boxSelectionEnabled": true,
-    "renderer": { "name": "canvas" },
-    "hideEdgesOnViewport": false,
-    "textureOnViewport": false,
-    "motionBlur": false
+    "pan": { "x": 0, "y": 50 }
   },
 
   "2": {
@@ -1194,90 +1028,8 @@
         }
       ]
     },
-    "style": [
-      {
-        "selector": "core",
-        "style": {
-          "selection-box-opacity": "0.5",
-          "selection-box-color": "rgb(255,204,0)",
-          "selection-box-border-color": "rgb(0,0,0)",
-          "active-bg-color": "rgb(255,204,0)",
-          "active-bg-opacity": "0.8",
-          "active-bg-size": "10px",
-          "selection-box-border-width": "0px",
-          "outside-texture-bg-color": "rgb(0,0,0)",
-          "outside-texture-bg-opacity": "0.5"
-        }
-      },
-      {
-        "selector": "edge",
-        "style": {
-          "width": "1px",
-          "target-arrow-fill": "filled",
-          "target-arrow-shape": "vee",
-          "target-arrow-color": "rgb(27,27,27)",
-          "curve-style": "bezier",
-          "line-color": "rgb(27,27,27)",
-          "color": "rgb(27,27,27)"
-        }
-      },
-      {
-        "selector": "edge[label]",
-        "style": {
-          "label": "data(label)",
-          "text-outline-color": "rgb(239,239,239)",
-          "text-outline-width": "2px",
-          "font-size": "15px"
-        }
-      },
-      {
-        "selector": "edge[label]:selected",
-        "style": {
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "3px"
-        }
-      },
-      {
-        "selector": "node",
-        "style": {
-          "shape": "rectangle",
-          "background-opacity": "0",
-          "label": "data(label)"
-        }
-      },
-      {
-        "selector": "node[label]",
-        "style": {
-          "color": "rgb(27,27,27)",
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "0px",
-          "text-valign": "center",
-          "font-size": "15px"
-        }
-      },
-      {
-        "selector": "node:selected",
-        "style": {
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "3px"
-        }
-      },
-      { "selector": "node:active", "style": { "text-outline-width": "3px" } }
-    ],
-    "data": {},
-    "zoomingEnabled": false,
-    "userZoomingEnabled": false,
-    "zoom": 1.5,
-    "minZoom": 0.4,
-    "maxZoom": 6,
-    "panningEnabled": true,
-    "userPanningEnabled": true,
-    "pan": { "x": 0, "y": 0 },
-    "boxSelectionEnabled": true,
-    "renderer": { "name": "canvas" },
-    "hideEdgesOnViewport": false,
-    "textureOnViewport": false,
-    "motionBlur": false
+
+    "pan": { "x": 0, "y": 0 }
   },
 
   "3": {
@@ -1468,90 +1220,8 @@
         }
       ]
     },
-    "style": [
-      {
-        "selector": "core",
-        "style": {
-          "selection-box-opacity": "0.5",
-          "selection-box-color": "rgb(255,204,0)",
-          "selection-box-border-color": "rgb(0,0,0)",
-          "active-bg-color": "rgb(255,204,0)",
-          "active-bg-opacity": "0.8",
-          "active-bg-size": "10px",
-          "selection-box-border-width": "0px",
-          "outside-texture-bg-color": "rgb(0,0,0)",
-          "outside-texture-bg-opacity": "0.5"
-        }
-      },
-      {
-        "selector": "edge",
-        "style": {
-          "width": "1px",
-          "target-arrow-fill": "filled",
-          "target-arrow-shape": "vee",
-          "target-arrow-color": "rgb(27,27,27)",
-          "curve-style": "bezier",
-          "line-color": "rgb(27,27,27)",
-          "color": "rgb(27,27,27)"
-        }
-      },
-      {
-        "selector": "edge[label]",
-        "style": {
-          "label": "data(label)",
-          "text-outline-color": "rgb(239,239,239)",
-          "text-outline-width": "2px",
-          "font-size": "15px"
-        }
-      },
-      {
-        "selector": "edge[label]:selected",
-        "style": {
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "3px"
-        }
-      },
-      {
-        "selector": "node",
-        "style": {
-          "shape": "rectangle",
-          "background-opacity": "0",
-          "label": "data(label)"
-        }
-      },
-      {
-        "selector": "node[label]",
-        "style": {
-          "color": "rgb(27,27,27)",
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "0px",
-          "text-valign": "center",
-          "font-size": "15px"
-        }
-      },
-      {
-        "selector": "node:selected",
-        "style": {
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "3px"
-        }
-      },
-      { "selector": "node:active", "style": { "text-outline-width": "3px" } }
-    ],
-    "data": {},
-    "zoomingEnabled": false,
-    "userZoomingEnabled": false,
-    "zoom": 1.5,
-    "minZoom": 0.4,
-    "maxZoom": 6,
-    "panningEnabled": true,
-    "userPanningEnabled": true,
-    "pan": { "x": 0, "y": 50 },
-    "boxSelectionEnabled": true,
-    "renderer": { "name": "canvas" },
-    "hideEdgesOnViewport": false,
-    "textureOnViewport": false,
-    "motionBlur": false
+
+    "pan": { "x": 0, "y": 50 }
   },
 
   "4": {
@@ -1691,89 +1361,266 @@
         }
       ]
     },
-    "style": [
-      {
-        "selector": "core",
-        "style": {
-          "selection-box-opacity": "0.5",
-          "selection-box-color": "rgb(255,204,0)",
-          "selection-box-border-color": "rgb(0,0,0)",
-          "active-bg-color": "rgb(255,204,0)",
-          "active-bg-opacity": "0.8",
-          "active-bg-size": "10px",
-          "selection-box-border-width": "0px",
-          "outside-texture-bg-color": "rgb(0,0,0)",
-          "outside-texture-bg-opacity": "0.5"
+    "pan": { "x": 0, "y": 50 }
+  },
+
+  "5": {
+    "elements": {
+      "nodes": [
+        {
+          "data": {
+            "index": 0,
+            "label": "?",
+            "comment": "",
+            "meta": {},
+            "id": "n0",
+            "type": "node",
+            "variant": "Object",
+            "properties": []
+          },
+          "position": { "x": 48, "y": 32.666666666666664 },
+          "group": "nodes",
+          "removed": false,
+          "selected": false,
+          "selectable": true,
+          "locked": false,
+          "grabbable": true,
+          "pannable": false,
+          "classes": ""
+        },
+        {
+          "data": {
+            "index": 1,
+            "label": "?",
+            "comment": "",
+            "meta": {},
+            "id": "n1",
+            "type": "node",
+            "variant": "Object",
+            "properties": []
+          },
+          "position": { "x": 140.66666666666666, "y": 35.333333333333336 },
+          "group": "nodes",
+          "removed": false,
+          "selected": false,
+          "selectable": true,
+          "locked": false,
+          "grabbable": true,
+          "pannable": false,
+          "classes": ""
+        },
+        {
+          "data": {
+            "index": 2,
+            "label": "ℕ",
+            "comment": "",
+            "meta": {},
+            "id": "n2",
+            "type": "node",
+            "variant": "Object",
+            "properties": []
+          },
+          "position": { "x": 54.66666666666665, "y": 87.33333333333334 },
+          "group": "nodes",
+          "removed": false,
+          "selected": false,
+          "selectable": true,
+          "locked": false,
+          "grabbable": true,
+          "pannable": false,
+          "classes": ""
+        },
+        {
+          "data": {
+            "index": 3,
+            "label": "𝔹",
+            "comment": "",
+            "meta": {},
+            "id": "n3",
+            "type": "node",
+            "variant": "Object",
+            "properties": []
+          },
+          "position": { "x": 139.99999999999997, "y": 86 },
+          "group": "nodes",
+          "removed": false,
+          "selected": false,
+          "selectable": true,
+          "locked": false,
+          "grabbable": true,
+          "pannable": false,
+          "classes": ""
         }
-      },
-      {
-        "selector": "edge",
-        "style": {
-          "width": "1px",
-          "target-arrow-fill": "filled",
-          "target-arrow-shape": "vee",
-          "target-arrow-color": "rgb(27,27,27)",
-          "curve-style": "bezier",
-          "line-color": "rgb(27,27,27)",
-          "color": "rgb(27,27,27)"
+      ],
+      "edges": [
+        {
+          "data": {
+            "id": "e0",
+            "index": 0,
+            "comment": "",
+            "meta": {},
+            "source": "n0",
+            "target": "n1",
+            "type": "edge",
+            "variant": "Morphism",
+            "properties": []
+          },
+          "position": { "x": 0, "y": 0 },
+          "group": "edges",
+          "removed": false,
+          "selected": false,
+          "selectable": true,
+          "locked": false,
+          "grabbable": true,
+          "pannable": true,
+          "classes": ""
+        },
+        {
+          "data": {
+            "id": "e1",
+            "index": 1,
+            "comment": "",
+            "meta": {},
+            "source": "n1",
+            "target": "n0",
+            "type": "edge",
+            "variant": "Morphism",
+            "properties": []
+          },
+          "position": { "x": 0, "y": 0 },
+          "group": "edges",
+          "removed": false,
+          "selected": false,
+          "selectable": true,
+          "locked": false,
+          "grabbable": true,
+          "pannable": true,
+          "classes": ""
+        },
+        {
+          "data": {
+            "id": "e2",
+            "index": 2,
+            "comment": "",
+            "meta": {},
+            "source": "n2",
+            "target": "n3",
+            "type": "edge",
+            "variant": "Morphism",
+            "properties": []
+          },
+          "position": { "x": 0, "y": 0 },
+          "group": "edges",
+          "removed": false,
+          "selected": false,
+          "selectable": true,
+          "locked": false,
+          "grabbable": true,
+          "pannable": true,
+          "classes": ""
         }
-      },
-      {
-        "selector": "edge[label]",
-        "style": {
-          "label": "data(label)",
-          "text-outline-color": "rgb(239,239,239)",
-          "text-outline-width": "2px",
-          "font-size": "15px"
+      ]
+    },
+    "pan": { "x": 3, "y": 34.99999999999998 }
+  },
+
+  "6": {
+    "elements": {
+      "nodes": [
+        {
+          "data": {
+            "index": 0,
+            "label": "X",
+            "comment": "",
+            "meta": {},
+            "id": "n0",
+            "type": "node",
+            "variant": "Object",
+            "properties": []
+          },
+          "position": { "x": 135.33333333333334, "y": 18 },
+          "group": "nodes",
+          "removed": false,
+          "selected": false,
+          "selectable": true,
+          "locked": false,
+          "grabbable": true,
+          "pannable": false,
+          "classes": ""
+        },
+        {
+          "data": {
+            "index": 1,
+            "label": "Y",
+            "comment": "",
+            "meta": {},
+            "id": "n1",
+            "type": "node",
+            "variant": "Object",
+            "properties": []
+          },
+          "position": { "x": 204, "y": 19.333333333333332 },
+          "group": "nodes",
+          "removed": false,
+          "selected": false,
+          "selectable": true,
+          "locked": false,
+          "grabbable": true,
+          "pannable": false,
+          "classes": ""
         }
-      },
-      {
-        "selector": "edge[label]:selected",
-        "style": {
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "3px"
+      ]
+    },
+    "pan": { "x": 0, "y": 0 }
+  },
+  "7": {
+    "elements": {
+      "nodes": [
+        {
+          "data": {
+            "index": 0,
+            "label": "𝑋",
+            "comment": "",
+            "meta": {},
+            "id": "n0",
+            "type": "node",
+            "variant": "Object",
+            "properties": []
+          },
+          "position": { "x": 98, "y": -13.333333333333334 },
+          "group": "nodes",
+          "removed": false,
+          "selected": false,
+          "selectable": true,
+          "locked": false,
+          "grabbable": true,
+          "pannable": false,
+          "classes": ""
+        },
+        {
+          "data": {
+            "index": 1,
+            "label": "𝑋",
+            "comment": "",
+            "meta": {},
+            "id": "n1",
+            "type": "node",
+            "variant": "Object",
+            "properties": []
+          },
+          "position": { "x": 202.66666666666666, "y": -13.333333333333336 },
+          "group": "nodes",
+          "removed": false,
+          "selected": false,
+          "selectable": true,
+          "locked": false,
+          "grabbable": true,
+          "pannable": false,
+          "classes": ""
         }
-      },
-      {
-        "selector": "node",
-        "style": {
-          "shape": "rectangle",
-          "background-opacity": "0",
-          "label": "data(label)"
-        }
-      },
-      {
-        "selector": "node[label]",
-        "style": {
-          "color": "rgb(27,27,27)",
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "0px",
-          "text-valign": "center",
-          "font-size": "15px"
-        }
-      },
-      {
-        "selector": "node:selected",
-        "style": {
-          "text-outline-color": "rgb(255,204,0)",
-          "text-outline-width": "3px"
-        }
-      },
-      { "selector": "node:active", "style": { "text-outline-width": "3px" } }
-    ],
-    "data": {},
-    "zoomingEnabled": false,
+      ]
+    },
     "userZoomingEnabled": false,
-    "zoom": 1.5,
-    "minZoom": 0.4,
-    "maxZoom": 6,
-    "panningEnabled": true,
-    "userPanningEnabled": true,
-    "pan": { "x": 0, "y": 50 },
-    "boxSelectionEnabled": true,
-    "renderer": { "name": "canvas" },
-    "hideEdgesOnViewport": false,
-    "textureOnViewport": false,
-    "motionBlur": false
+    "pan": { "x": 0, "y": 50 }
   }
 }

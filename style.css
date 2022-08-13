@@ -256,6 +256,7 @@ body {
   border: solid 1px var(--color-primary);
   padding: 40px;
   background-color: var(--background-primary);
+  transition: all 0.9s ease;
 }
 #infoGuide {
   user-select: none;

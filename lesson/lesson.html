@@ -28,6 +28,13 @@
       is, we don't really need to know, the only thing to remember is that we
       have this collection. What it represents is none of our business.
     </p>
+    <diagram graph="5" />
+  </div>
+</div>
+<div class="slide">
+  <rules> No Edge Creation, No Node Renaming</rules>
+  <!--style="display: grid; gap: 100px"-->
+  <div class="slide-content">
     <p>
       Objects are lonely, hence category connects them. For any two objects,
       let's call them $X, Y \in \ob \C$, we have a new collection of things. We
@@ -44,32 +51,48 @@
         multiple links between the two, in different directions.</i
       >
     </p>
+
+    <diagram graph="6" />
+  </div>
+</div>
+<div class="slide">
+  <rules> No Edge Creation, No Node Renaming</rules>
+  <!--style="display: grid; gap: 100px"-->
+  <div class="slide-content">
     <p>
       For every object $X \in \ob \C$, there is a special arrow from $X$ to $X$,
       called the identity. We write $\id_X : X \to X$.
       <br />
       <i
         >When you try to draw an arrow between objects with the same name, you
-        can can choose the identity button.</i
+        can can choose the identity button that will appear on the top right once 
+        two two objects with the same name are selected.</i
       >
-    </p>
+  </div>
+  <diagram graph="7" />
+</div>
+<div class="slide">
+  <rules> No Edge Creation, No Node Renaming</rules>
     <p>
       One piece of data is missing in order to form a category. We need a way to
-      merge arrows together. Suppose we have three objects $X, Y, Z \in \ob C$
-      and two arrows $f \in \C(X, Y)$ and $g : \C(Y, Z)$. The composition of $f$
+      merge arrows together. </p>
+      <p>  Suppose we have three objects $X, Y, Z \in \ob C$
+      and two arrows $f \in \C(X, Y)$ and $g : \C(Y, Z)$.</p>
+      <p> The composition of $f$
       and $g$ is the data of an arrow in $\C(X, Z)$ and is written $g\circ f$.
+    </p>
       <br />
       <i
-        >Select $f$, then $g$ and click on the composition button to see the
+        >Select $f$, then $g$ and click on the composition button (top right) to see the
         compisite arrow.</i
       >
-    </p>
+
     <p></p>
     <diagram graph="0" />
   </div>
 </div>
 <div class="slide">
-  <rules></rules>
+  <rules>No Constraints</rules>
   <div class="slide-content">
     <h3>The laws this data must follow for $\C$ to be a category</h3>
     <p>
@@ -92,7 +115,7 @@
 <!------------------->
 <!--LESSON PRODUCT--->
 <div class="slide">
-  <rules></rules>
+  <rules>No Constraints</rules>
   <div class="slide-content">
     <p>
       Now that we know what a category is, it is time to start doing interesting
@@ -149,7 +172,7 @@
   </div>
 </div>
 <div class="slide">
-  <rules></rules>
+  <rules>No Constraints</rules>
   <div class="slide-content">
     <p>
       So what is this weird construction for? Well you know it, it is the

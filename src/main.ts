@@ -14,7 +14,8 @@ type Rules =
   | 'No Composition'
   | 'No Universal Property'
   | 'No Hints'
-  | 'No Identity Creation';
+  | 'No Identity Creation'
+  | 'No Constraints';
 
 type Variant = NodeVariants | EdgeVariants;
 interface Seleciton {
@@ -834,6 +835,89 @@ const toggleTheme = () => {
     elements.themeButton.textContent = '☼';
     invertAllEdges();
   }
+  cy.style([
+    {
+      selector: 'core',
+      style: {
+        'selection-box-opacity': 0.5,
+        'selection-box-color': CURRENT_THEME.selectionBox,
+        'selection-box-border-color': 'transparent',
+        'active-bg-color': CURRENT_THEME.selectionBox,
+        'active-bg-opacity': 0.8,
+        'active-bg-size': 10,
+        'selection-box-border-width': 0,
+        'outside-texture-bg-color': 'transparent',
+        'outside-texture-bg-opacity': 0.5
+      }
+    },
+    // {
+    //   selector: '.autorotate',
+    //   style: { 'edge-text-rotation': 'autorotate' }
+    // },
+
+    {
+      selector: 'edge',
+      style: {
+        width: 1,
+        'target-arrow-fill': 'filled',
+        'target-arrow-shape': 'vee',
+        'target-arrow-color': CURRENT_THEME.edges,
+        'curve-style': CURVES.morphism,
+        'line-color': CURRENT_THEME.edges,
+        color: CURRENT_THEME.text
+      }
+    },
+    {
+      selector: 'edge[label]',
+      style: {
+        label: 'data(label)',
+        'text-outline-color': CURRENT_THEME.nodes,
+        'text-outline-width': 2,
+        'font-size': '15px'
+      }
+    },
+    {
+      selector: 'edge[label]:selected',
+      style: {
+        'text-outline-color': CURRENT_THEME.selection,
+        'text-outline-width': 3
+      }
+    },
+    {
+      selector: 'node',
+      style: {
+        shape: 'rectangle',
+        // 'border-style': 'solid',
+        // 'border-color': CURRENT_THEME.stroke,
+        // 'border-width': '2',
+        'background-opacity': 0,
+        content: 'data(label)'
+      }
+    },
+    {
+      selector: 'node[label]',
+      style: {
+        color: CURRENT_THEME.text,
+        'text-outline-color': CURRENT_THEME.selection,
+        'text-outline-width': 0,
+        'text-valign': 'center',
+        'font-size': '15px'
+      }
+    },
+    {
+      selector: 'node:selected',
+      style: {
+        'text-outline-color': CURRENT_THEME.selection,
+        'text-outline-width': 3
+      }
+    },
+    {
+      selector: 'node:active',
+      style: {
+        'text-outline-width': 3
+      }
+    }
+  ]);
   localStorage.setItem('theme', CURRENT_THEME.type);
 };
 
@@ -849,89 +933,7 @@ cy.ready(() => {
   elements.themeButton.addEventListener('click', () => {
     clearSelection();
     toggleTheme();
-    cy.style([
-      {
-        selector: 'core',
-        style: {
-          'selection-box-opacity': 0.5,
-          'selection-box-color': CURRENT_THEME.selectionBox,
-          'selection-box-border-color': 'transparent',
-          'active-bg-color': CURRENT_THEME.selectionBox,
-          'active-bg-opacity': 0.8,
-          'active-bg-size': 10,
-          'selection-box-border-width': 0,
-          'outside-texture-bg-color': 'transparent',
-          'outside-texture-bg-opacity': 0.5
-        }
-      },
-      // {
-      //   selector: '.autorotate',
-      //   style: { 'edge-text-rotation': 'autorotate' }
-      // },
 
-      {
-        selector: 'edge',
-        style: {
-          width: 1,
-          'target-arrow-fill': 'filled',
-          'target-arrow-shape': 'vee',
-          'target-arrow-color': CURRENT_THEME.edges,
-          'curve-style': CURVES.morphism,
-          'line-color': CURRENT_THEME.edges,
-          color: CURRENT_THEME.text
-        }
-      },
-      {
-        selector: 'edge[label]',
-        style: {
-          label: 'data(label)',
-          'text-outline-color': CURRENT_THEME.nodes,
-          'text-outline-width': 2,
-          'font-size': '15px'
-        }
-      },
-      {
-        selector: 'edge[label]:selected',
-        style: {
-          'text-outline-color': CURRENT_THEME.selection,
-          'text-outline-width': 3
-        }
-      },
-      {
-        selector: 'node',
-        style: {
-          shape: 'rectangle',
-          // 'border-style': 'solid',
-          // 'border-color': CURRENT_THEME.stroke,
-          // 'border-width': '2',
-          'background-opacity': 0,
-          content: 'data(label)'
-        }
-      },
-      {
-        selector: 'node[label]',
-        style: {
-          color: CURRENT_THEME.text,
-          'text-outline-color': CURRENT_THEME.selection,
-          'text-outline-width': 0,
-          'text-valign': 'center',
-          'font-size': '15px'
-        }
-      },
-      {
-        selector: 'node:selected',
-        style: {
-          'text-outline-color': CURRENT_THEME.selection,
-          'text-outline-width': 3
-        }
-      },
-      {
-        selector: 'node:active',
-        style: {
-          'text-outline-width': 3
-        }
-      }
-    ]);
     // if (elements.tutorialButton.style.display === 'none') {
     //   displayLesson();
     // }
@@ -1095,11 +1097,27 @@ cy.ready(() => {
 
   const saveFile = () => {
     clearSelection();
-    const data = cy.json() as {
+    const diryJson = cy.json() as any;
+    delete diryJson.style;
+    delete diryJson.data;
+    delete diryJson.zoomingEnabled;
+    delete diryJson.zoom;
+    delete diryJson.minZoom;
+    delete diryJson.maxZoom;
+    delete diryJson.panningEnabled;
+    delete diryJson.userPanningEnabled;
+    delete diryJson.boxSelectionEnabled;
+    delete diryJson.renderer;
+    delete diryJson.hideEdgesOnViewport;
+    delete diryJson.textureOnViewport;
+    delete diryJson.motionBlur;
+
+    const data = diryJson as {
       elements: Elements;
       zoom: number;
       pan: Coordinates2D;
     };
+
     const json = JSON.stringify(data);
     const a = document.createElement('a');
     const blob = new Blob([json], { type: 'text/json' });
@@ -1267,5 +1285,8 @@ cy.ready(() => {
   //     }
   //   })
   // );
+  if (localStorage.getItem('theme') === 'Dark') {
+    toggleTheme();
+  }
   elements.treeContainer.focus();
 });
