@@ -60,7 +60,7 @@ const DARK_THEME = {
     }
 };
 const PAN_STEP = 50;
-const LESSON_OFFSET = { x: 0, y: 20 };
+const LESSON_OFFSET = { x: 0, y: PAN_STEP };
 const CURRENT_THEME = Object.assign({}, LIGTH_THEME);
 const CURVES = {
     composition1: 'unbundled-bezier',
@@ -292,7 +292,7 @@ const deselectIndex = () => {
 const clickEdges = (e) => {
     resetColorOfSelectedNodes();
     const { label, comment } = e.target.data();
-    elements.hintsButton.style.display = 'block';
+    // elements.hintsButton.style.display = 'block';
     memo.lastSelection = {
         type: 'edge',
         id: e.target.id(),
@@ -318,7 +318,6 @@ const connectNodes = (couple = memo.nodePairsSelections, label) => {
 const clickNodes = (e) => {
     var _a, _b, _c;
     const current = e.target.data();
-    elements.hintsButton.style.display = 'block';
     memo.lastSelection = {
         type: current.type,
         id: e.target.id(),
@@ -344,6 +343,7 @@ const clickNodes = (e) => {
         ? '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]'
         : '[ ' + incomming.data().label + ' -> ? ]');
     if (memo.nodePairsSelections.length === 2) {
+        elements.hintsButton.style.display = 'block';
         // elements.hintsButton.style.display = 'none';
         elements.connectionA.textContent = incomming.data().label;
         elements.connectionB.textContent = outgoing.data().label;
@@ -385,12 +385,17 @@ const positionAbsoluteElement = (element, coordinates) => {
 };
 const autocomplete = (words = []) => {
     elements.autocompleteContainer.innerHTML = '';
+    if (words.length === 0) {
+        return (elements.autocompleteContainer.style.display = 'none');
+    }
+    elements.autocompleteContainer.style.display = 'block';
     words.forEach(word => {
         const option = document.createElement('button');
         option.classList.add('autocomplete-option');
         option.textContent = word;
         option.addEventListener('click', () => {
             elements.autocompleteContainer.innerHTML = '';
+            elements.autocompleteContainer.style.display = 'none';
             elements.variableInput.value = elements.variableInput.value.substring(0, elements.variableInput.value.length - 1);
             elements.variableInput.value += word;
         });
@@ -400,6 +405,7 @@ const autocomplete = (words = []) => {
 const clearSelection = () => {
     resetColorOfSelectedNodes();
     elements.autocompleteContainer.innerHTML = '';
+    elements.autocompleteContainer.style.display = 'none';
     elements.compositionButton.style.display = 'none';
     elements.connectionButton.style.display = 'none';
     elements.identityButton.style.display = 'none';
@@ -540,52 +546,50 @@ const rules = [...document.getElementsByTagName('rules')].map(el => el.textConte
     .filter(Boolean)
     .map(rule => rule.trim()));
 const hint = (memo) => {
-    if (memo.nodePairsSelections.length === 2) {
-        const a = cy.nodes(`#${memo.nodePairsSelections[0]}`).first();
-        const b = cy.nodes(`#${memo.nodePairsSelections[1]}`).first();
-        const dataA = CURRENT_THEME.type === 'Dark' ? b.data() : a.data();
-        const dataB = CURRENT_THEME.type === 'Dark' ? a.data() : b.data();
-        if (dataA.meta.isUniversalSource &&
-            dataA.meta.universalProperty &&
-            dataB.meta.isUniversalTarget &&
-            dataA.meta.universalData) {
-            const edge = connectNodes(memo.nodePairsSelections).style({
-                'line-style': 'dashed',
-                'line-dash-pattern': [6, 3],
-                'line-dash-offset': 1
-            });
-            switch (dataA.meta.universalProperty) {
-                case 'Product':
-                    {
-                        const leftEdge = findEdgeByMetaId(dataA.meta.universalData.leftEdgeId);
-                        const rightEdge = findEdgeByMetaId(dataA.meta.universalData.rightEdgeId);
-                        if (leftEdge && rightEdge) {
-                            edge.data({
-                                variant: 'Universal',
-                                label: `<${leftEdge.data().label};${rightEdge.data().label}>`
-                            });
-                        }
+    const a = cy.nodes(`#${memo.nodePairsSelections[0]}`).first();
+    const b = cy.nodes(`#${memo.nodePairsSelections[1]}`).first();
+    const dataA = CURRENT_THEME.type === 'Dark' ? b.data() : a.data();
+    const dataB = CURRENT_THEME.type === 'Dark' ? a.data() : b.data();
+    if (dataA.meta.isUniversalSource &&
+        dataA.meta.universalProperty &&
+        dataB.meta.isUniversalTarget &&
+        dataA.meta.universalData) {
+        const edge = connectNodes(memo.nodePairsSelections).style({
+            'line-style': 'dashed',
+            'line-dash-pattern': [6, 3],
+            'line-dash-offset': 1
+        });
+        switch (dataA.meta.universalProperty) {
+            case 'Product':
+                {
+                    const leftEdge = findEdgeByMetaId(dataA.meta.universalData.leftEdgeId);
+                    const rightEdge = findEdgeByMetaId(dataA.meta.universalData.rightEdgeId);
+                    if (leftEdge && rightEdge) {
+                        edge.data({
+                            variant: 'Universal',
+                            label: `<${leftEdge.data().label};${rightEdge.data().label}>`
+                        });
                     }
-                    break;
-                case 'Sum':
-                    {
-                        const leftEdge = findEdgeByMetaId(dataA.meta.universalData.leftEdgeId);
-                        const rightEdge = findEdgeByMetaId(dataA.meta.universalData.rightEdgeId);
-                        if (leftEdge && rightEdge) {
-                            edge.data({
-                                variant: 'Universal',
-                                label: `[${leftEdge.data().label};${rightEdge.data().label}]`
-                            });
-                        }
+                }
+                break;
+            case 'Sum':
+                {
+                    const leftEdge = findEdgeByMetaId(dataA.meta.universalData.leftEdgeId);
+                    const rightEdge = findEdgeByMetaId(dataA.meta.universalData.rightEdgeId);
+                    if (leftEdge && rightEdge) {
+                        edge.data({
+                            variant: 'Universal',
+                            label: `[${leftEdge.data().label};${rightEdge.data().label}]`
+                        });
                     }
-                    break;
-                default:
-                    edge.data({
-                        variant: 'Universal',
-                        label: ''
-                    });
-                    break;
-            }
+                }
+                break;
+            default:
+                edge.data({
+                    variant: 'Universal',
+                    label: ''
+                });
+                break;
         }
     }
     elements.hintsButton.style.display = 'none';
@@ -745,7 +749,9 @@ cy.ready(() => {
             invertAllEdges();
     });
     elements.hintsButton.addEventListener('click', () => {
-        if (!memo.ruleBook.includes('No Hints') && memo.lastSelection) {
+        if (!memo.ruleBook.includes('No Hints') &&
+            memo.lastSelection &&
+            memo.nodePairsSelections.length === 2) {
             hint(memo);
         }
     });
@@ -913,6 +919,7 @@ cy.ready(() => {
             e.key !== 'Control') {
             if (e.key === 'Backspace') {
                 elements.autocompleteContainer.innerHTML = '';
+                elements.autocompleteContainer.style.display = 'none';
                 elements.variableInput.value = eraseCharacter();
             }
             else {

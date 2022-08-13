@@ -19,6 +19,7 @@
   font-display: swap;
 }
 body {
+  user-select: none;
   background-color: var(--background-primary);
   overflow: hidden;
   margin: 0;
@@ -46,7 +47,7 @@ body {
   cursor: pointer;
   background-color: transparent;
   font-size: 30px;
-  opacity: 0.25;
+  opacity: 0.5;
   color: var(--color-inverted);
 }
 #autocomplete {
@@ -54,12 +55,17 @@ body {
   font-weight: 600;
   position: fixed;
   bottom: 160px;
-  background-color: transparent;
+  background-color: var(--background-primary);
+  border: none;
+  border-top: solid 1px var(--color-primary);
+  border-bottom: solid 1px var(--color-primary);
+  opacity: 0.85;
   outline: none;
   width: 100vw;
   margin: auto;
   text-align: center;
   z-index: 1000;
+  display: none;
 }
 
 #connection-button:hover {
@@ -97,8 +103,9 @@ body {
 }
 #menu-section {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  bottom: 32px;
+  right: 32px;
+  opacity: 0.5;
 }
 #scroll {
   display: grid;
@@ -123,11 +130,12 @@ body {
 }
 #theme-button {
   opacity: 0.5;
+  font-size: 32px;
   position: absolute;
   border: none;
   cursor: pointer;
-  top: 10px;
-  left: 60px;
+  top: 5px;
+  left: 12px;
   font-family: var(--font-primary);
   color: var(--color-primary);
   background-color: transparent;
@@ -149,7 +157,14 @@ body {
 #up:hover,
 #down:hover,
 #tutorial-button:hover,
-#theme-button:hover {
+#theme-button:hover,
+#lesson-button-left:hover,
+#lesson-button-right:hover,
+#hints-button:hover,
+#identity-button:hover,
+#composition-button:hover,
+#menu-section:hover {
+  border: solid 1px var(--color-primary);
   opacity: 1;
 }
 
@@ -163,12 +178,7 @@ body {
   color: var(--color-primary);
   font-size: 15px;
   background: transparent;
-  border: solid 1px var(--color-primary);
-}
-#hints-button:hover,
-#identity-button:hover,
-#composition-button:hover {
-  opacity: 1;
+  border: none;
 }
 
 #toolkit {
@@ -189,14 +199,11 @@ body {
   display: none;
   border: none;
   cursor: pointer;
+  font-size: 32px;
   color: var(--color-primary);
   background: transparent;
 }
 
-#lesson-button-left:hover,
-#lesson-button-right:hover {
-  opacity: 1;
-}
 #variableInput {
   font-family: var(--font-primary);
   font-size: 18px;
@@ -214,19 +221,24 @@ body {
   user-select: none;
   pointer-events: none;
 }
+
 #up,
 #down,
 #save,
 #load {
   opacity: 0.5;
   font-family: var(--font-secondary);
-  font-size: 15px;
+  font-size: 32px;
   border: none;
   cursor: pointer;
   color: var(--color-primary);
   background: transparent;
 }
-
+#save,
+#load {
+  font-size: 20px;
+  padding: 5px;
+}
 #selectedIndex {
   font-family: var(--font-secondary);
   font-size: 15px;
