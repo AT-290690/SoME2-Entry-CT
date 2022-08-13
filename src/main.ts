@@ -123,6 +123,12 @@ const DARK_THEME: ThemeSettings = {
     '--color-inverted': '#efefef'
   }
 };
+const href = window.location.href.split('/').filter(Boolean);
+const envi = href.slice(1, 2);
+const protocol = envi[0].includes('localhost') ? 'http://' : 'https://';
+const API = protocol + envi.join('/');
+const APP = 'SoME2-Entry-CT';
+const GIST = 'https://gist.githubusercontent.com/';
 const PAN_STEP = 50;
 const LESSON_OFFSET: Coordinates2D = { x: 0, y: PAN_STEP };
 const CURRENT_THEME: ThemeSettings = { ...LIGTH_THEME };

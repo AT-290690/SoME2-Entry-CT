@@ -1,18 +1,5 @@
-const CONTENT = [];
-const META = window['PREDIFINED_TREES_METADATA'];
-const DIAGRAMS = window['PREDIFINED_TREES_DRAWING'];
-for (const key in META) {
-    META[key].forEach(meta => {
-        const isNode = meta.id[0] === 'n';
-        const current = isNode
-            ? DIAGRAMS[key].elements.nodes.find(node => node.data.id === meta.id)
-            : DIAGRAMS[key].elements.edges.find(edge => edge.data.id === meta.id);
-        current.data.meta = meta;
-    });
-}
-[...document.getElementsByClassName('slide')].forEach((text, index) => {
-    CONTENT[index] = { text, object: DIAGRAMS[index] };
-});
+const urlParams = new URLSearchParams(window.location.search);
+const lessonContentNode = document.getElementById('lesson-content');
 const lesson = {
     interface: {
         index: 0,
@@ -32,5 +19,41 @@ const lesson = {
             lesson.interface.index > 0 ? lesson.interface.index-- : 0;
         }
     },
-    content: CONTENT
+    content: []
 };
+fetch(urlParams.has('g') ? `${GIST}${urlParams.get('g')}` : './lesson/lesson.json')
+    .then(buffer => {
+    if (buffer.status >= 400)
+        console.error(buffer.status);
+    return buffer.json();
+})
+    .then(({ CONTENT, GRAPH, META }) => {
+    const META_DATA = window['PREDIFINED_TREES_METADATA'];
+    const DIAGRAMS = window['PREDIFINED_TREES_DRAWING'];
+    for (const key in GRAPH) {
+        DIAGRAMS[key] = GRAPH[key];
+    }
+    for (const key in META) {
+        META_DATA[key] = META[key];
+    }
+    lessonContentNode.innerHTML = window.atob(CONTENT);
+})
+    .then(() => {
+    const META_DATA = window['PREDIFINED_TREES_METADATA'];
+    const DIAGRAMS = window['PREDIFINED_TREES_DRAWING'];
+    for (const key in META_DATA) {
+        META_DATA[key].forEach(meta => {
+            const isNode = meta.id[0] === 'n';
+            const current = isNode
+                ? DIAGRAMS[key].elements.nodes.find(node => node.data.id === meta.id)
+                : DIAGRAMS[key].elements.edges.find(edge => edge.data.id === meta.id);
+            if (current)
+                current.data.meta = meta;
+        });
+    }
+    window['MathJax'].typeset();
+    [...document.getElementsByClassName('slide')].forEach((text, index) => {
+        lesson.content[index] = { text, object: DIAGRAMS[index] };
+    });
+});
+// .catch(err => printErrors(err));

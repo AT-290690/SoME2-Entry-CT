@@ -104,14 +104,14 @@ body {
 #menu-section {
   position: absolute;
   bottom: 32px;
-  right: 32px;
-  opacity: 0.5;
+  right: 10px;
+  opacity: 0.2;
 }
 #scroll {
   display: grid;
   position: absolute;
   bottom: 30px;
-  left: 30px;
+  left: 5px;
 }
 #lesson-section {
   visibility: hidden;
@@ -283,7 +283,7 @@ body {
 .slide-content {
   display: grid;
   /* width: 50em; */
-  width: 100vw;
+  width: 90vw;
   max-width: 50em;
   text-align: justify;
 }

@@ -1,0 +1,194 @@
+<!--LESSON TUTORIAL-->
+<div class="slide">
+  <rules> No Edge Creation, No Node Renaming</rules>
+  <!--style="display: grid; gap: 100px"-->
+  <div class="slide-content">
+    <h3>The data required for $\C$ to be a category</h3>
+    <p>
+      To be a category, $\C$ has to possess a bunch of <i>objects</i>. Those
+      objects can be anything and we assume that they form a collection called
+      $\ob \C$.
+      <br />
+      <i
+        >Double click anywhere on the screen to create a new object of the
+        category $\C$.</i
+      >
+    </p>
+    <p>
+      Usually, $\ob \C$ is an homogeneous collection of things, concepts, ideas,
+      constructions... For instance, $\ob \C$ could be the collection of all
+      human being, one object of $\C$ per human being. $\ob \C$ could also be
+      the natural numbers, one object of $\C$ per natural number. But the truth
+      is, we don't really need to know, the only thing to remember is that we
+      have this collection. What it represents is none of our business.
+    </p>
+    <p>
+      Objects are lonely, hence category connects them. For any two objects,
+      let's call them $X, Y \in \ob \C$, we have a new collection of things. We
+      call it $\C(X, Y)$. This collection represents the links (also called
+      arrows or morphisms) from $X$ to $Y$. Beware, $\C(X, Y)$ is not the same
+      thing as $\C(Y, X)$, arrows are directed! To denote an arrow $f \in \C(X,
+      Y)$, we often write $f : X \to Y$. It represents a way to link $X$ to $Y$,
+      and there could be a lot of ways to link $X$ to $Y$, the collection $\C(X,
+      Y)$ can have a lot of entities.
+      <br />
+      <i
+        >Invoke two objects $X, Y$ of $\C$. Click on $X$, $Y$ and then on the
+        connection button to create a morphism from $X$ to $Y$. Try to create
+        multiple links between the two, in different directions.</i
+      >
+    </p>
+    <p>
+      For every object $X \in \ob \C$, there is a special arrow from $X$ to $X$,
+      called the identity. We write $\id_X : X \to X$.
+      <br />
+      <i
+        >When you try to draw an arrow between objects with the same name, you
+        can can choose the identity button.</i
+      >
+    </p>
+    <p>
+      One piece of data is missing in order to form a category. We need a way to
+      merge arrows together. Suppose we have three objects $X, Y, Z \in \ob C$
+      and two arrows $f \in \C(X, Y)$ and $g : \C(Y, Z)$. The composition of $f$
+      and $g$ is the data of an arrow in $\C(X, Z)$ and is written $g\circ f$.
+      <br />
+      <i
+        >Select $f$, then $g$ and click on the composition button to see the
+        compisite arrow.</i
+      >
+    </p>
+  </div>
+</div>
+<div class="slide">
+  <rules></rules>
+  <div class="slide-content">
+    <h3>The laws this data must follow for $\C$ to be a category</h3>
+    <p>
+      The first law concerns the identity, it tells us that for any arrow $f : X
+      \to Y$, then $f \circ \id_X = f$ and $\id_Y \circ f = f$.
+    </p>
+    <p>
+      The second law is associativity, thanks to it, we can
+      <i>not care</i> when we follow a path in a diagram. Indeed, look at the
+      three arrows below. There are two ways of composing them, one gives
+      $h\circ (g\circ f)$ and the other $(h\circ g) \circ f$. A priori, these
+      arrows need not to be equal, and associativity states they indeed are. $$
+      h\circ (g\circ f) = (h\circ g) \circ f$$ This allows us to simply write
+      $h\circ g \circ f$. Convenient, we can follow a path in a diagram without
+      worrying about the parenthesis.
+    </p>
+  </div>
+</div>
+<!------------------->
+<!--LESSON PRODUCT--->
+<div class="slide">
+  <rules></rules>
+  <div class="slide-content">
+    <p>
+      Now that we know what a category is, it is time to start doing interesting
+      construction with it. Inside the category $\C$, we can construct
+      particular objects that come with <i>superpower</i>. In general, when we
+      have two object $X, Y$ of the category, we don't know a priori what are
+      the morphisms between them. There could be none, there could be a lot,
+      they could have interesting properties, or not. We don't know. We say that
+      an object $X$ has a <i>superpower</i>, (really called a
+      <i>universal property</i>) if we have interesting things to say about the
+      arrows from (or to) $X$. The most basic example is the notion of initial
+      object. An object $I \in \C$ is initial if, for any other object $Y$ of
+      the category, there exists one and only one arrow from $I$ to $Y$.
+    </p>
+    <p>
+      Dually, an object $T$ is terminal if there exactly one arrow from any
+      object $Y$ to $T$.
+    </p>
+    <p>
+      <i
+        >We instanciated a terminal and an initial object on the screen.
+        Instantiate other objects and draw some arrows using their
+        superpower.</i
+      >
+    </p>
+  </div>
+</div>
+
+<div class="slide">
+  <rules> No Edge Creation, No Node Renaming</rules>
+  <div class="slide-content">
+    <p>
+      Let's move on to another interesting construction, the product. When we
+      have two objects $A, B \in \ob \C$, we can form their product. It is the
+      data of a new object, that we call $A\times B$, and two arrows, the
+      projections. The first one is $p : A\times B \to A$ and the second is $q :
+      A\times B \to B$.
+    </p>
+    <p>
+      The interesting thing with the product is its superpower, it can
+      instantiate arrow from nothingness! Suppose we have another object $X \in
+      \ob C$ and two maps $f : X \to A$, and $g : X \to B$. Then the superpower
+      of the product creates a (unique, but let's not bother too much with that)
+      new arrow $\langle f, g\rangle : X \to A \times B$. This new arrow is such
+      that $$ p \circ \langle f; g\rangle = f$$ and $$ q \circ \langle f;
+      g\rangle = g$$ To understand the product, click on $X$, $A\times B$, then
+      on the question mark to see the magical arrow appear. The equations above
+      means that the two triangles inside the big one are commutative. To go
+      from $X$ to $A$, it is the same thing to follow $f$, or to follow $\langle
+      f; g\rangle$ and then $p$.
+    </p>
+  </div>
+</div>
+<div class="slide">
+  <rules></rules>
+  <div class="slide-content">
+    <p>
+      So what is this weird construction for? Well you know it, it is the
+      greatest common divisor! Indeed, say our category $\C$ has for objects the
+      natural numbers $0, 1, 2, \dots$. Between any two natural number $n$ and
+      $m$, put one, and only one, arrow $n \to m$ if $n$ divides $m$. For
+      instance there is an arrow from $2$ to $4$ but none from $9$ to $3$. (what
+      are the initial and terminal object here?). In this category, let's
+      compute the product of any two numbers $a$ and $b$. It is an object, let's
+      call it $a \land b$. It has two projections $p : a\land b \to a$ and $q :
+      a\land b \to b$. By definition of the arrows, it means this object divides
+      both $a$ and $b$.
+    </p>
+    <p>
+      Now, we unfold the definition of its superpower. For any other number $x$,
+      if we have an arrow $f : x \to a$, that is if $x \mid a$, and another
+      arrow $g : x \to b$, that is $x \mid b$, then we have an arrow $\langle f;
+      g\rangle : x \to a \land b$, that is $x \mid a \land b$. Let's rewrite all
+      of that in mathematical terms. We have $$ \forall x \in \mathbb{N},
+      \;\;\text{ if } \;\; x \mid a \;\; \text{ and } \;\; x \mid b \;\; \text{
+      then } \;\; x \mid a \land b $$ This is the definition of the greatest
+      common divisor!
+    </p>
+    <p>
+      So why is it called <i>product</i> then? Oh, because this is also the
+      cartesian product of sets. Take $\C$ to be the category of all sets and
+      the arrows between any two objects $X, Y$ are the usual functions between
+      sets. For two object (so two sets here) $A$ and $B$, we define $$ A \times
+      B = \{ (a, b) \mid a \in A, \; b \in B \} $$ to be the cartesian product.
+      We have to natural maps $p : A \times B \to A$ and $q : A\times B \to B$
+      defined by $$ p((a, b)) = a $$ and $$ q((a, b)) = b $$ Then having two
+      functions $f : X \to A$ and $g : X \to B$ creates a new function $\langle
+      f, g \rangle : X \to A\times B$ such that for all $x \in X$ $$ \langle f,
+      g \rangle(x) = (f(x), g(x)) $$ and indeed $p \circ \langle f, g \rangle(x)
+      = f(x)$ and $$q \circ \langle f, g \rangle(x) = g(x)$$
+    </p>
+  </div>
+</div>
+<div class="slide">
+  <rules>
+    No Edge Creation, No Edge Renaming, No Node Renaming, No Node
+    Creation</rules
+  >
+  <div class="slide-content">
+    <p>
+      Now it's you to play. Back to our general category $\C$. Here's an object
+      $A$, and the product to itself $A\times A$. Your goal is to create an
+      arrow from the top $A$ to $A\times A$. Recall that in a category, the
+      arrow cannot be instiated from nowhere. Good luck.
+    </p>
+  </div>
+</div>
+<!------------------>
