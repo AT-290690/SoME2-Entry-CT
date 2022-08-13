@@ -118,7 +118,7 @@ body {
   position: absolute;
   margin: auto;
   top: 0;
-  left: 100px;
+  left: 32px;
   color: var(--color-primary);
   background: transparent;
 }
@@ -280,7 +280,13 @@ body {
 .slide * {
   pointer-events: none;
 }
-
+.slide-content {
+  display: grid;
+  /* width: 50em; */
+  width: 100vw;
+  max-width: 50em;
+  text-align: justify;
+}
 rules {
   pointer-events: none;
   user-select: none;
