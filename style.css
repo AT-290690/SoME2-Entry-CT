@@ -21,6 +21,7 @@
 body {
   user-select: none;
   background-color: var(--background-primary);
+  transition: all 0.9s ease;
   overflow: hidden;
   margin: 0;
 }
@@ -30,6 +31,7 @@ body {
   height: 100vh;
   border: none;
 }
+
 #lesson-switch {
   position: absolute;
   top: 0;
@@ -280,11 +282,13 @@ body {
 .slide * {
   pointer-events: none;
 }
+
 .slide-content {
+  animation: fadeIn 1s;
   display: grid;
   /* width: 50em; */
   width: 90vw;
-  max-width: 50em;
+  max-width: 70em;
   text-align: justify;
 }
 rules {
@@ -304,4 +308,13 @@ light,
 diagram {
   visibility: hidden;
   height: 0;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
