@@ -19,7 +19,8 @@ const lesson = {
             lesson.interface.index > 0 ? lesson.interface.index-- : 0;
         }
     },
-    content: []
+    content: [],
+    diagrams: {}
 };
 fetch(urlParams.has('g') ? `${GIST}${urlParams.get('g')}` : './lesson/lesson.json')
     .then(buffer => {
@@ -36,6 +37,7 @@ fetch(urlParams.has('g') ? `${GIST}${urlParams.get('g')}` : './lesson/lesson.jso
     for (const key in META) {
         META_DATA[key] = META[key];
     }
+    lesson.diagrams = DIAGRAMS;
     lessonContentNode.innerHTML = window.atob(CONTENT);
 })
     .then(() => {
@@ -43,17 +45,19 @@ fetch(urlParams.has('g') ? `${GIST}${urlParams.get('g')}` : './lesson/lesson.jso
     const DIAGRAMS = window['PREDIFINED_TREES_DRAWING'];
     for (const key in META_DATA) {
         META_DATA[key].forEach(meta => {
+            var _a, _b;
             const isNode = meta.id[0] === 'n';
             const current = isNode
-                ? DIAGRAMS[key].elements.nodes.find(node => node.data.id === meta.id)
-                : DIAGRAMS[key].elements.edges.find(edge => edge.data.id === meta.id);
+                ? (_a = DIAGRAMS[key].elements.nodes) === null || _a === void 0 ? void 0 : _a.find(node => node.data.id === meta.id)
+                : (_b = DIAGRAMS[key].elements.edges) === null || _b === void 0 ? void 0 : _b.find(edge => edge.data.id === meta.id);
             if (current)
                 current.data.meta = meta;
         });
     }
-    window['MathJax'].typeset();
+    if (window['MathJax'] && 'typeset' in window['MathJax'])
+        window['MathJax'].typeset();
     [...document.getElementsByClassName('slide')].forEach((text, index) => {
-        lesson.content[index] = { text, object: DIAGRAMS[index] };
+        lesson.content[index] = { text };
     });
 });
 // .catch(err => printErrors(err));

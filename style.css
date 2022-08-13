@@ -295,11 +295,9 @@ rules {
 #info-pannel {
   display: none;
 }
-dark {
+dark,
+light,
+diagram {
   visibility: hidden;
-  height: 0;
-}
-light {
-  visibility: visible;
   height: 0;
 }

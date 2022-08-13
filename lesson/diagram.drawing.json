@@ -13,7 +13,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 662.6666666666666, "y": 432.6666666666667 },
+          "position": { "x": 43.33333333333326, "y": 10 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -34,7 +34,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 745.3333333333333, "y": 433.3333333333333 },
+          "position": { "x": 125.99999999999989, "y": 10.666666666666629 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -55,7 +55,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 827.3333333333333, "y": 432.6666666666667 },
+          "position": { "x": 207.9999999999999, "y": 10 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -120,9 +120,9 @@
         "selector": "core",
         "style": {
           "selection-box-opacity": "0.5",
-          "selection-box-color": "rgb(131,230,101)",
+          "selection-box-color": "rgb(255,204,0)",
           "selection-box-border-color": "rgb(0,0,0)",
-          "active-bg-color": "rgb(131,230,101)",
+          "active-bg-color": "rgb(255,204,0)",
           "active-bg-opacity": "0.8",
           "active-bg-size": "10px",
           "selection-box-border-width": "0px",
@@ -154,7 +154,7 @@
       {
         "selector": "edge[label]:selected",
         "style": {
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "3px"
         }
       },
@@ -170,7 +170,7 @@
         "selector": "node[label]",
         "style": {
           "color": "rgb(27,27,27)",
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "0px",
           "text-valign": "center",
           "font-size": "15px"
@@ -179,7 +179,7 @@
       {
         "selector": "node:selected",
         "style": {
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "3px"
         }
       },
@@ -193,7 +193,7 @@
     "maxZoom": 6,
     "panningEnabled": true,
     "userPanningEnabled": true,
-    "pan": { "x": 36.99999999999994, "y": -8.999999999999915 },
+    "pan": { "x": 0, "y": 50 },
     "boxSelectionEnabled": true,
     "renderer": { "name": "canvas" },
     "hideEdgesOnViewport": false,
@@ -215,7 +215,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 640.0000000000001, "y": 104.66666666666663 },
+          "position": { "x": 187.32942708333343, "y": 20.204427083333215 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -236,7 +236,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 736.0000000000001, "y": 103.99999999999986 },
+          "position": { "x": 283.32942708333337, "y": 19.537760416666472 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -257,7 +257,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 692.6666666666669, "y": 172.66666666666654 },
+          "position": { "x": 239.99609375000017, "y": 88.2044270833331 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -278,7 +278,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 798.6666666666669, "y": 104.66666666666666 },
+          "position": { "x": 345.9960937500001, "y": 20.204427083333215 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -299,7 +299,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 842.0000000000003, "y": 184.6666666666666 },
+          "position": { "x": 389.3294270833335, "y": 100.20442708333321 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -320,7 +320,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 891.3333333333335, "y": 104 },
+          "position": { "x": 438.66276041666674, "y": 19.537760416666586 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -341,7 +341,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 228.6666666666666, "y": 281.3333333333333 },
+          "position": { "x": 179.99609374999991, "y": 196.20442708333331 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -362,7 +362,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 325.33333333333326, "y": 280.6666666666667 },
+          "position": { "x": 276.6627604166666, "y": 195.5377604166668 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -383,7 +383,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 409.33333333333337, "y": 280.6666666666666 },
+          "position": { "x": 360.6627604166667, "y": 195.53776041666657 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -404,7 +404,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 504.6666666666665, "y": 279.3333333333333 },
+          "position": { "x": 455.99609374999983, "y": 194.20442708333331 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -425,7 +425,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 81.9999999999998, "y": 371.3333333333332 },
+          "position": { "x": 33.329427083333115, "y": 286.20442708333337 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -446,7 +446,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 223.9999999999999, "y": 371.99999999999983 },
+          "position": { "x": 175.3294270833332, "y": 286.8710937499999 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -467,7 +467,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 309.9999999999998, "y": 372.6666666666666 },
+          "position": { "x": 261.3294270833331, "y": 287.53776041666663 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -488,7 +488,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 414, "y": 372.66666666666646 },
+          "position": { "x": 365.3294270833333, "y": 287.53776041666663 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -509,7 +509,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 492, "y": 371.99999999999983 },
+          "position": { "x": 443.3294270833333, "y": 286.8710937499999 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -530,7 +530,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 630.6666666666667, "y": 374.66666666666646 },
+          "position": { "x": 581.99609375, "y": 289.53776041666663 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -551,7 +551,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 424.66666666666663, "y": 518.6666666666666 },
+          "position": { "x": 375.99609374999994, "y": 433.53776041666663 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -572,7 +572,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 607.3333333333333, "y": 516.6666666666666 },
+          "position": { "x": 558.6627604166665, "y": 431.53776041666663 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -593,7 +593,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 103.33333333333326, "y": 517.9999999999999 },
+          "position": { "x": 54.66276041666657, "y": 432.8710937499999 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -614,7 +614,7 @@
             "properties": [],
             "variant": "Object"
           },
-          "position": { "x": 280, "y": 518.6666666666666 },
+          "position": { "x": 231.32942708333331, "y": 433.53776041666663 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -639,7 +639,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -662,7 +662,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -685,7 +685,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -708,7 +708,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -731,7 +731,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -754,7 +754,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -777,7 +777,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -800,7 +800,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -823,7 +823,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -846,7 +846,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -869,7 +869,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -892,7 +892,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -915,7 +915,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -938,7 +938,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -961,7 +961,7 @@
             "properties": [],
             "variant": "Morphism"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -983,7 +983,7 @@
             "properties": [],
             "variant": "Universal"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -1005,7 +1005,7 @@
             "properties": [],
             "variant": "Universal"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -1027,7 +1027,7 @@
             "properties": [],
             "variant": "Universal"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -1049,10 +1049,10 @@
             "properties": [],
             "variant": "Universal"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 15.99609375, "y": 438.87109375 },
           "group": "edges",
           "removed": false,
-          "selected": true,
+          "selected": false,
           "selectable": true,
           "locked": false,
           "grabbable": true,
@@ -1066,9 +1066,9 @@
         "selector": "core",
         "style": {
           "selection-box-opacity": "0.5",
-          "selection-box-color": "rgb(131,230,101)",
+          "selection-box-color": "rgb(255,204,0)",
           "selection-box-border-color": "rgb(0,0,0)",
-          "active-bg-color": "rgb(131,230,101)",
+          "active-bg-color": "rgb(255,204,0)",
           "active-bg-opacity": "0.8",
           "active-bg-size": "10px",
           "selection-box-border-width": "0px",
@@ -1100,7 +1100,7 @@
       {
         "selector": "edge[label]:selected",
         "style": {
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "3px"
         }
       },
@@ -1116,7 +1116,7 @@
         "selector": "node[label]",
         "style": {
           "color": "rgb(27,27,27)",
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "0px",
           "text-valign": "center",
           "font-size": "15px"
@@ -1125,7 +1125,7 @@
       {
         "selector": "node:selected",
         "style": {
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "3px"
         }
       },
@@ -1139,7 +1139,7 @@
     "maxZoom": 6,
     "panningEnabled": true,
     "userPanningEnabled": true,
-    "pan": { "x": 58.00000000000014, "y": -66.99999999999991 },
+    "pan": { "x": 0, "y": 50 },
     "boxSelectionEnabled": true,
     "renderer": { "name": "canvas" },
     "hideEdgesOnViewport": false,
@@ -1154,14 +1154,14 @@
           "data": {
             "index": 0,
             "label": "T",
-            "meta": {},
             "comment": "",
+            "meta": {},
             "id": "n0",
             "type": "node",
-            "properties": [],
-            "variant": "Object"
+            "variant": "Object",
+            "properties": []
           },
-          "position": { "x": 164.6666666666666, "y": 322.6666666666666 },
+          "position": { "x": 84.66666666666667, "y": 61.333333333333336 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -1175,14 +1175,14 @@
           "data": {
             "index": 1,
             "label": "I",
-            "meta": {},
             "comment": "",
+            "meta": {},
             "id": "n1",
             "type": "node",
-            "properties": [],
-            "variant": "Object"
+            "variant": "Object",
+            "properties": []
           },
-          "position": { "x": 379.33333333333326, "y": 367.9999999999999 },
+          "position": { "x": 261.3333333333333, "y": 144 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -1199,9 +1199,9 @@
         "selector": "core",
         "style": {
           "selection-box-opacity": "0.5",
-          "selection-box-color": "rgb(131,230,101)",
+          "selection-box-color": "rgb(255,204,0)",
           "selection-box-border-color": "rgb(0,0,0)",
-          "active-bg-color": "rgb(131,230,101)",
+          "active-bg-color": "rgb(255,204,0)",
           "active-bg-opacity": "0.8",
           "active-bg-size": "10px",
           "selection-box-border-width": "0px",
@@ -1233,7 +1233,7 @@
       {
         "selector": "edge[label]:selected",
         "style": {
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "3px"
         }
       },
@@ -1249,7 +1249,7 @@
         "selector": "node[label]",
         "style": {
           "color": "rgb(27,27,27)",
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "0px",
           "text-valign": "center",
           "font-size": "15px"
@@ -1258,7 +1258,7 @@
       {
         "selector": "node:selected",
         "style": {
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "3px"
         }
       },
@@ -1272,7 +1272,7 @@
     "maxZoom": 6,
     "panningEnabled": true,
     "userPanningEnabled": true,
-    "pan": { "x": -33.999999999999915, "y": 14 },
+    "pan": { "x": 0, "y": 0 },
     "boxSelectionEnabled": true,
     "renderer": { "name": "canvas" },
     "hideEdgesOnViewport": false,
@@ -1287,13 +1287,19 @@
           "data": {
             "index": 0,
             "label": "X",
+            "meta": {
+              "id": "n0",
+              "isUniversalSource": true,
+              "universalProperty": "Product",
+              "universalData": { "leftEdgeId": "e3", "rightEdgeId": "e2" }
+            },
             "comment": "",
             "id": "n0",
             "type": "node",
             "variant": "Object",
             "properties": []
           },
-          "position": { "x": 774.0000000000001, "y": 70.66666666666663 },
+          "position": { "x": 158.66666666666677, "y": 11.791676839192672 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -1314,7 +1320,7 @@
             "variant": "Object",
             "properties": []
           },
-          "position": { "x": 647.9999999999998, "y": 237.33333333333337 },
+          "position": { "x": 32.66666666666643, "y": 178.45834350585943 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -1335,7 +1341,7 @@
             "variant": "Object",
             "properties": []
           },
-          "position": { "x": 889.3333333333334, "y": 237.33333333333337 },
+          "position": { "x": 274, "y": 178.45834350585943 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -1349,14 +1355,14 @@
           "data": {
             "index": 3,
             "label": "AxB",
-            "meta": { "isUniversalTarget": true },
+            "meta": { "id": "n3", "isUniversalTarget": true },
             "comment": "",
             "id": "n3",
             "type": "node",
             "variant": "Object",
             "properties": []
           },
-          "position": { "x": 767.3333333333335, "y": 196.66666666666654 },
+          "position": { "x": 152.00000000000014, "y": 137.79167683919246 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -1381,7 +1387,7 @@
             "properties": [],
             "label": "p"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 16, "y": 310.4583435058594 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -1404,7 +1410,7 @@
             "properties": [],
             "label": "q"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 16, "y": 310.4583435058594 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -1418,7 +1424,7 @@
           "data": {
             "id": "e2",
             "index": 2,
-            "meta": {},
+            "meta": { "id": "e2" },
             "comment": "",
             "source": "n0",
             "target": "n2",
@@ -1427,7 +1433,7 @@
             "properties": [],
             "label": "g"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 16, "y": 310.4583435058594 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -1441,7 +1447,7 @@
           "data": {
             "id": "e3",
             "index": 3,
-            "meta": {},
+            "meta": { "id": "e3" },
             "comment": "",
             "source": "n0",
             "target": "n1",
@@ -1450,7 +1456,7 @@
             "properties": [],
             "label": "f"
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 16, "y": 310.4583435058594 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -1467,9 +1473,9 @@
         "selector": "core",
         "style": {
           "selection-box-opacity": "0.5",
-          "selection-box-color": "rgb(131,230,101)",
+          "selection-box-color": "rgb(255,204,0)",
           "selection-box-border-color": "rgb(0,0,0)",
-          "active-bg-color": "rgb(131,230,101)",
+          "active-bg-color": "rgb(255,204,0)",
           "active-bg-opacity": "0.8",
           "active-bg-size": "10px",
           "selection-box-border-width": "0px",
@@ -1501,7 +1507,7 @@
       {
         "selector": "edge[label]:selected",
         "style": {
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "3px"
         }
       },
@@ -1517,7 +1523,7 @@
         "selector": "node[label]",
         "style": {
           "color": "rgb(27,27,27)",
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "0px",
           "text-valign": "center",
           "font-size": "15px"
@@ -1526,7 +1532,7 @@
       {
         "selector": "node:selected",
         "style": {
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "3px"
         }
       },
@@ -1540,7 +1546,7 @@
     "maxZoom": 6,
     "panningEnabled": true,
     "userPanningEnabled": true,
-    "pan": { "x": 52.000000000000085, "y": 1.999999999999993 },
+    "pan": { "x": 0, "y": 50 },
     "boxSelectionEnabled": true,
     "renderer": { "name": "canvas" },
     "hideEdgesOnViewport": false,
@@ -1548,7 +1554,7 @@
     "motionBlur": false
   },
 
-  "5": {
+  "4": {
     "elements": {
       "nodes": [
         {
@@ -1562,7 +1568,7 @@
             "variant": "Object",
             "properties": []
           },
-          "position": { "x": 367.99999999999994, "y": 312 },
+          "position": { "x": 156.6666666666666, "y": 171 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -1583,7 +1589,7 @@
             "variant": "Object",
             "properties": []
           },
-          "position": { "x": 489.3333333333334, "y": 347.33333333333326 },
+          "position": { "x": 278.0000000000001, "y": 206.33333333333326 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -1604,7 +1610,7 @@
             "variant": "Object",
             "properties": []
           },
-          "position": { "x": 258.6666666666666, "y": 358.66666666666674 },
+          "position": { "x": 47.33333333333323, "y": 217.66666666666674 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -1625,7 +1631,7 @@
             "variant": "Object",
             "properties": []
           },
-          "position": { "x": 364.66666666666674, "y": 162.66666666666663 },
+          "position": { "x": 153.3333333333334, "y": 21.66666666666663 },
           "group": "nodes",
           "removed": false,
           "selected": false,
@@ -1650,7 +1656,7 @@
             "variant": "Morphism",
             "properties": []
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 16, "y": 169 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -1673,7 +1679,7 @@
             "variant": "Morphism",
             "properties": []
           },
-          "position": { "x": 0, "y": 0 },
+          "position": { "x": 16, "y": 169 },
           "group": "edges",
           "removed": false,
           "selected": false,
@@ -1690,9 +1696,9 @@
         "selector": "core",
         "style": {
           "selection-box-opacity": "0.5",
-          "selection-box-color": "rgb(131,230,101)",
+          "selection-box-color": "rgb(255,204,0)",
           "selection-box-border-color": "rgb(0,0,0)",
-          "active-bg-color": "rgb(131,230,101)",
+          "active-bg-color": "rgb(255,204,0)",
           "active-bg-opacity": "0.8",
           "active-bg-size": "10px",
           "selection-box-border-width": "0px",
@@ -1724,7 +1730,7 @@
       {
         "selector": "edge[label]:selected",
         "style": {
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "3px"
         }
       },
@@ -1740,7 +1746,7 @@
         "selector": "node[label]",
         "style": {
           "color": "rgb(27,27,27)",
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "0px",
           "text-valign": "center",
           "font-size": "15px"
@@ -1749,7 +1755,7 @@
       {
         "selector": "node:selected",
         "style": {
-          "text-outline-color": "rgb(131,230,101)",
+          "text-outline-color": "rgb(255,204,0)",
           "text-outline-width": "3px"
         }
       },
@@ -1763,7 +1769,7 @@
     "maxZoom": 6,
     "panningEnabled": true,
     "userPanningEnabled": true,
-    "pan": { "x": 86.0000000000002, "y": 10.999999999999943 },
+    "pan": { "x": 0, "y": 50 },
     "boxSelectionEnabled": true,
     "renderer": { "name": "canvas" },
     "hideEdgesOnViewport": false,

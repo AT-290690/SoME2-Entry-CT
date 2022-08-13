@@ -28,7 +28,10 @@ interface Coordinates2D {
   x: number;
   y: number;
 }
-
+interface GraphElements {
+  nodes: cytoscape.ElementDefinition[];
+  edges: cytoscape.ElementDefinition[];
+}
 interface Payload {
   index: number;
   label: string;
@@ -184,6 +187,14 @@ const changeTheme = (theme: ThemeSettings) => {
   for (const color in CURRENT_THEME.styles) {
     style.setProperty(color, CURRENT_THEME.styles[color]);
   }
+};
+
+const debounce = (func: (e: Event) => void) => {
+  let timer;
+  return (event: Event) => {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(func, 100, event);
+  };
 };
 
 const cy = cytoscape({
@@ -676,10 +687,10 @@ const graphFromJson = (input: object) => {
     cy.edges().forEach(edge => {
       setEdgeVariant(edge);
     });
-    cy.zoom({
-      level: data.zoom,
-      position: cy.nodes().first().position()
-    });
+    // cy.zoom({
+    //   level: data.zoom,
+    //   position: cy.nodes().first().position()
+    // });
     cy.pan(data.pan);
     incIndex();
   }
@@ -765,20 +776,41 @@ const hint = (memo: State): void => {
   }
   elements.hintsButton.style.display = 'none';
 };
-
+const getElementOffset = (element: Element) => {
+  const rect = element.getBoundingClientRect();
+  return {
+    left: rect.left / 2,
+    top: rect.top / 2
+  };
+};
 const applyRules = () => {
   memo.ruleBook = rules[lesson.interface.index] ?? [];
 };
+
 const displayLesson = () => {
   applyRules();
-  const element = lesson.interface.show();
-  const object = lesson.content[lesson.interface.index].object;
   clearSelection();
   clearTree();
-  if (object) {
-    graphFromJson(object);
-  }
+  const element = lesson.interface.show();
   positionAbsoluteElement(element, LESSON_OFFSET);
+  [...element.getElementsByTagName('diagram')].forEach(diagram => {
+    const id = diagram.getAttribute('graph');
+    const currentDiagram = lesson.diagrams[id];
+    if (currentDiagram) {
+      const clone = structuredClone(currentDiagram);
+      const { top, left } = getElementOffset(diagram);
+      const elements = clone.elements as GraphElements;
+      elements.nodes?.forEach(elem => {
+        elem.position.x += left + LESSON_OFFSET.x;
+        elem.position.y += top + LESSON_OFFSET.y + PAN_STEP;
+      });
+      elements.edges?.forEach(elem => {
+        elem.position.x += left + LESSON_OFFSET.x;
+        elem.position.y += top + LESSON_OFFSET.y + PAN_STEP;
+      });
+      graphFromJson(clone);
+    }
+  });
   cy.pan(LESSON_OFFSET);
 };
 
@@ -1227,5 +1259,13 @@ cy.ready(() => {
     );
   });
 
+  // window.addEventListener(
+  //   'resize',
+  //   debounce(e => {
+  //     if (elements.lessonSection.style.visibility === 'visible') {
+  //       displayLesson();
+  //     }
+  //   })
+  // );
   elements.treeContainer.focus();
 });

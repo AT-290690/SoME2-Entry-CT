@@ -19,7 +19,8 @@ const lesson = {
       lesson.interface.index > 0 ? lesson.interface.index-- : 0;
     }
   },
-  content: []
+  content: [],
+  diagrams: {}
 };
 
 fetch(
@@ -47,6 +48,7 @@ fetch(
       for (const key in META) {
         META_DATA[key] = META[key];
       }
+      lesson.diagrams = DIAGRAMS;
       lessonContentNode.innerHTML = window.atob(CONTENT);
     }
   )
@@ -58,14 +60,17 @@ fetch(
         const isNode = meta.id[0] === 'n';
 
         const current = isNode
-          ? DIAGRAMS[key].elements.nodes.find(node => node.data.id === meta.id)
-          : DIAGRAMS[key].elements.edges.find(edge => edge.data.id === meta.id);
+          ? DIAGRAMS[key].elements.nodes?.find(node => node.data.id === meta.id)
+          : DIAGRAMS[key].elements.edges?.find(
+              edge => edge.data.id === meta.id
+            );
         if (current) current.data.meta = meta;
       });
     }
-    window['MathJax'].typeset();
+    if (window['MathJax'] && 'typeset' in window['MathJax'])
+      window['MathJax'].typeset();
     [...document.getElementsByClassName('slide')].forEach((text, index) => {
-      lesson.content[index] = { text, object: DIAGRAMS[index] };
+      lesson.content[index] = { text };
     });
   });
 // .catch(err => printErrors(err));
