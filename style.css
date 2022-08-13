@@ -288,6 +288,10 @@ body {
   text-align: justify;
 }
 rules {
+  padding: 5px;
+  font-size: 12px;
+  opacity: 0.5;
+  text-transform: uppercase;
   pointer-events: none;
   user-select: none;
 }
