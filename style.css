@@ -113,7 +113,7 @@ body {
   display: grid;
   position: absolute;
   bottom: 30px;
-  left: 5px;
+  left: 15px;
 }
 #lesson-section {
   visibility: hidden;
@@ -158,6 +158,8 @@ body {
 #load:hover,
 #up:hover,
 #down:hover,
+#left:hover,
+#right:hover,
 #lesson-button:hover,
 #theme-button:hover,
 #lesson-button-left:hover,
@@ -226,6 +228,8 @@ body {
 
 #up,
 #down,
+#left,
+#right,
 #save,
 #load {
   opacity: 0.5;

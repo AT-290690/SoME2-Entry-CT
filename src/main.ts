@@ -179,7 +179,9 @@ const elements: Record<string, any> = {
   lessonButton: document.getElementById('lesson-button'),
   themeButton: document.getElementById('theme-button'),
   upScrollButton: document.getElementById('up'),
-  downScrollButton: document.getElementById('down')
+  downScrollButton: document.getElementById('down'),
+  leftScrollButton: document.getElementById('left'),
+  rightScrollButton: document.getElementById('right')
 };
 
 const changeTheme = (theme: ThemeSettings) => {
@@ -1176,6 +1178,15 @@ cy.ready(() => {
     cy.pan({ x: pan.x, y: pan.y + PAN_STEP });
   });
 
+  elements.leftScrollButton.addEventListener('click', () => {
+    const pan = cy.pan();
+    cy.pan({ x: pan.x - PAN_STEP, y: pan.y });
+  });
+
+  elements.rightScrollButton.addEventListener('click', () => {
+    const pan = cy.pan();
+    cy.pan({ x: pan.x + PAN_STEP, y: pan.y });
+  });
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter') {
       renameVariable(elements.variableInput.value);
