@@ -61,7 +61,7 @@ const DARK_THEME = {
 };
 const PAN_STEP = 50;
 const ZOOM_STEP = 0.1;
-const TUTORIAL_GIFS = 8;
+const TUTORIAL_GIFS = 9;
 const CURRENT_THEME = Object.assign({}, LIGTH_THEME);
 const CURVES = {
     composition1: 'unbundled-bezier',
@@ -745,10 +745,8 @@ cy.ready(() => {
             elements.tutorialButton.textContent = 'close';
         }
     });
-    let currentTutorialIndex = 0;
-    elements.tutorialNext.addEventListener('click', () => {
-        elements.tutorialImage.src = `./assets/gifs/${++currentTutorialIndex % TUTORIAL_GIFS}.gif`;
-    });
+    let currentTutorialIndex = TUTORIAL_GIFS - 2;
+    elements.tutorialNext.addEventListener('click', () => (elements.tutorialImage.src = `./assets/gifs/${++currentTutorialIndex % TUTORIAL_GIFS}.gif`));
     elements.lessonPrev.addEventListener('click', () => {
         lesson.interface.decIndex();
         displayLesson();
