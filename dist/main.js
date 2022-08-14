@@ -103,7 +103,7 @@ const elements = {
     lessonContent: document.getElementById('lesson-content'),
     lessonPrev: document.getElementById('lesson-button-right'),
     lessonNext: document.getElementById('lesson-button-left'),
-    tutorialButton: document.getElementById('tutorial-button'),
+    lessonButton: document.getElementById('lesson-button'),
     themeButton: document.getElementById('theme-button'),
     upScrollButton: document.getElementById('up'),
     downScrollButton: document.getElementById('down')
@@ -769,16 +769,30 @@ cy.ready(() => {
     elements.themeButton.addEventListener('click', () => {
         clearSelection();
         toggleTheme();
-        // if (elements.tutorialButton.style.display === 'none') {
+        // if (elements.lessonButton.style.display === 'none') {
         //   displayLesson();
         // }
     });
-    elements.tutorialButton.addEventListener('click', () => {
-        elements.tutorialButton.style.display = 'none';
-        elements.lessonPrev.style.display = 'block';
-        elements.lessonNext.style.display = 'block';
-        elements.lessonSection.style.visibility = 'visible';
-        displayLesson();
+    elements.lessonButton.addEventListener('click', () => {
+        if (elements.lessonButton.textContent === 'playground') {
+            memo.ruleBook = ['No Constraints'];
+            clearSelection();
+            clearTree();
+            // window.location.reload();
+            elements.lessonButton.textContent = 'lesson';
+            // elements.lessonButton.style.display = 'none';
+            elements.lessonPrev.style.display = 'none';
+            elements.lessonNext.style.display = 'none';
+            elements.lessonSection.style.visibility = 'hidden';
+        }
+        else {
+            elements.lessonButton.textContent = 'playground';
+            // elements.lessonButton.style.display = 'none';
+            elements.lessonPrev.style.display = 'block';
+            elements.lessonNext.style.display = 'block';
+            elements.lessonSection.style.visibility = 'visible';
+            displayLesson();
+        }
     });
     elements.lessonPrev.addEventListener('click', () => {
         lesson.interface.decIndex();

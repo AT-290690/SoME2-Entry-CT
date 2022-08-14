@@ -1,6 +1,6 @@
 <!--LESSON TUTORIAL-->
 <div class="slide">
-  <rules> No Edge Creation, No Node Renaming</rules>
+  <rules> No Edge Creation </rules>
   
   <div class="slide-content">
     <h3>The data required for $\C$ to be a category</h3>
@@ -32,7 +32,7 @@
   </div>
 </div>
 <div class="slide">
-  <rules> No Edge Creation, No Node Renaming</rules>
+  <rules> No Node Creation, No Composition, No Node Renaming</rules>
   <div class="slide-content">
     <p>
       Objects are lonely, hence category connects them. For any two objects,
@@ -43,13 +43,15 @@
       Y)$, we often write $f : X \to Y$. It represents a way to link $X$ to $Y$,
       and there could be a lot of ways to link $X$ to $Y$, the collection $\C(X,
       Y)$ can have a lot of entities.
-      <br />
+    </p>
+      <p>
       <i
-        >Invoke two objects $X, Y$ of $\C$. Click on $X$, $Y$ and then on the
+        >Here are two objects $X, Y$ of $\C$. Click on $X$, $Y$ and then on the
         connection button to create a morphism from $X$ to $Y$. Try to create
         multiple links between the two, in different directions.</i
       >
     </p>
+    
 
     <diagram graph="6"></diagram>
   </div>
@@ -132,10 +134,11 @@
       they could have interesting properties, or not. We don't know. We say that
       an object $X$ has a <i>superpower</i>, (really called a
       <i>universal property</i>) if we have interesting things to say about the
-      arrows from (or to) $X$. The most basic example is the notion of initial
-      object. An object $I \in \C$ is initial if, for any other object $Y$ of
-      the category, there exists one and only one arrow from $I$ to $Y$.
+      arrows from (or to) $X$.
     </p>
+    <p> The most basic example is the notion of initial
+      object. An object $I \in \C$ is initial if, for any other object $Y$ of
+      the category, there exists one and only one arrow from $I$ to $Y$.</p>
     <p>
       Dually, an object $T$ is terminal if there exactly one arrow from any
       object $Y$ to $T$.

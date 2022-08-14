@@ -142,7 +142,7 @@ body {
   color: var(--color-primary);
   background-color: transparent;
 }
-#tutorial-button {
+#lesson-button {
   opacity: 0.5;
   position: absolute;
   border: none;
@@ -158,7 +158,7 @@ body {
 #load:hover,
 #up:hover,
 #down:hover,
-#tutorial-button:hover,
+#lesson-button:hover,
 #theme-button:hover,
 #lesson-button-left:hover,
 #lesson-button-right:hover,
