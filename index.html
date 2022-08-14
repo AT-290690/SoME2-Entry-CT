@@ -4,25 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="config.js"></script>
-    <script
-      id="MathJax-script"
-      async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
-    ></script>
     <link href="./style.css" rel="stylesheet" />
   </head>
   <body>
-    <div id="lesson-section">
-      <!--Bunch of Latex command I use over and over-->
-      \( \newcommand{\C}{\mathcal{C}} \newcommand{\ob}{\operatorname{Ob}}
-      \newcommand{\id}{\operatorname{id}} \)
-      <div id="lesson-content"></div>
-    </div>
     <div id="tree"></div>
     <div id="lesson-switch">
-      <button id="lesson-button-right">←</button>
-      <button id="lesson-button-left">→</button>
+      <button id="lesson-button-a">←</button>
+      <button id="lesson-button-b">→</button>
     </div>
     <div id="autocomplete"></div>
     <div id="menu-section">
@@ -138,6 +126,10 @@
         <button id="right" style="width: 50px">→</button>
       </div>
       <button id="down">↓</button>
+      <div style="display: flex">
+        <button id="zoom-in">+</button>
+        <button id="zoom-out">-</button>
+      </div>
     </div>
     <div id="toolkit">
       <button id="hints-button" style="display: none">?</button>
@@ -151,6 +143,15 @@
     </button>
     <button id="theme-button">☾</button>
     <button id="lesson-button">lesson</button>
+    <button id="tutorial-button">tutorial</button>
+    <div id="tutorial-container">
+      <img
+        id="tutorial"
+        src="./assets/gifs/1.gif"
+        style="pointer-events: none"
+      />
+      <button id="tutorial-next">-></button>
+    </div>
     <div id="comments-section"></div>
     <div id="info-pannel">
       <input id="variableInput" placeholder="..." spellcheck="false" disabled />

@@ -4,18 +4,6 @@ type Roles = 'node' | 'edge';
 type EdgeVariants = 'Morphism' | 'Universal';
 type NodeVariants = 'Object';
 type Properties = 'Composition-Unbundled' | 'Composition-Bundled';
-type Rules =
-  | 'No Node Renaming'
-  | 'No Node Creation'
-  | 'No Node Destruction'
-  | 'No Edge Renaming'
-  | 'No Edge Creation'
-  | 'No Edge Destruction'
-  | 'No Composition'
-  | 'No Universal Property'
-  | 'No Hints'
-  | 'No Identity Creation'
-  | 'No Constraints';
 
 type Variant = NodeVariants | EdgeVariants;
 interface Seleciton {
@@ -62,7 +50,6 @@ interface State {
   mousePosition: Coordinates2D;
   nodeIndex: number;
   edgeIndex: number;
-  ruleBook: Rules[];
 }
 type Theme = 'Light' | 'Dark';
 type ThemeSettings = {
@@ -129,7 +116,8 @@ const DARK_THEME: ThemeSettings = {
 };
 
 const PAN_STEP = 50;
-const LESSON_OFFSET: Coordinates2D = { x: 0, y: PAN_STEP };
+const ZOOM_STEP = 0.1;
+
 const CURRENT_THEME: ThemeSettings = { ...LIGTH_THEME };
 const CURVES: Record<
   string,
@@ -148,8 +136,7 @@ const memo: State = {
   edgeSelections: new Set(),
   mousePosition: { x: 0, y: 0 },
   nodeIndex: 0,
-  edgeIndex: 0,
-  ruleBook: []
+  edgeIndex: 0
 };
 
 const elements: Record<string, any> = {
@@ -167,16 +154,20 @@ const elements: Record<string, any> = {
   save: document.getElementById('save'),
   load: document.getElementById('load'),
   commentsSection: document.getElementById('comments-section'),
-  lessonSection: document.getElementById('lesson-section'),
-  lessonContent: document.getElementById('lesson-content'),
-  lessonPrev: document.getElementById('lesson-button-right'),
-  lessonNext: document.getElementById('lesson-button-left'),
+  lessonPrev: document.getElementById('lesson-button-a'),
+  lessonNext: document.getElementById('lesson-button-b'),
   lessonButton: document.getElementById('lesson-button'),
+  tutorialButton: document.getElementById('tutorial-button'),
+  tutorialImage: document.getElementById('tutorial'),
+  tutorialNext: document.getElementById('tutorial-next'),
+  tutorialContainer: document.getElementById('tutorial-container'),
   themeButton: document.getElementById('theme-button'),
   upScrollButton: document.getElementById('up'),
   downScrollButton: document.getElementById('down'),
   leftScrollButton: document.getElementById('left'),
-  rightScrollButton: document.getElementById('right')
+  rightScrollButton: document.getElementById('right'),
+  zoomInButton: document.getElementById('zoom-in'),
+  zoomOutButton: document.getElementById('zoom-out')
 };
 
 const changeTheme = (theme: ThemeSettings) => {
@@ -284,15 +275,15 @@ const cy = cytoscape({
   layout: { name: 'breadthfirst' },
 
   // initial viewport state:
-  zoom: 1.5,
+  zoom: 1,
   pan: { x: 0, y: 0 },
   // interaction options:
   minZoom: 0.4,
   maxZoom: 6,
-  zoomingEnabled: false,
+  zoomingEnabled: true,
   userZoomingEnabled: false,
   panningEnabled: true, // drag
-  userPanningEnabled: true,
+  userPanningEnabled: false,
   boxSelectionEnabled: true,
   selectionType: 'single',
   touchTapThreshold: 8,
@@ -406,11 +397,11 @@ const connectNodes = (
   label?: string
 ) => {
   if (!couple[0] && !couple[1]) {
-    resetColorOfSelectedNodes(couple);
+    // resetColorOfSelectedNodes(couple);
     clearSelection();
   } else if (couple.length > 1) {
     const edge = addEdge({ source: couple[0], target: couple[1] }, label);
-    resetColorOfSelectedNodes(couple);
+    // resetColorOfSelectedNodes(couple);
     clearSelection();
     return edge;
   }
@@ -451,22 +442,13 @@ const clickNodes = (e: cytoscape.EventObjectNode) => {
     // elements.hintsButton.style.display = 'none';
     elements.connectionA.textContent = incomming.data().label;
     elements.connectionB.textContent = outgoing.data().label;
-    if (!memo.ruleBook.includes('No Edge Creation')) {
-      elements.connectionButton.style.display = 'block';
-      positionAbsoluteElement(
-        elements.connectionButton,
-        offsetPosition(memo.mousePosition, -50, 50)
-      );
-    }
-    if (
-      !memo.ruleBook.includes('No Identity Creation') &&
-      elements.connectionA.textContent === elements.connectionB.textContent
-    ) {
+    elements.connectionButton.style.display = 'block';
+    positionAbsoluteElement(
+      elements.connectionButton,
+      offsetPosition(memo.mousePosition, -50, 50)
+    );
+    if (elements.connectionA.textContent === elements.connectionB.textContent) {
       elements.identityButton.style.display = 'block';
-      positionAbsoluteElement(
-        elements.identityButton,
-        offsetPosition(memo.mousePosition, -50, 50)
-      );
     }
   } else if (memo.nodePairsSelections.length > 2) {
     clearSelection();
@@ -539,16 +521,14 @@ const clearSelection = () => {
   elements.connectionButton.style.display = 'none';
   elements.identityButton.style.display = 'none';
 
-  cy.$(':selected')
-    .nodes()
-    .map(n =>
-      n
-        .style({
-          'text-outline-width': 0,
-          'text-outline-color': CURRENT_THEME.selection
-        })
-        .unselect()
-    );
+  cy.nodes().map(n =>
+    n
+      .style({
+        'text-outline-width': 0,
+        'text-outline-color': CURRENT_THEME.selection
+      })
+      .unselect()
+  );
   cy.edges().map(e =>
     e
       .style({
@@ -564,19 +544,13 @@ const clearSelection = () => {
 
 const renameVariable = (value = DEFAULT_TOKEN) => {
   const label = value.trim();
-  if (
-    memo.lastSelection.type === 'node' &&
-    !memo.ruleBook.includes('No Node Renaming')
-  ) {
+  if (memo.lastSelection.type === 'node') {
     cy.nodes(`#${memo.lastSelection.id}`)
       .first()
       .data({
         label: label === '' ? DEFAULT_TOKEN : label
       });
-  } else if (
-    memo.lastSelection.type === 'edge' &&
-    !memo.ruleBook.includes('No Edge Renaming')
-  ) {
+  } else if (memo.lastSelection.type === 'edge') {
     cy.edges(`#${memo.lastSelection.id}`).first().data({
       label
     });
@@ -692,10 +666,10 @@ const graphFromJson = (input: object) => {
     cy.edges().forEach(edge => {
       setEdgeVariant(edge);
     });
-    // cy.zoom({
-    //   level: data.zoom,
-    //   position: cy.nodes().first().position()
-    // });
+    cy.zoom({
+      level: data.zoom,
+      position: cy.nodes().first().position()
+    });
     cy.pan(data.pan);
     incIndex();
   }
@@ -742,7 +716,7 @@ const hint = (memo: State): void => {
           if (leftEdge && rightEdge) {
             edge.data({
               variant: 'Universal',
-              label: `<${leftEdge.data().label};${rightEdge.data().label}>`
+              label: `⟨ ${leftEdge.data().label} ; ${rightEdge.data().label} ⟩`
             });
           }
         }
@@ -758,7 +732,7 @@ const hint = (memo: State): void => {
           if (leftEdge && rightEdge) {
             edge.data({
               variant: 'Universal',
-              label: `[${leftEdge.data().label};${rightEdge.data().label}]`
+              label: `[ ${leftEdge.data().label} ; ${rightEdge.data().label} ]`
             });
           }
         }
@@ -776,66 +750,27 @@ const hint = (memo: State): void => {
 const getElementOffset = (element: Element) => {
   const rect = element.getBoundingClientRect();
   return {
-    left: rect.left / 2,
-    top: rect.top / 2
+    left: rect.left,
+    top: rect.top
   };
-};
-const applyRules = () => {
-  const rules = [...document.getElementsByTagName('rules')].map(
-    el =>
-      el.textContent
-        .trim()
-        .split(',')
-        .filter(Boolean)
-        .map(rule => rule.trim()) as Rules[]
-  );
-  memo.ruleBook = rules[lesson.interface.index] ?? [];
 };
 
 const displayLesson = () => {
-  applyRules();
   clearSelection();
   clearTree();
-  const element = lesson.interface.show();
-  positionAbsoluteElement(element, LESSON_OFFSET);
-  [...element.getElementsByTagName('diagram')].forEach(diagram => {
-    const id = diagram.getAttribute('graph');
-    const currentDiagram = lesson.diagrams[id];
-    if (currentDiagram) {
-      const clone = structuredClone(currentDiagram);
-      const { top, left } = getElementOffset(diagram);
-      const elements = clone.elements as GraphElements;
-      elements.nodes?.forEach(elem => {
-        elem.position.x += left + LESSON_OFFSET.x;
-        elem.position.y += top + LESSON_OFFSET.y + PAN_STEP;
-      });
-      elements.edges?.forEach(elem => {
-        elem.position.x += left + LESSON_OFFSET.x;
-        elem.position.y += top + LESSON_OFFSET.y + PAN_STEP;
-      });
-      graphFromJson(clone);
-    }
-  });
-  cy.pan(LESSON_OFFSET);
-};
-
-const toggleTagsVisibility = (tags: string, visibility: string) => {
-  for (const el of document.getElementsByTagName(tags)) {
-    el.setAttribute('style', `visibility: ${visibility}`);
+  const diagram = lesson.diagrams[lesson.content[lesson.interface.index]];
+  if (diagram) {
+    graphFromJson(diagram);
   }
 };
 
 const toggleTheme = () => {
   if (CURRENT_THEME.type === 'Dark') {
     changeTheme(LIGTH_THEME);
-    toggleTagsVisibility('light', 'visible');
-    toggleTagsVisibility('dark', 'hidden');
     elements.themeButton.textContent = '☾';
     invertAllEdges();
   } else {
     changeTheme(DARK_THEME);
-    toggleTagsVisibility('dark', 'visible');
-    toggleTagsVisibility('light', 'hidden');
     elements.themeButton.textContent = '☼';
     invertAllEdges();
   }
@@ -891,9 +826,6 @@ const toggleTheme = () => {
       selector: 'node',
       style: {
         shape: 'rectangle',
-        // 'border-style': 'solid',
-        // 'border-color': CURRENT_THEME.stroke,
-        // 'border-width': '2',
         'background-opacity': 0,
         content: 'data(label)'
       }
@@ -926,26 +858,13 @@ const toggleTheme = () => {
 };
 
 cy.ready(() => {
-  cy.on('pan', () => {
-    const currentLesson = lesson.content[lesson.interface.index].text;
-    if (currentLesson) {
-      const pan = cy.pan();
-      positionAbsoluteElement(currentLesson, offsetPosition(pan, 0, 0));
-    }
-  });
-
   elements.themeButton.addEventListener('click', () => {
     clearSelection();
     toggleTheme();
-
-    // if (elements.lessonButton.style.display === 'none') {
-    //   displayLesson();
-    // }
   });
 
   elements.lessonButton.addEventListener('click', () => {
     if (elements.lessonButton.textContent === 'playground') {
-      memo.ruleBook = ['No Constraints'];
       clearSelection();
       clearTree();
       // window.location.reload();
@@ -953,17 +872,29 @@ cy.ready(() => {
       // elements.lessonButton.style.display = 'none';
       elements.lessonPrev.style.display = 'none';
       elements.lessonNext.style.display = 'none';
-      elements.lessonSection.style.visibility = 'hidden';
     } else {
       elements.lessonButton.textContent = 'playground';
       // elements.lessonButton.style.display = 'none';
       elements.lessonPrev.style.display = 'block';
       elements.lessonNext.style.display = 'block';
-      elements.lessonSection.style.visibility = 'visible';
       displayLesson();
     }
   });
-
+  elements.tutorialButton.addEventListener('click', () => {
+    if (elements.tutorialContainer.style.display === 'grid') {
+      elements.tutorialContainer.style.display = 'none';
+      elements.tutorialButton.textContent = 'tutorial';
+    } else {
+      elements.tutorialContainer.style.display = 'grid';
+      elements.tutorialButton.textContent = 'close';
+    }
+  });
+  let currentTutorialIndex = 0;
+  elements.tutorialNext.addEventListener('click', () => {
+    elements.tutorialImage.src = `./assets/gifs/${
+      ++currentTutorialIndex % 5
+    }.gif`;
+  });
   elements.lessonPrev.addEventListener('click', () => {
     lesson.interface.decIndex();
     displayLesson();
@@ -976,28 +907,18 @@ cy.ready(() => {
     if (CURRENT_THEME.type === 'Dark') invertAllEdges();
   });
   elements.hintsButton.addEventListener('click', () => {
-    if (
-      !memo.ruleBook.includes('No Hints') &&
-      memo.lastSelection &&
-      memo.nodePairsSelections.length === 2
-    ) {
+    if (memo.lastSelection && memo.nodePairsSelections.length === 2) {
       hint(memo);
     }
   });
   elements.connectionButton.addEventListener('click', () => {
-    if (
-      memo.nodePairsSelections.length === 2 &&
-      !memo.ruleBook.includes('No Edge Creation')
-    ) {
+    if (memo.nodePairsSelections.length === 2) {
       connectNodes(memo.nodePairsSelections);
     }
   });
 
   elements.identityButton.addEventListener('click', () => {
-    if (
-      memo.nodePairsSelections.length === 2 &&
-      !memo.ruleBook.includes('No Identity Creation')
-    ) {
+    if (memo.nodePairsSelections.length === 2) {
       connectNodes(
         memo.nodePairsSelections,
         elements.connectionA.textContent !== DEFAULT_TOKEN &&
@@ -1092,7 +1013,6 @@ cy.ready(() => {
   });
   document.addEventListener('dblclick', () => {
     if (
-      !memo.ruleBook.includes('No Node Creation') &&
       document.activeElement === document.body &&
       !memo.nodePairsSelections.length &&
       !memo.lastSelection.id
@@ -1118,16 +1038,16 @@ cy.ready(() => {
     delete diryJson.style;
     delete diryJson.data;
     delete diryJson.zoomingEnabled;
-    delete diryJson.zoom;
     delete diryJson.minZoom;
     delete diryJson.maxZoom;
     delete diryJson.panningEnabled;
-    delete diryJson.userPanningEnabled;
     delete diryJson.boxSelectionEnabled;
     delete diryJson.renderer;
     delete diryJson.hideEdgesOnViewport;
     delete diryJson.textureOnViewport;
     delete diryJson.motionBlur;
+    delete diryJson.userPanningEnabled;
+    delete diryJson.userZoomingEnabled;
 
     const data = diryJson as {
       elements: Elements;
@@ -1136,7 +1056,6 @@ cy.ready(() => {
     };
 
     const json = JSON.stringify({
-      CONTENT: '',
       GRAPH: { main: data },
       META: {}
     });
@@ -1187,6 +1106,25 @@ cy.ready(() => {
     const pan = cy.pan();
     cy.pan({ x: pan.x + PAN_STEP, y: pan.y });
   });
+
+  elements.zoomInButton.addEventListener('click', () => {
+    const zoom = cy.zoom();
+    const { top, left } = getElementOffset(document.body);
+    cy.zoom({
+      level: zoom + ZOOM_STEP,
+      position: { x: left * 0.5, y: top * 0.5 }
+    });
+  });
+
+  elements.zoomOutButton.addEventListener('click', () => {
+    const zoom = cy.zoom();
+    const { top, left } = getElementOffset(document.body);
+    cy.zoom({
+      level: zoom - ZOOM_STEP,
+      position: { x: left * 0.5, y: top * 0.5 }
+    });
+  });
+
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter') {
       renameVariable(elements.variableInput.value);
@@ -1232,17 +1170,11 @@ cy.ready(() => {
     }
 
     if (e.key === 'Delete' || (e.ctrlKey && e.key === 'Backspace')) {
-      if (
-        memo.lastSelection.type === 'node' &&
-        !memo.ruleBook.includes('No Node Destruction')
-      ) {
+      if (memo.lastSelection.type === 'node') {
         hasEdges(memo.lastSelection.id)
           ? removeNodeEdges(memo.lastSelection.id)
           : removeNode(memo.lastSelection.id);
-      } else if (
-        memo.lastSelection.type === 'edge' &&
-        !memo.ruleBook.includes('No Edge Destruction')
-      ) {
+      } else if (memo.lastSelection.type === 'edge') {
         removeEdge(memo.lastSelection.id);
       }
       clearSelection();
@@ -1254,33 +1186,17 @@ cy.ready(() => {
     deselectIndex();
   });
   cy.on('select', 'edge', e => {
-    // const connections = edges.connectedNodes().map(
-    //   x => x.data().id
-    //   // x.connectedEdges().map(x => {
-    //   //   const data = x.data();
-    //   //   return { source: data.source, target: data.target };
-    //   // })
-    // );
     e.target.style({ 'line-color': CURRENT_THEME.selection, width: 3 });
-
     memo.edgeSelections.add(e.target.id());
-    if (
-      memo.edgeSelections.size > 1 &&
-      !memo.ruleBook.includes('No Composition')
-    ) {
+    if (memo.edgeSelections.size > 1) {
       elements.compositionButton.style.display = 'block';
-      positionAbsoluteElement(
-        elements.compositionButton,
-        offsetPosition(memo.mousePosition, -50, 50)
-      );
     }
   });
 
   cy.on('select', 'node', e => e.target.style('text-outline-width', 3));
   cy.on('click', 'node', clickNodes);
   cy.on('dblclick', 'edge', e =>
-    e.target.data().variant === 'Universal' &&
-    !memo.ruleBook.includes('No Universal Property')
+    e.target.data().variant === 'Universal'
       ? e.target
           .style({
             'line-style': 'solid',

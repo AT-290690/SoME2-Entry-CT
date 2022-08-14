@@ -153,17 +153,50 @@ body {
   color: var(--color-primary);
   background-color: transparent;
 }
-
+#tutorial-container {
+  cursor: pointer;
+  display: none;
+  position: absolute;
+  left: 80px;
+  top: 60px;
+  border: solid 3px var(--color-secondary);
+  z-index: 5000;
+}
+#tutorial-next {
+  color: var(--color-primary);
+  font-family: 'Fantasque';
+  padding: 10px;
+  text-align: center;
+  background: var(--background-primary);
+  border: none;
+  border-top: 3px solid var(--color-secondary);
+  z-index: 5000;
+  cursor: pointer;
+}
+#tutorial-button {
+  cursor: pointer;
+  opacity: 0.5;
+  position: absolute;
+  border: none;
+  top: 35px;
+  left: 80px;
+  font-family: var(--font-primary);
+  color: var(--color-primary);
+  background-color: transparent;
+}
 #save:hover,
 #load:hover,
+#zoom-in:hover,
+#zoom-out:hover,
 #up:hover,
 #down:hover,
 #left:hover,
 #right:hover,
 #lesson-button:hover,
+#tutorial-button:hover,
 #theme-button:hover,
-#lesson-button-left:hover,
-#lesson-button-right:hover,
+#lesson-button-b:hover,
+#lesson-button-a:hover,
 #hints-button:hover,
 #identity-button:hover,
 #composition-button:hover,
@@ -197,8 +230,8 @@ body {
   color: var(--color-primary);
 }
 
-#lesson-button-left,
-#lesson-button-right {
+#lesson-button-b,
+#lesson-button-a {
   opacity: 0.5;
   display: none;
   border: none;
@@ -225,7 +258,8 @@ body {
   user-select: none;
   pointer-events: none;
 }
-
+#zoom-in,
+#zoom-out,
 #up,
 #down,
 #left,
@@ -261,6 +295,10 @@ body {
   padding: 40px;
   background-color: var(--background-primary);
   transition: all 0.9s ease;
+  max-width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #infoGuide {
   user-select: none;
@@ -280,39 +318,9 @@ body {
   background-color: transparent;
   pointer-events: none;
 }
-.slide {
-  display: none;
-  position: absolute;
-}
-.slide * {
-  pointer-events: none;
-}
-
-.slide-content {
-  animation: fadeIn 1s;
-  display: grid;
-  /* width: 50em; */
-  width: 90vw;
-  max-width: 70em;
-  text-align: justify;
-}
-rules {
-  padding: 5px;
-  font-size: 12px;
-  opacity: 0.5;
-  text-transform: uppercase;
-  pointer-events: none;
-  user-select: none;
-}
 
 #info-pannel {
   display: none;
-}
-dark,
-light,
-diagram {
-  visibility: hidden;
-  height: 0;
 }
 
 @keyframes fadeIn {
