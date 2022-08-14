@@ -1085,11 +1085,14 @@ cy.ready(() => {
         const outgoing = cy.nodes(`#${data.target}`).first();
         inspectSelectionIndex(memo.lastSelection, '[ ' + incomming.data().label + ' -> ' + outgoing.data().label + ' ]');
     });
-    window.addEventListener('resize', debounce(e => {
-        if (elements.lessonSection.style.visibility === 'visible') {
-            displayLesson();
-        }
-    }));
+    // window.addEventListener(
+    //   'resize',
+    //   debounce(e => {
+    //     if (elements.lessonSection.style.visibility === 'visible') {
+    //       displayLesson();
+    //     }
+    //   })
+    // );
     if (localStorage.getItem('theme') === 'Dark') {
         toggleTheme();
     }

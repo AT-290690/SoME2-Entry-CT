@@ -1308,14 +1308,14 @@ cy.ready(() => {
     );
   });
 
-  window.addEventListener(
-    'resize',
-    debounce(e => {
-      if (elements.lessonSection.style.visibility === 'visible') {
-        displayLesson();
-      }
-    })
-  );
+  // window.addEventListener(
+  //   'resize',
+  //   debounce(e => {
+  //     if (elements.lessonSection.style.visibility === 'visible') {
+  //       displayLesson();
+  //     }
+  //   })
+  // );
   if (localStorage.getItem('theme') === 'Dark') {
     toggleTheme();
   }
