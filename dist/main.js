@@ -935,19 +935,11 @@ cy.ready(() => {
     });
     elements.zoomInButton.addEventListener('click', () => {
         const zoom = cy.zoom();
-        const { top, left } = getElementOffset(document.body);
-        cy.zoom({
-            level: zoom + ZOOM_STEP,
-            position: { x: left * 0.5, y: top * 0.5 }
-        });
+        cy.zoom(zoom + ZOOM_STEP);
     });
     elements.zoomOutButton.addEventListener('click', () => {
         const zoom = cy.zoom();
-        const { top, left } = getElementOffset(document.body);
-        cy.zoom({
-            level: zoom - ZOOM_STEP,
-            position: { x: left * 0.5, y: top * 0.5 }
-        });
+        cy.zoom(zoom - ZOOM_STEP);
     });
     document.addEventListener('keydown', e => {
         if (e.key === 'Enter') {

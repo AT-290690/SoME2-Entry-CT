@@ -195,7 +195,7 @@
           {
             "data": {
               "index": 9,
-              "label": "Ob𝑪",
+              "label": "𝐎𝐛𝑪",
               "comment": "",
               "meta": {},
               "id": "n9",
@@ -413,7 +413,7 @@
           {
             "data": {
               "index": 6,
-              "label": "Ob𝑪",
+              "label": "𝐎𝐛𝑪",
               "comment": "",
               "meta": {},
               "id": "n6",
@@ -476,7 +476,7 @@
           {
             "data": {
               "index": 9,
-              "label": "Ob𝑪",
+              "label": "𝐎𝐛𝑪",
               "comment": "",
               "meta": {},
               "id": "n9",
@@ -644,7 +644,7 @@
           {
             "data": {
               "index": 17,
-              "label": "Ob𝑪",
+              "label": "𝐎𝐛𝑪",
               "comment": "",
               "meta": {},
               "id": "n17",
@@ -925,7 +925,7 @@
           {
             "data": {
               "index": 4,
-              "label": "Ob𝑪,",
+              "label": "𝐎𝐛𝑪,",
               "comment": "",
               "meta": {},
               "id": "n4",
@@ -1521,7 +1521,7 @@
           {
             "data": {
               "index": 1,
-              "label": "𝑋 ∈ Ob𝑪,",
+              "label": "𝑋 ∈ 𝐎𝐛𝑪,",
               "comment": "",
               "meta": {},
               "id": "n1",
@@ -1907,7 +1907,7 @@
           {
             "data": {
               "index": 3,
-              "label": "𝑋, 𝑌, 𝑍 ∈ Ob𝑪",
+              "label": "𝑋, 𝑌, 𝑍 ∈ 𝐎𝐛𝑪",
               "comment": "",
               "meta": {},
               "id": "n3",
@@ -2846,7 +2846,7 @@
           {
             "data": {
               "index": 6,
-              "label": "W",
+              "label": "𝑊",
               "meta": {},
               "comment": "",
               "id": "n6",
@@ -2867,7 +2867,7 @@
           {
             "data": {
               "index": 7,
-              "label": "X",
+              "label": "𝑋",
               "meta": {},
               "comment": "",
               "id": "n7",
@@ -2888,7 +2888,7 @@
           {
             "data": {
               "index": 8,
-              "label": "Y",
+              "label": "𝑌",
               "meta": {},
               "comment": "",
               "id": "n8",
@@ -2909,7 +2909,7 @@
           {
             "data": {
               "index": 9,
-              "label": "Z",
+              "label": "𝑍",
               "meta": {},
               "comment": "",
               "id": "n9",
@@ -2930,7 +2930,7 @@
           {
             "data": {
               "index": 15,
-              "label": "W",
+              "label": "𝑊",
               "meta": {},
               "comment": "",
               "id": "n15",
@@ -2951,7 +2951,7 @@
           {
             "data": {
               "index": 17,
-              "label": "Y",
+              "label": "𝑌",
               "meta": {},
               "comment": "",
               "id": "n17",
@@ -2972,7 +2972,7 @@
           {
             "data": {
               "index": 18,
-              "label": "Z",
+              "label": "𝑍",
               "meta": {},
               "comment": "",
               "id": "n18",
@@ -2993,7 +2993,7 @@
           {
             "data": {
               "index": 19,
-              "label": "W",
+              "label": "𝑊",
               "meta": {},
               "comment": "",
               "id": "n19",
@@ -3014,7 +3014,7 @@
           {
             "data": {
               "index": 20,
-              "label": "X",
+              "label": "𝑋",
               "meta": {},
               "comment": "",
               "id": "n20",
@@ -3035,7 +3035,7 @@
           {
             "data": {
               "index": 22,
-              "label": "Z",
+              "label": "𝑍",
               "meta": {},
               "comment": "",
               "id": "n22",
@@ -3056,7 +3056,7 @@
           {
             "data": {
               "index": 25,
-              "label": "W",
+              "label": "𝑊",
               "meta": {},
               "comment": "",
               "id": "n25",
@@ -3077,7 +3077,7 @@
           {
             "data": {
               "index": 26,
-              "label": "Z",
+              "label": "𝑍",
               "meta": {},
               "comment": "",
               "id": "n26",
@@ -3098,7 +3098,7 @@
           {
             "data": {
               "index": 23,
-              "label": "W",
+              "label": "𝑊",
               "meta": {},
               "comment": "",
               "id": "n23",
@@ -3119,7 +3119,7 @@
           {
             "data": {
               "index": 24,
-              "label": "Z",
+              "label": "𝑍",
               "meta": {},
               "comment": "",
               "id": "n24",
@@ -3308,7 +3308,7 @@
           {
             "data": {
               "index": 35,
-              "label": "𝒉 ∘  (g ∘ 𝒇)",
+              "label": "𝐡 ∘  (g ∘ 𝒇)",
               "comment": "",
               "meta": {},
               "id": "n35",
@@ -3350,7 +3350,7 @@
           {
             "data": {
               "index": 37,
-              "label": "(𝒉 ∘  g) ∘ 𝒇.",
+              "label": "(𝐡 ∘  g) ∘ 𝒇.",
               "comment": "",
               "meta": {},
               "id": "n37",
@@ -3413,7 +3413,7 @@
           {
             "data": {
               "index": 40,
-              "label": "𝒉 ∘  (g ∘ 𝒇) = (𝒉 ∘ 𝒇) ∘  𝒇",
+              "label": "𝐡 ∘  (g ∘ 𝒇) = (𝐡 ∘ 𝒇) ∘  𝒇",
               "comment": "",
               "meta": {},
               "id": "n40",
@@ -3455,7 +3455,7 @@
           {
             "data": {
               "index": 42,
-              "label": "𝒉 ∘ g ∘ 𝒇.",
+              "label": "𝐡 ∘ g ∘ 𝒇.",
               "comment": "",
               "meta": {},
               "id": "n42",
@@ -3543,7 +3543,7 @@
             "data": {
               "id": "e87",
               "index": 14,
-              "label": "g∘f",
+              "label": "g∘𝒇",
               "comment": "",
               "meta": {},
               "source": "n15",
@@ -3566,12 +3566,12 @@
             "data": {
               "id": "e88",
               "index": 22,
-              "label": "h∘(g∘f)",
+              "label": "𝐡∘(g∘𝒇)",
               "comment": "",
               "meta": {
                 "hasInvertedLabel": true,
-                "invertedLabel": "f∘(g∘h)",
-                "originalLabel": "h∘(g∘f)"
+                "invertedLabel": "𝒇∘(g∘𝐡)",
+                "originalLabel": "𝐡∘(g∘𝒇)"
               },
               "source": "n23",
               "target": "n24",
@@ -3593,7 +3593,7 @@
             "data": {
               "id": "e89",
               "index": 19,
-              "label": "h∘g",
+              "label": "𝐡∘g",
               "comment": "",
               "meta": {},
               "source": "n20",
@@ -3616,7 +3616,7 @@
             "data": {
               "id": "e90",
               "index": 16,
-              "label": "f",
+              "label": "𝒇",
               "comment": "",
               "meta": {},
               "source": "n19",
@@ -3639,7 +3639,7 @@
             "data": {
               "id": "e91",
               "index": 9,
-              "label": "h",
+              "label": "𝐡",
               "comment": "",
               "meta": {},
               "source": "n8",
@@ -3662,7 +3662,7 @@
             "data": {
               "id": "e92",
               "index": 7,
-              "label": "f",
+              "label": "𝒇",
               "comment": "",
               "meta": {},
               "source": "n6",
@@ -3685,7 +3685,7 @@
             "data": {
               "id": "e93",
               "index": 15,
-              "label": "h",
+              "label": "𝐡",
               "comment": "",
               "meta": {},
               "source": "n17",
@@ -3774,12 +3774,12 @@
             "data": {
               "id": "e97",
               "index": 24,
-              "label": "(h∘g)∘f",
+              "label": "(𝐡∘g)∘𝒇",
               "comment": "",
               "meta": {
                 "hasInvertedLabel": true,
-                "invertedLabel": "(f∘g)∘h",
-                "originalLabel": "(h∘g)∘f"
+                "invertedLabel": "(𝒇∘g)∘h",
+                "originalLabel": "(𝐡∘g)∘𝒇"
               },
               "source": "n25",
               "target": "n26",
@@ -4729,7 +4729,7 @@
           {
             "data": {
               "index": 2,
-              "label": "𝐴, 𝐵 ∈ Ob𝑪,",
+              "label": "𝐴, 𝐵 ∈ 𝐎𝐛𝑪,",
               "comment": "",
               "meta": {},
               "id": "n2",
@@ -4918,7 +4918,7 @@
           {
             "data": {
               "index": 11,
-              "label": "𝚚 ∶ 𝐴 x 𝐵 → B.",
+              "label": "𝚚 ∶ 𝐴 x 𝐵 → 𝐵.",
               "comment": "",
               "meta": {},
               "id": "n11",
@@ -5023,7 +5023,7 @@
           {
             "data": {
               "index": 16,
-              "label": "𝑋 ∈ Ob𝑪",
+              "label": "𝑋 ∈ 𝐎𝐛𝑪",
               "comment": "",
               "meta": {},
               "id": "n16",
@@ -5191,7 +5191,7 @@
           {
             "data": {
               "index": 24,
-              "label": "⟨ 𝑓, g ⟩ ∶ 𝑋 → 𝐴 x B.",
+              "label": "⟨ 𝑓, g ⟩ ∶ 𝑋 → 𝐴 x 𝐵.",
               "comment": "",
               "meta": {},
               "id": "n24",
@@ -5304,7 +5304,7 @@
           {
             "data": {
               "index": 0,
-              "label": "X",
+              "label": "𝑋",
               "meta": {
                 "id": "n0",
                 "isUniversalSource": true,
@@ -5330,7 +5330,7 @@
           {
             "data": {
               "index": 1,
-              "label": "A",
+              "label": "𝐴",
               "meta": {},
               "comment": "",
               "id": "n1",
@@ -5351,7 +5351,7 @@
           {
             "data": {
               "index": 2,
-              "label": "B",
+              "label": "𝐵",
               "meta": {},
               "comment": "",
               "id": "n2",
@@ -5372,7 +5372,7 @@
           {
             "data": {
               "index": 3,
-              "label": "AxB",
+              "label": "𝐴 x 𝐵",
               "meta": { "id": "n3", "isUniversalTarget": true },
               "comment": "",
               "id": "n3",
@@ -5745,7 +5745,7 @@
               "type": "edge",
               "variant": "Morphism",
               "properties": [],
-              "label": "f"
+              "label": "𝒇"
             },
             "position": { "x": 16, "y": 310.4583435058594 },
             "group": "edges",
@@ -7766,7 +7766,7 @@
           {
             "data": {
               "index": 0,
-              "label": "AxA",
+              "label": "𝐴 x A",
               "comment": "",
               "meta": {},
               "id": "n0",
@@ -7787,7 +7787,7 @@
           {
             "data": {
               "index": 1,
-              "label": "A",
+              "label": "𝐴",
               "comment": "",
               "meta": {},
               "id": "n1",
@@ -7808,7 +7808,7 @@
           {
             "data": {
               "index": 2,
-              "label": "A",
+              "label": "𝐴",
               "comment": "",
               "meta": {},
               "id": "n2",
@@ -7829,7 +7829,7 @@
           {
             "data": {
               "index": 3,
-              "label": "A",
+              "label": "𝐴",
               "comment": "",
               "meta": {},
               "id": "n3",
