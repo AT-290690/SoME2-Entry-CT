@@ -1,7 +1,7 @@
 :root {
   --background-primary: #efefef;
   --color-primary: #1b1b1b;
-  --color-secondary: #ffcc00;
+  --color-secondary: #33d746;
   --color-inverted: #1b1b1b;
   --font-primary: 'NatoSansMath';
   --font-secondary: 'Fantasque';
@@ -152,6 +152,9 @@ body {
   font-family: var(--font-primary);
   color: var(--color-primary);
   background-color: transparent;
+}
+#tutorial {
+  filter: invert(100);
 }
 #tutorial-container {
   cursor: pointer;

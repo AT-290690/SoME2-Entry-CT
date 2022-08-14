@@ -80,15 +80,15 @@ const LIGTH_THEME: ThemeSettings = {
   stroke: '#efefef',
   nodesBG: '#efefef',
   edges: '#1b1b1b',
-  selection: '#ffcc00',
+  selection: '#33d746',
   selectionOutgoing: '#fc6262',
   selectionIncoming: '#57b3f7',
-  selectionBox: '#ffcc00',
+  selectionBox: '#33d746',
   styles: {
     '--background-primary': '#efefef',
     '--color-primary': '#1b1b1b',
 
-    '--color-secondary': '#ffcc00',
+    '--color-secondary': '#33d746',
     '--color-outgoing': '#fc6262',
     '--color-incomming': '#57b3f7',
     '--color-inverted': '#1b1b1b'
@@ -768,10 +768,12 @@ const toggleTheme = () => {
   if (CURRENT_THEME.type === 'Dark') {
     changeTheme(LIGTH_THEME);
     elements.themeButton.textContent = '☾';
+    elements.tutorialImage.style = 'filter: invert(100)';
     invertAllEdges();
   } else {
     changeTheme(DARK_THEME);
     elements.themeButton.textContent = '☼';
+    elements.tutorialImage.style = 'filter:invert(0)';
     invertAllEdges();
   }
   cy.style([
