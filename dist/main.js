@@ -735,17 +735,19 @@ cy.ready(() => {
             displayLesson();
         }
     });
+    let currentTutorialIndex = TUTORIAL_GIFS - 2;
     elements.tutorialButton.addEventListener('click', () => {
         if (elements.tutorialContainer.style.display === 'grid') {
             elements.tutorialContainer.style.display = 'none';
+            elements.tutorialImage.src = './assets/images/favicon.png';
             elements.tutorialButton.textContent = 'tutorial';
         }
         else {
+            elements.tutorialImage.src = `./assets/gifs/${currentTutorialIndex % TUTORIAL_GIFS}.gif`;
             elements.tutorialContainer.style.display = 'grid';
             elements.tutorialButton.textContent = 'close';
         }
     });
-    let currentTutorialIndex = TUTORIAL_GIFS - 2;
     elements.tutorialNext.addEventListener('click', () => (elements.tutorialImage.src = `./assets/gifs/${++currentTutorialIndex % TUTORIAL_GIFS}.gif`));
     elements.lessonPrev.addEventListener('click', () => {
         lesson.interface.decIndex();
