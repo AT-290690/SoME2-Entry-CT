@@ -117,7 +117,7 @@ const DARK_THEME: ThemeSettings = {
 
 const PAN_STEP = 50;
 const ZOOM_STEP = 0.1;
-
+const TUTORIAL_GIFS = 8;
 const CURRENT_THEME: ThemeSettings = { ...LIGTH_THEME };
 const CURVES: Record<
   string,
@@ -894,7 +894,7 @@ cy.ready(() => {
   let currentTutorialIndex = 0;
   elements.tutorialNext.addEventListener('click', () => {
     elements.tutorialImage.src = `./assets/gifs/${
-      ++currentTutorialIndex % 5
+      ++currentTutorialIndex % TUTORIAL_GIFS
     }.gif`;
   });
   elements.lessonPrev.addEventListener('click', () => {
