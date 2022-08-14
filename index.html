@@ -9,12 +9,12 @@
   <body>
     <div id="tree"></div>
     <div id="lesson-switch">
-      <button id="lesson-button-a">←</button>
-      <button id="lesson-button-b">→</button>
+      <button id="lesson-button-a" title="previous lesson">←</button>
+      <button id="lesson-button-b" title="next lesson">→</button>
     </div>
     <div id="autocomplete"></div>
     <div id="menu-section">
-      <button id="save">↓</button>
+      <button id="save" title="download">↓</button>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
@@ -117,40 +117,44 @@
           ></path>
         </g>
       </svg>
-      <button id="load">↑</button>
+      <button id="load" title="upload">↑</button>
     </div>
     <div id="scroll">
-      <button id="up">↑</button>
+      <button id="up" title="up">↑</button>
       <div style="display: flex">
-        <button id="left" style="width: 50px">←</button>
-        <button id="right" style="width: 50px">→</button>
+        <button id="left" title="left" style="width: 50px">←</button>
+        <button id="right" title="right" style="width: 50px">→</button>
       </div>
-      <button id="down">↓</button>
+      <button id="down" title="down">↓</button>
       <div style="display: flex">
-        <button id="zoom-in">+</button>
-        <button id="zoom-out">-</button>
+        <button id="zoom-in" title="zoom in">+</button>
+        <button id="zoom-out" title="zoom out">-</button>
       </div>
     </div>
     <div id="toolkit">
-      <button id="hints-button" style="display: none">?</button>
-      <button id="composition-button" style="display: none">Composition</button>
-      <button id="identity-button" style="display: none">Identity</button>
+      <button id="hints-button" title="hints?" style="display: none">?</button>
+      <button id="composition-button" title="composition" style="display: none">
+        Composition
+      </button>
+      <button id="identity-button" title="identity" style="display: none">
+        Identity
+      </button>
     </div>
-    <button id="connection-button" style="display: none">
+    <button id="connection-button" style="display: none" title="morphism">
       <span id="connection-node-A">𝐀</span>
       <span id="connection-arrow"> → </span>
       <span id="connection-node-B">𝐁</span>
     </button>
-    <button id="theme-button">☾</button>
-    <button id="lesson-button">lesson</button>
-    <button id="tutorial-button">tutorial</button>
+    <button id="theme-button" title="change theme & invert edges">☾</button>
+    <button id="lesson-button" title="lesson">lesson</button>
+    <button id="tutorial-button" title="tutorial">tutorial</button>
     <div id="tutorial-container">
       <img
         id="tutorial"
         src="./assets/gifs/1.gif"
         style="pointer-events: none"
       />
-      <button id="tutorial-next">-></button>
+      <button id="tutorial-next" title="next tutorial">-></button>
     </div>
     <div id="comments-section"></div>
     <div id="info-pannel">
