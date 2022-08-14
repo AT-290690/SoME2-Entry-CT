@@ -1,0 +1,150 @@
+{
+  "CONTENT": "PGRpdiBjbGFzcz0ic2xpZGUiPgogIDxydWxlcz4gTm8gTm9kZSBDcmVhdGlvbiwgTm8gRWRnZSBDcmVhdGlvbiwgTm8gTm9kZSBSZW5hbWluZzwvcnVsZXM+CgogIDxkaXYgY2xhc3M9InNsaWRlLWNvbnRlbnQiPgogICAgPHA+CiAgICAgIEZvciBldmVyeSBvYmplY3QgJFggXGluIFxvYiBcQyQsIHRoZXJlIGlzIGEgc3BlY2lhbCBhcnJvdyBmcm9tICRYJCB0byAkWCQsCiAgICAgIGNhbGxlZCB0aGUgaWRlbnRpdHkuIFdlIHdyaXRlICRcaWRfWCA6IFggXHRvIFgkLgogICAgICA8YnIgLz4KICAgICAgPGkKICAgICAgICA+V2hlbiB5b3UgdHJ5IHRvIGRyYXcgYW4gYXJyb3cgYmV0d2VlbiBvYmplY3RzIHdpdGggdGhlIHNhbWUgbmFtZSwgeW91CiAgICAgICAgY2FuIGNhbiBjaG9vc2UgdGhlIGlkZW50aXR5IGJ1dHRvbiB0aGF0IHdpbGwgYXBwZWFyIG9uIHRoZSB0b3AgcmlnaHQKICAgICAgICBvbmNlIHR3byB0d28gb2JqZWN0cyB3aXRoIHRoZSBzYW1lIG5hbWUgYXJlIHNlbGVjdGVkLjwvaQogICAgICA+CiAgICA8L3A+CiAgPC9kaXY+CgogIDxkaWFncmFtIGdyYXBoPSJpZGVudGl0eSI+PC9kaWFncmFtPgo8L2Rpdj4K",
+  "GRAPH": {
+    "identity": {
+      "elements": {
+        "nodes": [
+          {
+            "data": {
+              "index": 0,
+              "label": "𝑋",
+              "comment": "",
+              "meta": {},
+              "id": "n0",
+              "type": "node",
+              "variant": "Object",
+              "properties": []
+            },
+            "position": { "x": 70.64679031526114, "y": 45.59092001004254 },
+            "group": "nodes",
+            "removed": false,
+            "selected": false,
+            "selectable": true,
+            "locked": false,
+            "grabbable": true,
+            "pannable": false,
+            "classes": ""
+          },
+          {
+            "data": {
+              "index": 1,
+              "label": "𝑋",
+              "comment": "",
+              "meta": {},
+              "id": "n1",
+              "type": "node",
+              "variant": "Object",
+              "properties": []
+            },
+            "position": { "x": 280.02037022684647, "y": 44.25707398144482 },
+            "group": "nodes",
+            "removed": false,
+            "selected": false,
+            "selectable": true,
+            "locked": false,
+            "grabbable": true,
+            "pannable": false,
+            "classes": ""
+          }
+        ],
+        "edges": [
+          {
+            "data": {
+              "id": "e1",
+              "index": 1,
+              "label": "ⁱᵈ𝑋",
+              "comment": "",
+              "meta": {},
+              "source": "n0",
+              "target": "n0",
+              "type": "edge",
+              "variant": "Morphism",
+              "properties": []
+            },
+            "position": { "x": 15.99826431274414, "y": 195.9982681274414 },
+            "group": "edges",
+            "removed": false,
+            "selected": false,
+            "selectable": true,
+            "locked": false,
+            "grabbable": true,
+            "pannable": true,
+            "classes": ""
+          },
+          {
+            "data": {
+              "id": "e2",
+              "index": 2,
+              "label": "ⁱᵈ𝑋",
+              "comment": "",
+              "meta": {},
+              "source": "n1",
+              "target": "n1",
+              "type": "edge",
+              "variant": "Morphism",
+              "properties": []
+            },
+            "position": { "x": 15.99826431274414, "y": 195.9982681274414 },
+            "group": "edges",
+            "removed": false,
+            "selected": false,
+            "selectable": true,
+            "locked": false,
+            "grabbable": true,
+            "pannable": true,
+            "classes": ""
+          },
+          {
+            "data": {
+              "id": "e3",
+              "index": 3,
+              "label": "ⁱᵈ𝑋",
+              "comment": "",
+              "meta": {},
+              "source": "n0",
+              "target": "n1",
+              "type": "edge",
+              "variant": "Morphism",
+              "properties": []
+            },
+            "position": { "x": 15.99826431274414, "y": 195.9982681274414 },
+            "group": "edges",
+            "removed": false,
+            "selected": false,
+            "selectable": true,
+            "locked": false,
+            "grabbable": true,
+            "pannable": true,
+            "classes": ""
+          },
+          {
+            "data": {
+              "id": "e4",
+              "index": 4,
+              "label": "ⁱᵈ𝑋",
+              "comment": "",
+              "meta": {},
+              "source": "n1",
+              "target": "n0",
+              "type": "edge",
+              "variant": "Morphism",
+              "properties": []
+            },
+            "position": { "x": 15.99826431274414, "y": 195.9982681274414 },
+            "group": "edges",
+            "removed": false,
+            "selected": false,
+            "selectable": true,
+            "locked": false,
+            "grabbable": true,
+            "pannable": true,
+            "classes": ""
+          }
+        ]
+      },
+      "userZoomingEnabled": false,
+      "pan": { "x": 0, "y": 50 }
+    }
+  },
+  "META": {}
+}

@@ -59,12 +59,6 @@ const DARK_THEME = {
         '--color-inverted': '#efefef'
     }
 };
-const href = window.location.href.split('/').filter(Boolean);
-const envi = href.slice(1, 2);
-const protocol = envi[0].includes('localhost') ? 'http://' : 'https://';
-const API = protocol + envi.join('/');
-const APP = 'SoME2-Entry-CT';
-const GIST = 'https://gist.githubusercontent.com/';
 const PAN_STEP = 50;
 const LESSON_OFFSET = { x: 0, y: PAN_STEP };
 const CURRENT_THEME = Object.assign({}, LIGTH_THEME);
@@ -944,7 +938,11 @@ cy.ready(() => {
         delete diryJson.textureOnViewport;
         delete diryJson.motionBlur;
         const data = diryJson;
-        const json = JSON.stringify(data);
+        const json = JSON.stringify({
+            CONTENT: '',
+            GRAPH: { main: data },
+            META: {}
+        });
         const a = document.createElement('a');
         const blob = new Blob([json], { type: 'text/json' });
         const url = window.URL.createObjectURL(blob);
@@ -960,7 +958,7 @@ cy.ready(() => {
         upload.type = 'file';
         upload.name = 'object.json';
         const reader = new FileReader();
-        reader.onload = (e) => __awaiter(void 0, void 0, void 0, function* () { return graphFromJson(JSON.parse(e.target.result.toString())); });
+        reader.onload = (e) => __awaiter(void 0, void 0, void 0, function* () { return graphFromJson(JSON.parse(e.target.result.toString()).GRAPH.main); });
         upload.addEventListener('change', (e) => reader.readAsText(e.currentTarget.files[0]));
         upload.click();
     };

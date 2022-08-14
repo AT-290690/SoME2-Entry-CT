@@ -1,5 +1,11 @@
 const urlParams = new URLSearchParams(window.location.search);
 const lessonContentNode = document.getElementById('lesson-content');
+const href = window.location.href.split('/').filter(Boolean);
+const envi = href.slice(1, 2);
+const protocol = envi[0].includes('localhost') ? 'http://' : 'https://';
+const API = protocol + envi.join('/');
+const APP = 'SoME2-Entry-CT';
+const GIST = 'https://gist.githubusercontent.com/';
 const lesson = {
     interface: {
         index: 0,
@@ -59,5 +65,9 @@ fetch(urlParams.has('g') ? `${GIST}${urlParams.get('g')}` : './lesson/lesson.jso
     [...document.getElementsByClassName('slide')].forEach((text, index) => {
         lesson.content[index] = { text };
     });
+})
+    .then(() => {
+    if (urlParams.get('r'))
+        document.getElementById('lesson-button').click();
 });
 // .catch(err => printErrors(err));

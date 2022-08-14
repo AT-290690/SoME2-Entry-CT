@@ -127,12 +127,7 @@ const DARK_THEME: ThemeSettings = {
     '--color-inverted': '#efefef'
   }
 };
-const href = window.location.href.split('/').filter(Boolean);
-const envi = href.slice(1, 2);
-const protocol = envi[0].includes('localhost') ? 'http://' : 'https://';
-const API = protocol + envi.join('/');
-const APP = 'SoME2-Entry-CT';
-const GIST = 'https://gist.githubusercontent.com/';
+
 const PAN_STEP = 50;
 const LESSON_OFFSET: Coordinates2D = { x: 0, y: PAN_STEP };
 const CURRENT_THEME: ThemeSettings = { ...LIGTH_THEME };
@@ -1140,7 +1135,12 @@ cy.ready(() => {
       pan: Coordinates2D;
     };
 
-    const json = JSON.stringify(data);
+    const json = JSON.stringify({
+      CONTENT: '',
+      GRAPH: { main: data },
+      META: {}
+    });
+
     const a = document.createElement('a');
     const blob = new Blob([json], { type: 'text/json' });
     const url = window.URL.createObjectURL(blob);
@@ -1158,7 +1158,7 @@ cy.ready(() => {
     upload.name = 'object.json';
     const reader = new FileReader();
     reader.onload = async e =>
-      graphFromJson(JSON.parse(e.target.result.toString()));
+      graphFromJson(JSON.parse(e.target.result.toString()).GRAPH.main);
     upload.addEventListener('change', (e: Event) =>
       reader.readAsText((e.currentTarget as HTMLInputElement).files[0])
     );
