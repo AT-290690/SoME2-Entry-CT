@@ -635,13 +635,20 @@ const offsetElementsIndexes = (elements: {
 };
 const invertAllEdges = () =>
   cy.edges().forEach(edge => {
-    const { target, source, label, id, ...rest } = edge.data();
+    const { target, source, label, id, meta, ...rest } = edge.data();
     const vertex: Vertex = { target: source, source: target };
     edge.remove();
-    const newLabel = label?.includes(COMPOSITION_TOKEN)
-      ? label.split(COMPOSITION_TOKEN).reverse().join(COMPOSITION_TOKEN)
-      : label;
+    let newLabel: string;
+    if (meta.hasInvertedLabel) {
+      newLabel = meta.isInverted ? meta.originalLabel : meta.invertedLabel;
+      meta.isInverted = !meta.isInverted;
+    } else {
+      newLabel = label?.includes(COMPOSITION_TOKEN)
+        ? label.split(COMPOSITION_TOKEN).reverse().join(COMPOSITION_TOKEN)
+        : label;
+    }
     const newEdge = addEdge(vertex, newLabel);
+    rest.meta = meta;
     newEdge.data(rest);
     setEdgeVariant(newEdge);
   });
@@ -1277,14 +1284,14 @@ cy.ready(() => {
     );
   });
 
-  // window.addEventListener(
-  //   'resize',
-  //   debounce(e => {
-  //     if (elements.lessonSection.style.visibility === 'visible') {
-  //       displayLesson();
-  //     }
-  //   })
-  // );
+  window.addEventListener(
+    'resize',
+    debounce(e => {
+      if (elements.lessonSection.style.visibility === 'visible') {
+        displayLesson();
+      }
+    })
+  );
   if (localStorage.getItem('theme') === 'Dark') {
     toggleTheme();
   }

@@ -468,7 +468,11 @@
             "index": 22,
             "label": "h∘(g∘f)",
             "comment": "",
-            "meta": {},
+            "meta": {
+              "hasInvertedLabel": true,
+              "invertedLabel": "f∘(g∘h)",
+              "originalLabel": "h∘(g∘f)"
+            },
             "source": "n23",
             "target": "n24",
             "type": "edge",
@@ -672,7 +676,11 @@
             "index": 24,
             "label": "(h∘g)∘f",
             "comment": "",
-            "meta": {},
+            "meta": {
+              "hasInvertedLabel": true,
+              "invertedLabel": "(f∘g)∘h",
+              "originalLabel": "(h∘g)∘f"
+            },
             "source": "n25",
             "target": "n26",
             "type": "edge",
