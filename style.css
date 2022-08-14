@@ -132,7 +132,7 @@ body {
 }
 #theme-button {
   opacity: 0.5;
-  font-size: 32px;
+  font-size: 20px;
   position: absolute;
   border: none;
   cursor: pointer;
@@ -280,6 +280,14 @@ body {
   cursor: pointer;
   color: var(--color-primary);
   background: transparent;
+}
+#zoom-in,
+#zoom-out,
+#up,
+#down,
+#left,
+#right {
+  font-size: 18px;
 }
 #save,
 #load {
