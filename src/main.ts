@@ -75,20 +75,20 @@ type ThemeSettings = {
 
 const LIGTH_THEME: ThemeSettings = {
   type: 'Light' as Theme,
-  nodes: '#efefef',
+  nodes: '#e4e4e4',
   text: '#1b1b1b',
-  stroke: '#efefef',
-  nodesBG: '#efefef',
+  stroke: '#e4e4e4',
+  nodesBG: '#e4e4e4',
   edges: '#1b1b1b',
-  selection: '#33d746',
+  selection: '#74ed24',
   selectionOutgoing: '#fc6262',
   selectionIncoming: '#57b3f7',
-  selectionBox: '#33d746',
+  selectionBox: '#74ed24',
   styles: {
-    '--background-primary': '#efefef',
+    '--background-primary': '#e4e4e4',
     '--color-primary': '#1b1b1b',
 
-    '--color-secondary': '#33d746',
+    '--color-secondary': '#74ed24',
     '--color-outgoing': '#fc6262',
     '--color-incomming': '#57b3f7',
     '--color-inverted': '#1b1b1b'
@@ -97,21 +97,21 @@ const LIGTH_THEME: ThemeSettings = {
 const DARK_THEME: ThemeSettings = {
   type: 'Dark' as Theme,
   nodes: '#1b1b1b',
-  text: '#efefef',
+  text: '#e4e4e4',
   stroke: '#1b1b1b',
   nodesBG: '#1b1b1b',
-  edges: '#efefef',
+  edges: '#e4e4e4',
   selection: '#8b12db',
   selectionOutgoing: '#bd2047',
   selectionIncoming: '#2e5ed1',
   selectionBox: '#8b12db',
   styles: {
     '--background-primary': '#1b1b1b',
-    '--color-primary': '#efefef',
+    '--color-primary': '#e4e4e4',
     '--color-secondary': '#8b12db',
     '--color-outgoing': '#fc6262',
     '--color-incomming': '#57b3f7',
-    '--color-inverted': '#efefef'
+    '--color-inverted': '#e4e4e4'
   }
 };
 

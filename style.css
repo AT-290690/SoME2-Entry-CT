@@ -1,7 +1,7 @@
 :root {
-  --background-primary: #efefef;
+  --background-primary: #e4e4e4;
   --color-primary: #1b1b1b;
-  --color-secondary: #33d746;
+  --color-secondary: #74ed24;
   --color-inverted: #1b1b1b;
   --font-primary: 'NatoSansMath';
   --font-secondary: 'Fantasque';
@@ -164,6 +164,7 @@ body {
   top: 60px;
   border: solid 3px var(--color-secondary);
   z-index: 5000;
+  filter: drop-shadow(0px 0px 3px var(--color-inverted));
 }
 #tutorial-next {
   color: var(--color-primary);
@@ -175,6 +176,9 @@ body {
   border-top: 3px solid var(--color-secondary);
   z-index: 5000;
   cursor: pointer;
+}
+#tutorial-next:active {
+  background-color: var(--color-secondary);
 }
 #tutorial-button {
   cursor: pointer;
@@ -302,6 +306,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  filter: drop-shadow(0px 0px 3px var(--color-inverted));
 }
 #infoGuide {
   user-select: none;
