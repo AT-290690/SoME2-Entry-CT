@@ -2854,7 +2854,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": 59.33603547871866, "y": 278.5060485627515 },
+            "position": { "x": 50.33603547871866, "y": 295.5060485627515 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -2875,7 +2875,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": 166.00270214538523, "y": 279.1727152294184 },
+            "position": { "x": 159.00270214538523, "y": 297.1727152294184 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -2896,7 +2896,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": 256.00270214538546, "y": 279.8393818960848 },
+            "position": { "x": 266.00270214538546, "y": 299.8393818960848 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -2917,7 +2917,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": 386.00270214538546, "y": 281.8393818960849 },
+            "position": { "x": 388.00270214538546, "y": 300.8393818960849 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -2938,7 +2938,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": -35.99729785461477, "y": 362.5060485627515 },
+            "position": { "x": -39.99729785461477, "y": 398.5060485627515 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -2959,7 +2959,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": 76.66936881205197, "y": 361.83938189608466 },
+            "position": { "x": 72.66936881205197, "y": 397.83938189608466 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -2980,7 +2980,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": 181.3360354787185, "y": 364.5060485627514 },
+            "position": { "x": 177.3360354787185, "y": 400.5060485627514 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -3001,7 +3001,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": 237.33603547871894, "y": 364.5060485627514 },
+            "position": { "x": 233.33603547871894, "y": 400.5060485627514 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -3022,7 +3022,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": 336.00270214538546, "y": 367.17271522941803 },
+            "position": { "x": 332.00270214538546, "y": 403.17271522941803 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -3043,7 +3043,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": 436.6693688120513, "y": 369.83938189608466 },
+            "position": { "x": 432.6693688120513, "y": 405.83938189608466 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -3064,7 +3064,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": 254.33603547871894, "y": 472.5060485627515 },
+            "position": { "x": 268.33603547871894, "y": 505.5060485627515 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -3085,7 +3085,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": 415.0027021453843, "y": 475.17271522941815 },
+            "position": { "x": 429.0027021453843, "y": 508.17271522941815 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -3106,7 +3106,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": -18.997297854614658, "y": 466.5060485627515 },
+            "position": { "x": -25.997297854614658, "y": 503.5060485627515 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -3127,7 +3127,7 @@
               "properties": [],
               "variant": "Object"
             },
-            "position": { "x": 157.66936881205197, "y": 467.17271522941815 },
+            "position": { "x": 150.66936881205197, "y": 504.17271522941815 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -3484,7 +3484,7 @@
               "variant": "Object",
               "properties": []
             },
-            "position": { "x": 223.9999999999999, "y": 530.0000000000002 },
+            "position": { "x": 220.9999999999999, "y": 562.0000000000002 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -3505,7 +3505,7 @@
               "variant": "Object",
               "properties": []
             },
-            "position": { "x": 225.9999999999999, "y": 568.0000000000002 },
+            "position": { "x": 222.9999999999999, "y": 600.0000000000002 },
             "group": "nodes",
             "removed": false,
             "selected": false,
@@ -5676,7 +5676,7 @@
               "type": "edge",
               "variant": "Morphism",
               "properties": [],
-              "label": "p"
+              "label": "𝚙"
             },
             "position": { "x": 16, "y": 310.4583435058594 },
             "group": "edges",
@@ -5699,7 +5699,7 @@
               "type": "edge",
               "variant": "Morphism",
               "properties": [],
-              "label": "q"
+              "label": "𝚚"
             },
             "position": { "x": 16, "y": 310.4583435058594 },
             "group": "edges",
@@ -7317,7 +7317,7 @@
           {
             "data": {
               "index": 13,
-              "label": "We have two natrual maps",
+              "label": "We have two natural maps",
               "comment": "",
               "meta": {},
               "id": "n13",
@@ -8021,7 +8021,7 @@
             "data": {
               "id": "e2",
               "index": 0,
-              "label": "p",
+              "label": "𝚙",
               "comment": "",
               "meta": {},
               "source": "n2",
@@ -8044,7 +8044,7 @@
             "data": {
               "id": "e3",
               "index": 1,
-              "label": "q",
+              "label": "𝚚",
               "comment": "",
               "meta": {},
               "source": "n1",
