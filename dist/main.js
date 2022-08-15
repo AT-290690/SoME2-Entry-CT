@@ -627,14 +627,16 @@ const toggleTheme = () => {
         elements.themeButton.textContent = '☼';
         elements.tutorialImage.style = 'filter:invert(0)';
     }
-    cy.edges().style({
+    cy.edges()
+        .style({
         'target-arrow-fill': 'filled',
         'target-arrow-shape': 'vee',
         'target-arrow-color': CURRENT_THEME.edges,
         'curve-style': CURVES.morphism,
         'line-color': CURRENT_THEME.edges,
         color: CURRENT_THEME.text
-    });
+    })
+        .map(setEdgeVariant);
     cy.nodes(`node[label]`).style({
         color: CURRENT_THEME.text,
         'text-outline-color': CURRENT_THEME.selection
