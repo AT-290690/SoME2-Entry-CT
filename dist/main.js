@@ -486,25 +486,30 @@ const offsetElementsIndexes = (elements) => {
     memo.edgeIndex = Math.max(maxEdgeIndex, memo.edgeIndex) + 1;
     return { nodes: offsetNodes || [], edges: offsetEdges || [] };
 };
-const invertAllEdges = () => cy.edges().forEach(edge => {
-    const _a = edge.data(), { target, source, label, id, meta } = _a, rest = __rest(_a, ["target", "source", "label", "id", "meta"]);
-    const vertex = { target: source, source: target };
-    edge.remove();
-    let newLabel;
-    if (meta.hasInvertedLabel) {
-        newLabel = meta.isInverted ? meta.originalLabel : meta.invertedLabel;
-        meta.isInverted = !meta.isInverted;
-    }
-    else {
-        newLabel = (label === null || label === void 0 ? void 0 : label.includes(COMPOSITION_TOKEN))
-            ? label.split(COMPOSITION_TOKEN).reverse().join(COMPOSITION_TOKEN)
-            : label;
-    }
-    const newEdge = addEdge(vertex, newLabel);
-    rest.meta = meta;
-    newEdge.data(rest);
-    setEdgeVariant(newEdge);
-});
+const invertEdges = () => {
+    const allEdges = cy.edges();
+    const selectedEdges = allEdges.filter(edge => edge.selected());
+    const edges = selectedEdges.length ? selectedEdges : allEdges;
+    edges.forEach(edge => {
+        const _a = edge.data(), { target, source, label, id, meta } = _a, rest = __rest(_a, ["target", "source", "label", "id", "meta"]);
+        const vertex = { target: source, source: target };
+        edge.remove();
+        let newLabel;
+        if (meta.hasInvertedLabel) {
+            newLabel = meta.isInverted ? meta.originalLabel : meta.invertedLabel;
+            meta.isInverted = !meta.isInverted;
+        }
+        else {
+            newLabel = (label === null || label === void 0 ? void 0 : label.includes(COMPOSITION_TOKEN))
+                ? label.split(COMPOSITION_TOKEN).reverse().join(COMPOSITION_TOKEN)
+                : label;
+        }
+        const newEdge = addEdge(vertex, newLabel);
+        rest.meta = meta;
+        newEdge.data(rest);
+        setEdgeVariant(newEdge);
+    });
+};
 const seedGraph = (nodes, edges) => {
     (edges === null || edges === void 0 ? void 0 : edges.length) ? cy.add([...nodes, ...edges]) : cy.add([...nodes]);
 };
@@ -728,8 +733,8 @@ cy.ready(() => {
         toggleTheme();
     });
     elements.invertButton.addEventListener('click', () => {
+        invertEdges();
         clearSelection();
-        invertAllEdges();
     });
     elements.lessonButton.addEventListener('click', () => {
         if (elements.lessonButton.textContent === 'blank') {
@@ -766,12 +771,12 @@ cy.ready(() => {
     elements.lessonPrev.addEventListener('click', () => {
         lesson.interface.decIndex();
         displayLesson();
-        // if (CURRENT_THEME.type === 'Dark') invertAllEdges();
+        // if (CURRENT_THEME.type === 'Dark') invertEdges();
     });
     elements.lessonNext.addEventListener('click', () => {
         lesson.interface.incIndex();
         displayLesson();
-        // if (CURRENT_THEME.type === 'Dark') invertAllEdges();
+        // if (CURRENT_THEME.type === 'Dark') invertEdges();
     });
     elements.hintsButton.addEventListener('click', () => {
         if (memo.lastSelection && memo.nodePairsSelections.length === 2) {

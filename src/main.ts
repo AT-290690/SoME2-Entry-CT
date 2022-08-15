@@ -605,8 +605,11 @@ const offsetElementsIndexes = (elements: {
   memo.edgeIndex = Math.max(maxEdgeIndex, memo.edgeIndex) + 1;
   return { nodes: offsetNodes || [], edges: offsetEdges || [] };
 };
-const invertAllEdges = () =>
-  cy.edges().forEach(edge => {
+const invertEdges = () => {
+  const allEdges = cy.edges();
+  const selectedEdges = allEdges.filter(edge => edge.selected());
+  const edges = selectedEdges.length ? selectedEdges : allEdges;
+  edges.forEach(edge => {
     const { target, source, label, id, meta, ...rest } = edge.data();
     const vertex: Vertex = { target: source, source: target };
     edge.remove();
@@ -624,6 +627,7 @@ const invertAllEdges = () =>
     newEdge.data(rest);
     setEdgeVariant(newEdge);
   });
+};
 const seedGraph = (
   nodes: { data: NodeData }[],
   edges?: { data: EdgeData }[]
@@ -878,8 +882,8 @@ cy.ready(() => {
     toggleTheme();
   });
   elements.invertButton.addEventListener('click', () => {
+    invertEdges();
     clearSelection();
-    invertAllEdges();
   });
   elements.lessonButton.addEventListener('click', () => {
     if (elements.lessonButton.textContent === 'blank') {
@@ -922,13 +926,13 @@ cy.ready(() => {
   elements.lessonPrev.addEventListener('click', () => {
     lesson.interface.decIndex();
     displayLesson();
-    // if (CURRENT_THEME.type === 'Dark') invertAllEdges();
+    // if (CURRENT_THEME.type === 'Dark') invertEdges();
   });
 
   elements.lessonNext.addEventListener('click', () => {
     lesson.interface.incIndex();
     displayLesson();
-    // if (CURRENT_THEME.type === 'Dark') invertAllEdges();
+    // if (CURRENT_THEME.type === 'Dark') invertEdges();
   });
   elements.hintsButton.addEventListener('click', () => {
     if (memo.lastSelection && memo.nodePairsSelections.length === 2) {
