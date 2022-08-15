@@ -927,24 +927,16 @@ cy.ready(() => {
         upload.addEventListener('change', (e) => reader.readAsText(e.currentTarget.files[0]));
         upload.click();
     };
+    const scroll = (x = 0, y = 0, step) => {
+        const pan = cy.pan();
+        cy.pan({ x: pan.x + step * x, y: pan.y + step * y });
+    };
     elements.save.addEventListener('click', () => saveFile());
     elements.load.addEventListener('click', () => loadFile());
-    elements.upScrollButton.addEventListener('click', () => {
-        const pan = cy.pan();
-        cy.pan({ x: pan.x, y: pan.y - PAN_STEP });
-    });
-    elements.downScrollButton.addEventListener('click', () => {
-        const pan = cy.pan();
-        cy.pan({ x: pan.x, y: pan.y + PAN_STEP });
-    });
-    elements.leftScrollButton.addEventListener('click', () => {
-        const pan = cy.pan();
-        cy.pan({ x: pan.x - PAN_STEP, y: pan.y });
-    });
-    elements.rightScrollButton.addEventListener('click', () => {
-        const pan = cy.pan();
-        cy.pan({ x: pan.x + PAN_STEP, y: pan.y });
-    });
+    elements.upScrollButton.addEventListener('click', () => scroll(0, 1, PAN_STEP));
+    elements.downScrollButton.addEventListener('click', () => scroll(0, -1, PAN_STEP));
+    elements.leftScrollButton.addEventListener('click', () => scroll(1, 0, PAN_STEP));
+    elements.rightScrollButton.addEventListener('click', () => scroll(-1, 0, PAN_STEP));
     elements.zoomInButton.addEventListener('click', () => {
         const zoom = cy.zoom();
         cy.zoom(zoom + ZOOM_STEP);
