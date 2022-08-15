@@ -959,8 +959,10 @@ cy.ready(() => {
   elements.compositionButton.addEventListener('click', () => {
     if (memo.edgeSelections.size) {
       const edgeSelectionArray = [...memo.edgeSelections];
-      const connections = edgeSelectionArray.map(x => {
-        const edge = cy.edges(`#${x}`).first();
+      const edges = edgeSelectionArray.map(x => cy.edges(`#${x}`).first());
+
+      const connections = edgeSelectionArray.map((_, i) => {
+        const edge = edges[i];
         edge.style({
           'line-color': CURRENT_THEME.selection,
           width: 3
@@ -976,7 +978,6 @@ cy.ready(() => {
         }
       }
       if (edgeSelectionArray.length === 0) return;
-      const edges = edgeSelectionArray.map(x => cy.edges(`#${x}`).first());
       const firstEdge = edges[0];
       const lastEdge = edges[edges.length - 1];
       const firstNode = firstEdge.connectedNodes().first();
