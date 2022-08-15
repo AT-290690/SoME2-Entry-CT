@@ -991,14 +991,21 @@ cy.ready(() => {
             elements.hintsButton.style.display = 'none';
         }
         if (e.key === 'Delete' || (e.ctrlKey && e.key === 'Backspace')) {
-            if (memo.lastSelection.type === 'node') {
-                hasEdges(memo.lastSelection.id)
-                    ? removeNodeEdges(memo.lastSelection.id)
-                    : removeNode(memo.lastSelection.id);
-            }
-            else if (memo.lastSelection.type === 'edge') {
-                removeEdge(memo.lastSelection.id);
-            }
+            // if (memo.lastSelection.type === 'node') {
+            //   hasEdges(memo.lastSelection.id)
+            //     ? removeNodeEdges(memo.lastSelection.id)
+            //     : removeNode(memo.lastSelection.id);
+            // } else if (memo.lastSelection.type === 'edge') {
+            //   removeEdge(memo.lastSelection.id);
+            // }
+            cy.elements().map(el => {
+                if (el.selected()) {
+                    if (el.isNode())
+                        removeNode(el.id());
+                    else if (el.isEdge())
+                        removeEdge(el.id());
+                }
+            });
             clearSelection();
             deselectIndex();
         }
