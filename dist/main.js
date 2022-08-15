@@ -627,16 +627,9 @@ const toggleTheme = () => {
         elements.themeButton.textContent = '☼';
         elements.tutorialImage.style = 'filter:invert(0)';
     }
-    cy.nodes().forEach(node => {
-        node.style({
-            shape: 'rectangle',
-            'background-opacity': 0,
-            content: 'data(label)'
-        });
-    });
+    // cy.nodes().forEach(node => {});
     cy.edges().forEach(edge => {
         edge.style({
-            width: 1,
             'target-arrow-fill': 'filled',
             'target-arrow-shape': 'vee',
             'target-arrow-color': CURRENT_THEME.edges,
