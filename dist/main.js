@@ -732,7 +732,7 @@ cy.ready(() => {
         invertAllEdges();
     });
     elements.lessonButton.addEventListener('click', () => {
-        if (elements.lessonButton.textContent === 'playground') {
+        if (elements.lessonButton.textContent === 'blank') {
             clearSelection();
             clearTree();
             // window.location.reload();
@@ -742,7 +742,7 @@ cy.ready(() => {
             elements.lessonNext.style.display = 'none';
         }
         else {
-            elements.lessonButton.textContent = 'playground';
+            elements.lessonButton.textContent = 'blank';
             // elements.lessonButton.style.display = 'none';
             elements.lessonPrev.style.display = 'block';
             elements.lessonNext.style.display = 'block';
@@ -998,13 +998,9 @@ cy.ready(() => {
             // } else if (memo.lastSelection.type === 'edge') {
             //   removeEdge(memo.lastSelection.id);
             // }
-            cy.elements().map(el => {
-                if (el.selected()) {
-                    if (el.isNode())
-                        removeNode(el.id());
-                    else if (el.isEdge())
-                        removeEdge(el.id());
-                }
+            cy.elements().forEach(el => {
+                if (el.selected())
+                    el.remove();
             });
             clearSelection();
             deselectIndex();
