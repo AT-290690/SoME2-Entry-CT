@@ -539,10 +539,7 @@ const graphFromJson = (input) => {
         cy.edges().forEach(edge => {
             setEdgeVariant(edge);
         });
-        cy.zoom({
-            level: data.zoom,
-            position: cy.nodes().first().position()
-        });
+        cy.zoom(data.zoom);
         cy.pan(data.pan);
         incIndex();
     }
@@ -616,7 +613,7 @@ const displayLesson = () => {
     clearTree();
     const diagram = lesson.diagrams[lesson.content[lesson.interface.index]];
     if (diagram) {
-        graphFromJson(diagram);
+        graphFromJson(structuredClone(diagram));
     }
 };
 const toggleTheme = () => {
@@ -735,7 +732,7 @@ cy.ready(() => {
             // elements.lessonButton.style.display = 'none';
             elements.lessonPrev.style.display = 'block';
             elements.lessonNext.style.display = 'block';
-            displayLesson();
+            lesson.interface.fetchLesson(displayLesson);
         }
     });
     let currentTutorialIndex = TUTORIAL_GIFS - 2;
