@@ -560,8 +560,10 @@ const findEdgeByMetaId = (id) => cy
 const hint = (memo) => {
     const a = cy.nodes(`#${memo.nodePairsSelections[0]}`).first();
     const b = cy.nodes(`#${memo.nodePairsSelections[1]}`).first();
-    const dataA = CURRENT_THEME.type === 'Dark' ? b.data() : a.data();
-    const dataB = CURRENT_THEME.type === 'Dark' ? a.data() : b.data();
+    // const dataA = CURRENT_THEME.type === 'Dark' ? b.data() : a.data();
+    // const dataB = CURRENT_THEME.type === 'Dark' ? a.data() : b.data();
+    const dataA = a.data();
+    const dataB = b.data();
     if (dataA.meta.isUniversalSource &&
         dataA.meta.universalProperty &&
         dataB.meta.isUniversalTarget &&
