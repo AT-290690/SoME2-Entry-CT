@@ -101,6 +101,7 @@ const elements = {
     tutorialNext: document.getElementById('tutorial-next'),
     tutorialContainer: document.getElementById('tutorial-container'),
     themeButton: document.getElementById('theme-button'),
+    invertButton: document.getElementById('invert-button'),
     upScrollButton: document.getElementById('up'),
     downScrollButton: document.getElementById('down'),
     leftScrollButton: document.getElementById('left'),
@@ -623,13 +624,11 @@ const toggleTheme = () => {
         changeTheme(LIGTH_THEME);
         elements.themeButton.textContent = '☾';
         elements.tutorialImage.style = 'filter: invert(100)';
-        invertAllEdges();
     }
     else {
         changeTheme(DARK_THEME);
         elements.themeButton.textContent = '☼';
         elements.tutorialImage.style = 'filter:invert(0)';
-        invertAllEdges();
     }
     cy.style([
         {
@@ -717,6 +716,10 @@ cy.ready(() => {
         clearSelection();
         toggleTheme();
     });
+    elements.invertButton.addEventListener('click', () => {
+        clearSelection();
+        invertAllEdges();
+    });
     elements.lessonButton.addEventListener('click', () => {
         if (elements.lessonButton.textContent === 'playground') {
             clearSelection();
@@ -752,14 +755,12 @@ cy.ready(() => {
     elements.lessonPrev.addEventListener('click', () => {
         lesson.interface.decIndex();
         displayLesson();
-        if (CURRENT_THEME.type === 'Dark')
-            invertAllEdges();
+        // if (CURRENT_THEME.type === 'Dark') invertAllEdges();
     });
     elements.lessonNext.addEventListener('click', () => {
         lesson.interface.incIndex();
         displayLesson();
-        if (CURRENT_THEME.type === 'Dark')
-            invertAllEdges();
+        // if (CURRENT_THEME.type === 'Dark') invertAllEdges();
     });
     elements.hintsButton.addEventListener('click', () => {
         if (memo.lastSelection && memo.nodePairsSelections.length === 2) {
