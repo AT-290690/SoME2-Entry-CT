@@ -37,6 +37,8 @@ const lesson = {
           }) => {
             const META_DATA = window['PREDIFINED_TREES_METADATA'];
             const DIAGRAMS = window['PREDIFINED_TREES_DRAWING'];
+            lesson.interface.index = 0;
+            lesson.content = [];
             for (const key in GRAPH) {
               lesson.content.push(key);
               DIAGRAMS[key] = GRAPH[key];
@@ -72,5 +74,3 @@ const lesson = {
   content: [],
   diagrams: {}
 };
-
-// .catch(err => printErrors(err));
